@@ -13,6 +13,8 @@ struct Position {
 
 class Role {
 public:
+    Role(string name, Position position, int level = 1, int maxHP = 100, int HP = 100, int maxMP = 100, int MP = 100) :
+        name(name), level(level), maxHP(maxHP), HP(HP), maxMP(maxMP), MP(MP), position(position) {}
     
 protected:
     string name;

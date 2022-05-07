@@ -9,7 +9,9 @@ using std::vector;
 class Map {
 public:
     Map() : fields(vector<Field*>{initialFieldNum}) {
-        
+        for (auto field : fields) {
+            field = new Field;
+        }
     }
 private:
     vector<Field*> fields;

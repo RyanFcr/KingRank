@@ -6,6 +6,7 @@ all:
 
 run :
 	make all;
+	rm $(objPath)/*.o
 	./a.exe
 
 clean:
