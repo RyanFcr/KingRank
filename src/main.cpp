@@ -4,6 +4,7 @@
 int main() {
     string input;
     MapGen mapGen;
+    TextGen::PrintTitle();
     while (1) {
         input = TextGen::Input();
         if (input == "quit") {

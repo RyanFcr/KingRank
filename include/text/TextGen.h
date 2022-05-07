@@ -15,6 +15,8 @@ ostream& style(ostream& out) {
 
 class TextGen {
 public:
+    static void PrintTitle();
+    
     static void PrintText(string s, string end = "\n") { cout << s << end; }
     static void PrintWarning(string s, string end = "\n") { cout << style<RED_> << s << style<RESET_> << end; }
     static string Input() {

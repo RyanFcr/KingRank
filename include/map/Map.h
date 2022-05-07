@@ -13,6 +13,11 @@ public:
             field = new Field;
         }
     }
+    ~Map() {
+        for (auto field : fields) {
+            delete field;
+        }
+    }
 private:
     vector<Field*> fields;
 };
