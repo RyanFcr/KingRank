@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 using std::ostream; using std::string; 
-using std::cout;
+using std::cout; using std::cin;
 
 #include "common/Macro.h"
 
@@ -16,7 +16,13 @@ ostream& style(ostream& out) {
 class TextGen {
 public:
     static void PrintText(string s, string end = "\n") { cout << s << end; }
-    static void PrintWarning(string s, string end = "\n") { cout << style<RED> << s << style<RESET> << end; }
+    static void PrintWarning(string s, string end = "\n") { cout << style<RED_> << s << style<RESET_> << end; }
+    static string Input() {
+        string input;
+        PrintText("> ", "");
+        getline(cin, input);
+        return input;
+    }
 };
 
 #endif // TEXTGEN_H_

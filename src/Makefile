@@ -1,13 +1,15 @@
+.PHONY : all
+
 CXX = g++
 
-objPath = ../obj
-includePath = ../include
+objPath = ..\obj
+includePath = ..\include
 
-objs = $(objPath)/main.o
+objs = $(objPath)\main.o
 
-all : $(objs)
-	make -C map;
+all:
+	make -C map
 	make -C text
 
-$(objPath)/%.o: %.cpp
+$(objPath)\%.o: %.cpp
 	$(CXX) $^ -c -o $@ -I $(includePath)

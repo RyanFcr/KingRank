@@ -2,6 +2,15 @@
 #include "text/TextGen.h"
 
 int main() {
+    string input;
     MapGen mapGen;
-    TextGen::PrintWarning("hello world!");
+    while (1) {
+        input = TextGen::Input();
+        if (input == "quit") {
+            TextGen::PrintText("Bye!");
+            break;
+        }
+        else
+            TextGen::PrintWarning("hello world!");
+    }
 }
