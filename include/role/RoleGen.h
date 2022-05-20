@@ -2,10 +2,11 @@
 #define ROLEGEN_H_
 
 #include "role/King.h"
+#include "map/Map.h"
 
 class RoleGen {
 public:
-    static King InitKingGen();
+    static King InitKingGen(Map &map);
 };
 
 #endif

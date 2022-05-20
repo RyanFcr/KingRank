@@ -8,13 +8,15 @@
 
 class King : public Role {
 public:
-    King(string name, Position position = {fieldNum, 0, 0}, int level = 1, int maxHP = 100, int HP = 100, 
+    King(string name, Position position, int territoryId, int level = 1, int maxHP = 100, int HP = 100, 
         int maxMP = 100, int MP = 100, int experience = 0) 
-        : Role(name, position, level, maxHP, HP, maxMP, MP), experience(experience) {
+        : Role(name, position, level, maxHP, HP, maxMP, MP), experience(experience), territoryId(territoryId) {
         
     }
+    void ShowMap();
 private:
     int experience; //当前的经验值
+    int territoryId; // 领地编号
     Bag bag;
     vector<Skill*> skills;
 };

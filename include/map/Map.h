@@ -5,21 +5,19 @@
 using std::vector;
 
 #include "Field.h"
+#include "common/Global.h"
 
 class Map {
 public:
-    Map() : fields(vector<Field*>{initialFieldNum}) {
-        for (auto field : fields) {
-            field = new Field;
-        }
-    }
+    void Init();
+    void MapExtend(string name = "");
     ~Map() {
-        for (auto field : fields) {
-            delete field;
-        }
+        for (int i = 0; i < fields.size(); i++)
+            for (int j = 0; j < fields[i].size(); j++)
+                delete fields[i][j];
     }
 private:
-    vector<Field*> fields;
+    vector<vector<Field*>> fields;
 };
 
 #endif // MAP_H_
