@@ -3,6 +3,6 @@
 
 #include "Config.h"
 
-static int fieldNum = initialFieldNum;
+static int fieldNum = initialMapSize * initialMapSize;
 
 #endif

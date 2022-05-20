@@ -26,4 +26,7 @@
 #define CYAN_BACK_ 46
 #define WHITE_BACK_ 47
 
+/// \brief Simple Utils
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif // MACROS_H_
