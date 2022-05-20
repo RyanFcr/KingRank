@@ -2,18 +2,20 @@
 #define FIELD_H_
 
 #include <string>
-using std::string;
+using std::string; using std::move;
 
 #include "common/Config.h"
 #include "Scene.h"
 
 class Field {
 public:
-    Field(int id, string name = "") : id(id), name(name) {}
+    Field(string name) : name(name) {}
+    Scene& GetScene(int row, int col) {
+        return field[row][col];
+    }
 private:
-    int id; // 土地的编号
     string name; // 领地的名字
-    int field[fieldSize][fieldSize]; // 土地的大小
+    Scene field[fieldSize][fieldSize]; // 土地上的事件
 };
 
 #endif // FIELD_H_

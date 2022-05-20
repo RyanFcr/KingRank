@@ -2,14 +2,11 @@
 #include "text/TextGen.h"
 #include "role/RoleGen.h"
 
-
 int main() {
-    // test
-    
-
-    // srand((unsigned)time(NULL));
-    // string input;
-    // Map map;
+    srand((unsigned)time(NULL));
+    string input;
+    Map map;
+    map.Init();
     // TextGen::PrintTitle();
     // King player = RoleGen::InitKingGen(map);
     // while (1) {

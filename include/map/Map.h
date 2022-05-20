@@ -9,8 +9,13 @@ using std::vector;
 
 class Map {
 public:
-    Map();
+    void Init();
     void MapExtend(string name = "");
+    ~Map() {
+        for (int i = 0; i < fields.size(); i++)
+            for (int j = 0; j < fields[i].size(); j++)
+                delete fields[i][j];
+    }
 private:
     vector<vector<Field*>> fields;
 };

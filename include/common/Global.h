@@ -5,4 +5,10 @@
 
 static int fieldNum = initialMapSize * initialMapSize;
 
+enum KRerror {
+    OPEN_FILE_FAIL,
+    HAS_PARSE_ERROR
+
+};
+
 #endif
