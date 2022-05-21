@@ -24,5 +24,10 @@ The executable file is saved as `build\bin\main.exe`.
 You can run the following instruction in the root directory in the terminal.
 
 ```shell
-.\build\bin\main.exe
+cd .\build\bin
+.\main.exe
 ```
+
+## Thirdparty Library
+
+We use the RapidJSON of Tencent, the repository address is: https://github.com/Tencent/rapidjson 

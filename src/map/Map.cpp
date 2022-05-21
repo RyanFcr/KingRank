@@ -7,8 +7,10 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <vector>
 using std::string; using std::ifstream; 
 using std::ios; using std::bad_alloc; 
+using std::vector;
 using rapidjson::Document; using rapidjson::SizeType;
 using rapidjson::Value;
 
@@ -42,6 +44,7 @@ void Map::Init() {
             if (!fieldsCol.IsArray()) throw HAS_PARSE_ERROR;
             /// @attention 局部变量v被释放似乎不会有太大问题
             vector<Field*> v;
+            Field *f;
 
             for (SizeType j = 0; j < fieldsCol.Size(); j++) {
                 const Value &field = fieldsCol[j];
@@ -54,7 +57,7 @@ void Map::Init() {
                 if (!field.HasMember("field")) throw HAS_PARSE_ERROR;
                 if (!field["field"].IsArray()) throw HAS_PARSE_ERROR;
 
-                Field *f = new Field{name};
+                f = new Field{name};
                 const Value &fieldRow = field["field"];
                 for (SizeType m = 0; m < fieldRow.Size(); m++) {
                     const Value &fieldCol = fieldRow[m];
@@ -81,13 +84,13 @@ void Map::Init() {
         switch (errorId) {
             case OPEN_FILE_FAIL:
                 error = "Can't find map data! Please check the integrity of the game!";
-                TextGen::PrintWarning(error);
+                TextGen::Print<warning>(error);
                 exit(1); // exit forcefully
                 break;
             
             case HAS_PARSE_ERROR:
                 error = "Map data has parse error! Please check the validity of the data!";
-                TextGen::PrintWarning(error);
+                TextGen::Print<warning>(error);
                 exit(1); // exit forcefully
                 break;
             
@@ -97,11 +100,35 @@ void Map::Init() {
     }
     catch (bad_alloc) {
         error = "Not enough memory!";
-        TextGen::PrintWarning(error);
+        TextGen::Print<warning>(error);
         exit(1); // exit forcefully
     }
 }
 
 void Map::MapExtend(string name) {
     
+}
+
+Field Map::GetField(const int fieldX, const int fieldY) const {
+    return *(fields[fieldX][fieldY]);
+}
+
+Scene Map::GetScene(const Position &p) const {
+    return fields[p.fieldX][p.fieldY]->GetScene(p.sceneX, p.sceneY);
+}
+
+/**
+ * @brief check the existence of the target field
+ * The function can be called in the `MapExtend'
+ * @param p position, must be normalized
+ * @return true: the target field exist
+ * @return false: the target fiels doesn't exist
+ */
+bool Map::IsValidPosition(Position &p) const {
+    // check the validity
+    if (p.fieldX < 0 || p.fieldX >= GetColNum(p.fieldX) ||
+        p.fieldY < 0 || p.fieldY >= GetRowNum())
+        return false;
+    else 
+        return true;
 }
