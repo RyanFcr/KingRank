@@ -112,29 +112,31 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
                 PrintCenter(upFieldName, maxTerminalLenghth);
                 PrintCenter(upCo, maxTerminalLenghth);
                 PrintCenter("up state", maxTerminalLenghth);
-                PrintCenter("⇧", maxTerminalLenghth);
-                PrintCenter("⇧", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
             }
 
             // right
             if (rightFieldName != "")
             {
                 PrintThree(leftFieldName, centerFieldName, rightFieldName, maxTerminalLenghth);
-                PrintThree(leftCo, centerCo, rightCo, maxTerminalLenghth);
-                PrintThree("left state", "⇦ ⇦ center ⇨ ⇨", "right state", maxTerminalLenghth);
+                PrintThree(leftCo, centerCo, rightCo, maxTerminalLenghth, "-");
+                PrintThree("left state", "center", "right state", maxTerminalLenghth);
             }
             else
             {
                 PrintTwo(leftFieldName, centerFieldName, maxTerminalLenghth);
-                PrintTwo(leftCo, centerCo, maxTerminalLenghth);
-                PrintTwo("left state", "⇦ ⇦ center", maxTerminalLenghth);
+                PrintTwo(leftCo, centerCo, maxTerminalLenghth, "-");
+                PrintTwo("left state", "center", maxTerminalLenghth);
             }
 
             // down
             if (downFieldName != "")
             {
-                PrintCenter("⇩", maxTerminalLenghth);
-                PrintCenter("⇩", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
+                PrintCenter("|", maxTerminalLenghth);
                 PrintCenter(downFieldName, maxTerminalLenghth);
                 PrintCenter(downCo, maxTerminalLenghth);
                 PrintCenter("down state", maxTerminalLenghth);
@@ -148,15 +150,16 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
                 Print(upFieldName);
                 Print(upCo);
                 Print("up state");
-                Print("⇧");
-                Print("⇧");
+                Print("|");
+                Print("|");
+                Print("|");
             }
 
             if (rightFieldName != "")
             {
                 PrintTwo(centerFieldName, rightFieldName, maxTerminalLenghth);
-                PrintTwo(centerCo, rightCo, maxTerminalLenghth);
-                PrintTwo("center ⇨ ⇨", "right state", maxTerminalLenghth);
+                PrintTwo(centerCo, rightCo, maxTerminalLenghth, "-");
+                PrintTwo("center", "right state", maxTerminalLenghth);
             }
             else
             {
@@ -167,8 +170,9 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
             // down
             if (downFieldName != "")
             {
-                Print("⇩");
-                Print("⇩");
+                Print("|");
+                Print("|");
+                Print("|");
                 Print(downFieldName);
                 Print(downCo);
                 Print("down state");
