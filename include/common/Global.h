@@ -29,6 +29,12 @@ struct Position {
     int fieldY;
     int sceneX;
     int sceneY;
+
+    void Normalize();
+    void GoUp();
+    void GoDown();
+    void GoLeft();
+    void GoRight();
 };
 
 #endif

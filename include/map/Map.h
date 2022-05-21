@@ -18,6 +18,7 @@ public:
         if (row < 0 || row >= GetRowNum()) return 0;
         else return fields[row].size();
     }
+    bool IsValidPosition(Position &p) const;
 
     ~Map() {
         for (int i = 0; i < fields.size(); i++)

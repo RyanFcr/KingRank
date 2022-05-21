@@ -113,3 +113,19 @@ Field Map::GetField(const int fieldX, const int fieldY) const {
 Scene Map::GetScene(const Position &p) const {
     return fields[p.fieldX][p.fieldY]->GetScene(p.sceneX, p.sceneY);
 }
+
+/**
+ * @brief check the existence of the target field
+ * The function can be called in the `MapExtend'
+ * @param p position, must be normalized
+ * @return true: the target field exist
+ * @return false: the target fiels doesn't exist
+ */
+bool Map::IsValidPosition(Position &p) const {
+    // check the validity
+    if (p.fieldX < 0 || p.fieldX >= GetColNum(p.fieldX) ||
+        p.fieldY < 0 || p.fieldY >= GetRowNum())
+        return false;
+    else 
+        return true;
+}

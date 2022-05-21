@@ -20,6 +20,18 @@ int main() {
         else if (input == "map") {
             player.ShowMap(map);
         }
+        else if (input == "up") {
+            player.GoUp(map);
+        }
+        else if (input == "down") {
+            player.GoDown(map);
+        }
+        else if (input == "right") {
+            player.GoRight(map);
+        }
+        else if (input == "left") {
+            player.GoLeft(map);
+        }
         else
             TextGen::Print<warning>("Invalid Input!");
     }

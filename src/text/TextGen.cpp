@@ -54,7 +54,7 @@ void TextGen::PrintDirection(const Map &m, const Position &p) {
             leftCo = "(" + std::to_string(p.sceneX - 1) + "," + std::to_string(p.sceneY) + ")";
 
         // right
-        if (p.sceneX + 1 >= fieldSize && p.fieldX == m.GetRowNum() - 1) {
+        if (p.sceneX + 1 >= fieldSize && p.fieldX == m.GetColNum(p.fieldX) - 1) {
             rightFieldName = "";
             rightCo = "";
         }
@@ -78,7 +78,7 @@ void TextGen::PrintDirection(const Map &m, const Position &p) {
             downCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY - 1) + ")";
 
         // up
-        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetColNum(p.fieldX) - 1) {
+        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetRowNum() - 1) {
             upFieldName = "";
             upCo = "";
         }

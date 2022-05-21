@@ -16,6 +16,10 @@ public:
         
     }
     void ShowMap(const Map &m);
+    void GoUp(const Map &m);
+    void GoDown(const Map &m);
+    void GoLeft(const Map &m);
+    void GoRight(const Map &m);
 private:
     int experience; //当前的经验值
     int territoryId; // 领地编号
