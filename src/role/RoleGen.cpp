@@ -1,8 +1,10 @@
 #include "role/RoleGen.h"
 #include "text/TextGen.h"
 #include "common/Global.h"
+#include "bag/Bag.h"
 
-King RoleGen::InitKingGen(Map &map) {
+King RoleGen::InitKingGen(Map &map)
+{
     string name;
 
     /// set king name
@@ -18,7 +20,7 @@ King RoleGen::InitKingGen(Map &map) {
     /// randomly choose a birthplace
     Position birthPlace{rand() % initialMapSize, rand() % initialMapSize, rand() % fieldSize, rand() % fieldSize};
 
-    Bag bag;
-    
-    return King(name, birthPlace, fieldNum - 1);
+    Bag b;
+
+    return King(name, birthPlace, fieldNum - 1, b);
 }

@@ -133,11 +133,11 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
             // down
             if (downFieldName != "")
             {
+                PrintCenter("⇩", maxTerminalLenghth);
+                PrintCenter("⇩", maxTerminalLenghth);
                 PrintCenter(downFieldName, maxTerminalLenghth);
                 PrintCenter(downCo, maxTerminalLenghth);
                 PrintCenter("down state", maxTerminalLenghth);
-                PrintCenter("⇩", maxTerminalLenghth);
-                PrintCenter("⇩", maxTerminalLenghth);
             }
         }
         else
@@ -167,11 +167,11 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
             // down
             if (downFieldName != "")
             {
+                Print("⇩");
+                Print("⇩");
                 Print(downFieldName);
                 Print(downCo);
                 Print("down state");
-                Print("⇩");
-                Print("⇩");
             }
         }
     }
