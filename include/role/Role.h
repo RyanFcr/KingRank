@@ -6,12 +6,7 @@
 using std::string;
 using std::vector;
 
-struct Position
-{
-    int fieldId;
-    int sceneX;
-    int sceneY;
-};
+#include "common/Global.h"
 
 class Role
 {
