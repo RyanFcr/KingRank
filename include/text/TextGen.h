@@ -7,6 +7,9 @@ using std::ostream; using std::string;
 using std::cout; using std::cin;
 
 #include "common/Macro.h"
+#include "map/Scene.h"
+#include "map/Map.h"
+#include "common/Global.h"
 
 template<int ansiStyle = 0>
 ostream& style(ostream& out) { 
@@ -16,23 +19,27 @@ ostream& style(ostream& out) {
 /// \brief Generate different styles of texts
 class TextGen {
 public:
+    static void Init();
     static void PrintTitle();
+    static void PrintDirection(const Map &m, const Position &p);
     
-    static void PrintText(string s, string end = "\n") { cout << s << end; }
-    static void PrintRequest(string s, string end = "\n") { cout << style<CYAN_> << s << style<RESET_> << end; }
-    static void PrintReward(string s, string end = "\n") { cout << style<YELLOW_> << s << style<RESET_> << end; }
-    static void PrintWarning(string s, string end = "\n") { cout << style<RED_> << s << style<RESET_> << end; }
-    
-    static string Input() {
-        string input;
-        PrintText("> ", "");
-        getline(cin, input);
-        if (input == "quit") {
-            PrintText("Bye!");
-            exit(0);
-        }
-        return input;
+    template<int ansiStyle = 0>
+    static void Print(string s, string end = "\n") {
+        cout << style<ansiStyle> << s << style<plain> << end;
     }
+
+    template<int ansiStyle = 0>
+    static void PrintCenter(string s, int totalLength) {
+        int len = s.length();
+        if (len <= totalLength) {
+            for (int i = 0; i < (totalLength - len) / 2; i++) {
+                cout << " ";
+            }
+        }
+        Print<ansiStyle>(s);
+    }
+
+    static string Input();
 };
 
 #endif // TEXTGEN_H_

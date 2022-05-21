@@ -5,11 +5,7 @@
 #include <vector>
 using std::vector; using std::string;
 
-struct Position {
-    int fieldId;
-    int sceneX;
-    int sceneY;
-};
+#include "common/Global.h"
 
 class Role {
 public:

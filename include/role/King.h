@@ -5,6 +5,8 @@
 #include "Role.h"
 #include "skill/Skill.h"
 #include "common/Global.h"
+#include "map/Map.h"
+#include "text/TextGen.h"
 
 class King : public Role {
 public:
@@ -13,7 +15,7 @@ public:
         : Role(name, position, level, maxHP, HP, maxMP, MP), experience(experience), territoryId(territoryId) {
         
     }
-    void ShowMap();
+    void ShowMap(const Map &m);
 private:
     int experience; //当前的经验值
     int territoryId; // 领地编号

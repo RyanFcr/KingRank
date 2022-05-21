@@ -81,13 +81,13 @@ void Map::Init() {
         switch (errorId) {
             case OPEN_FILE_FAIL:
                 error = "Can't find map data! Please check the integrity of the game!";
-                TextGen::PrintWarning(error);
+                TextGen::Print<warning>(error);
                 exit(1); // exit forcefully
                 break;
             
             case HAS_PARSE_ERROR:
                 error = "Map data has parse error! Please check the validity of the data!";
-                TextGen::PrintWarning(error);
+                TextGen::Print<warning>(error);
                 exit(1); // exit forcefully
                 break;
             
@@ -97,11 +97,19 @@ void Map::Init() {
     }
     catch (bad_alloc) {
         error = "Not enough memory!";
-        TextGen::PrintWarning(error);
+        TextGen::Print<warning>(error);
         exit(1); // exit forcefully
     }
 }
 
 void Map::MapExtend(string name) {
     
+}
+
+Field Map::GetField(const int fieldX, const int fieldY) const {
+    return *(fields[fieldX][fieldY]);
+}
+
+Scene Map::GetScene(const Position &p) const {
+    return fields[p.fieldX][p.fieldY]->GetScene(p.sceneX, p.sceneY);
 }
