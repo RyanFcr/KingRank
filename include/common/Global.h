@@ -6,7 +6,7 @@
 
 static int fieldNum = initialMapSize * initialMapSize;
 
-const int maxTerminalLenghth = 200;
+const int maxTerminalLenghth = 100;
 
 /// Text Type
 const int plain = RESET_;

@@ -96,6 +96,7 @@ void TextGen::PrintDirection(const Map &m, const Position &p) {
             PrintCenter(upCo, maxTerminalLenghth);
             PrintCenter("test state", maxTerminalLenghth);
             PrintCenter("⇑", maxTerminalLenghth);
+            PrintCenter("⇑", maxTerminalLenghth);
         }
         // left
         if (leftFieldName != "") {

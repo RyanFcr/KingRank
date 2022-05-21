@@ -7,8 +7,10 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <vector>
 using std::string; using std::ifstream; 
 using std::ios; using std::bad_alloc; 
+using std::vector;
 using rapidjson::Document; using rapidjson::SizeType;
 using rapidjson::Value;
 
@@ -42,6 +44,7 @@ void Map::Init() {
             if (!fieldsCol.IsArray()) throw HAS_PARSE_ERROR;
             /// @attention 局部变量v被释放似乎不会有太大问题
             vector<Field*> v;
+            Field *f;
 
             for (SizeType j = 0; j < fieldsCol.Size(); j++) {
                 const Value &field = fieldsCol[j];
@@ -54,7 +57,7 @@ void Map::Init() {
                 if (!field.HasMember("field")) throw HAS_PARSE_ERROR;
                 if (!field["field"].IsArray()) throw HAS_PARSE_ERROR;
 
-                Field *f = new Field{name};
+                f = new Field{name};
                 const Value &fieldRow = field["field"];
                 for (SizeType m = 0; m < fieldRow.Size(); m++) {
                     const Value &fieldCol = fieldRow[m];
