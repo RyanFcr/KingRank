@@ -1,6 +1,6 @@
 #include "role/King.h"
 
-void King::ShowMap(const Map &m) {
+void King::ShowMap(const Map &m) const {
     TextGen::PrintDirection(m, position);
 }
 

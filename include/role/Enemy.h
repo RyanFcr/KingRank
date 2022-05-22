@@ -8,10 +8,10 @@ using std::vector;
 #include "skill/Skill.h"
 
 class Enemy : public Role {
-private:
-    int experienceVal; // 得到的经验值
-    int moneyVal; // 得到的钱
+   private:
+    int experienceVal;  // 得到的经验值
+    int moneyVal;       // 得到的钱
     vector<Skill*> skills;
 };
 
-#endif // ENEMY_H_
+#endif  // ENEMY_H_

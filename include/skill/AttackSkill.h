@@ -4,8 +4,8 @@
 #include "Skill.h"
 
 class AttackSkill : public Skill {
-private:
-    int damageValue; // 伤害
+   private:
+    int damageValue;  // 伤害
 };
 
-#endif // ATTACK_SKILL_H_
+#endif  // ATTACK_SKILL_H_

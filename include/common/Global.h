@@ -4,7 +4,7 @@
 #include "Config.h"
 #include "Macro.h"
 
-static int fieldNum = initialMapSize * initialMapSize;
+// static int fieldNum = initialMapSize * initialMapSize;
 
 const int maxTerminalLenghth = 50;
 
@@ -37,4 +37,9 @@ struct Position {
     void GoRight();
 };
 
+/// FieldPosition
+struct FieldPosition {
+    int fieldX;
+    int fieldY;
+};
 #endif

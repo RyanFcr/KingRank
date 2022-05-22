@@ -2,4 +2,5 @@
 build
 *.o
 *.exe
+*.out
 test_main.cpp
