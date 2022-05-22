@@ -28,4 +28,5 @@ int main() {
         } else
             TextGen::Print<warning>("Invalid Input!");
     }
+    MapGen::Free();
 }

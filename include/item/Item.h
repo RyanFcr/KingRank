@@ -10,6 +10,11 @@ enum ItemId {
 };
 
 class Item {
+   public:
+    Item() {}
+    Item(string n, string d, int w, ItemId id)
+        : name(n), description(d), weight(w), id(id) {}
+
    protected:
     string name;         // 物品名称
     string description;  // 物品介绍

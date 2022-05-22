@@ -13,8 +13,10 @@ const int fieldSize = 2;  // 土地的边长
 // 文件相关
 #ifdef _WIN32
 const string mapFile = "..\\..\\data\\map.json";
+const string itemFile = "..\\..\\data\\item.json";
 #else
 const string mapFile = "../../data/map.json";
+const string itemFile = "../../data/item.json";
 #endif
 
 #endif  // CONFIG_H_

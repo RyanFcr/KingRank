@@ -7,6 +7,8 @@
 class RoleGen {
    public:
     static King InitKingGen(Map& map);
+
+   private:
     static bool LoadKing(King& king);
     static bool CreateKing(King& king, Map& map);
 };
