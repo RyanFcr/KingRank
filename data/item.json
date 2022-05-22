@@ -1,0 +1,24 @@
+{
+    "Weapon": [
+        {
+            "name": "大棒子",
+            "description": "是伯斯王的武器"
+        }
+    ],
+    "Medicine": [
+        {
+            "name": "肉包",
+            "description": "每次使用恢复血量50%",
+            "HP": 50,
+            "MP": 0,
+            "weight": 3
+        },
+        {
+            "name": "魔法丸子",
+            "description": "每次使用恢复魔法值50%",
+            "HP": 0,
+            "MP": 50,
+            "weight": 3
+        }
+    ]
+}

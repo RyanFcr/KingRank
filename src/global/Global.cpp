@@ -23,22 +23,22 @@ void Position::Normalize() {
     }
 }
 
-void Position::GoUp() { 
-    sceneY++; 
-    Normalize(); 
-}
-
-void Position::GoDown() { 
-    sceneY--; 
-    Normalize(); 
-}
-
-void Position::GoLeft() { 
-    sceneX--; 
+void Position::GoUp() {
+    sceneY++;
     Normalize();
 }
 
-void Position::GoRight() { 
-    sceneX++; 
-    Normalize(); 
+void Position::GoDown() {
+    sceneY--;
+    Normalize();
+}
+
+void Position::GoLeft() {
+    sceneX--;
+    Normalize();
+}
+
+void Position::GoRight() {
+    sceneX++;
+    Normalize();
 }

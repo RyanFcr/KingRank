@@ -10,11 +10,11 @@ enum ItemId {
 };
 
 class Item {
-protected:
-    string name; // 物品名称
-    string description; //物品介绍 
-    int weight; // 物品重量
-    ItemId id; // 物品类型
+   protected:
+    string name;         // 物品名称
+    string description;  // 物品介绍
+    int weight;          // 物品重量
+    ItemId id;           // 物品类型
 };
 
-#endif // ITEM_H_
+#endif  // ITEM_H_

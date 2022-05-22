@@ -6,16 +6,10 @@
 #include "Weapon.h"
 
 class ItemGen {
-    public:
-        static Medicine InitMedicineGen();
-        static Weapon InitWeaponGen();
+   public:
+    static Medicine InitMedicineGen();
+    static Weapon InitWeaponGen();
+    static void test();
 };
-// #include "role/King.h"
-// #include "map/Map.h"
-
-// class RoleGen {
-// public:
-//     static King InitKingGen(Map &map);
-// };
 
 #endif

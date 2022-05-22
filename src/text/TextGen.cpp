@@ -5,24 +5,22 @@
 #include <Windows.h>
 #endif
 
-void TextGen::Init()
-{
+void TextGen::Init() {
 #ifdef _WIN32
     // http://m.blog.csdn.net/article/details?id=52789570
     //控制台显示乱码纠正
     // system("chcp 65001"); //设置字符集（使用SetConsoleCP(65001)设置无效，原因未知）
     SetConsoleOutputCP(65001);
-    CONSOLE_FONT_INFOEX info = {0}; // 以下设置字体来支持中文显示。
+    CONSOLE_FONT_INFOEX info = {0};  // 以下设置字体来支持中文显示。
     info.cbSize = sizeof(info);
-    info.dwFontSize.Y = 16; // leave X as zero
+    info.dwFontSize.Y = 16;  // leave X as zero
     info.FontWeight = FW_NORMAL;
     wcscpy(info.FaceName, L"Consolas");
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), NULL, &info);
 #endif
 }
 
-void TextGen::PrintTitle()
-{
+void TextGen::PrintTitle() {
     Print<title>("██╗  ██╗██╗███╗   ██╗ ██████╗ ██████╗  █████╗ ███╗   ██╗██╗  ██╗");
     Print<title>("██║ ██╔╝██║████╗  ██║██╔════╝ ██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝");
     Print<title>("█████╔╝ ██║██╔██╗ ██║██║  ███╗██████╔╝███████║██╔██╗ ██║█████╔╝");
@@ -31,11 +29,9 @@ void TextGen::PrintTitle()
     Print<title>("╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝");
 }
 
-void TextGen::PrintDirection(const Map &m, const Position &p)
-{
+void TextGen::PrintDirection(const Map& m, const Position& p) {
     /// @attention high coupling!
-    if (p.fieldX >= 0 && p.fieldX < m.GetRowNum() && p.fieldY >= 0 && p.fieldY < m.GetColNum(p.fieldX))
-    {
+    if (p.fieldX >= 0 && p.fieldX < m.GetRowNum() && p.fieldY >= 0 && p.fieldY < m.GetColNum(p.fieldX)) {
         // Field Name
         string centerFieldName{m.GetField(p.fieldX, p.fieldY).GetName()};
         string leftFieldName{centerFieldName}, rightFieldName{centerFieldName};
@@ -46,69 +42,51 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
         string centerCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY) + ")";
 
         // left
-        if (p.sceneX - 1 < 0 && p.fieldX == 0)
-        {
+        if (p.sceneX - 1 < 0 && p.fieldX == 0) {
             leftFieldName = "";
             leftCo = "";
-        }
-        else if (p.sceneX - 1 < 0)
-        {
+        } else if (p.sceneX - 1 < 0) {
             leftFieldName = m.GetField(p.fieldX - 1, p.fieldY).GetName();
             leftCo = "(" + std::to_string(fieldSize - 1) + "," + std::to_string(p.sceneY) + ")";
-        }
-        else
+        } else
             leftCo = "(" + std::to_string(p.sceneX - 1) + "," + std::to_string(p.sceneY) + ")";
 
         // right
-        if (p.sceneX + 1 >= fieldSize && p.fieldX == m.GetColNum(p.fieldX) - 1)
-        {
+        if (p.sceneX + 1 >= fieldSize && p.fieldX == m.GetColNum(p.fieldX) - 1) {
             rightFieldName = "";
             rightCo = "";
-        }
-        else if (p.sceneX + 1 >= fieldSize)
-        {
+        } else if (p.sceneX + 1 >= fieldSize) {
             rightFieldName = m.GetField(p.fieldX + 1, p.fieldY).GetName();
             rightCo = "(" + std::to_string(0) + "," + std::to_string(p.sceneY) + ")";
-        }
-        else
+        } else
             rightCo = "(" + std::to_string(p.sceneX + 1) + "," + std::to_string(p.sceneY) + ")";
 
         // down
-        if (p.sceneY - 1 < 0 && p.fieldY == 0)
-        {
+        if (p.sceneY - 1 < 0 && p.fieldY == 0) {
             downFieldName = "";
             downCo = "";
-        }
-        else if (p.sceneY - 1 < 0)
-        {
+        } else if (p.sceneY - 1 < 0) {
             downFieldName = m.GetField(p.fieldX, p.fieldY - 1).GetName();
             downCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(fieldSize - 1) + ")";
-        }
-        else
+        } else
             downCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY - 1) + ")";
 
         // up
-        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetRowNum() - 1)
-        {
+        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetRowNum() - 1) {
             upFieldName = "";
             upCo = "";
-        }
-        else if (p.sceneY + 1 >= fieldSize)
-        {
+        } else if (p.sceneY + 1 >= fieldSize) {
             upFieldName = m.GetField(p.fieldX, p.fieldY + 1).GetName();
             upCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(0) + ")";
-        }
-        else
+        } else
             upCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY + 1) + ")";
 
         // draw the map
 
         // if left can go
-        if (leftFieldName != "")
-        {
+        if (leftFieldName != "") {
             // up
-            if (upFieldName != "")
-            {
+            if (upFieldName != "") {
                 PrintCenter(upFieldName, maxTerminalLenghth);
                 PrintCenter(upCo, maxTerminalLenghth);
                 PrintCenter("up state", maxTerminalLenghth);
@@ -118,22 +96,18 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
             }
 
             // right
-            if (rightFieldName != "")
-            {
+            if (rightFieldName != "") {
                 PrintThree(leftFieldName, centerFieldName, rightFieldName, maxTerminalLenghth);
                 PrintThree(leftCo, centerCo, rightCo, maxTerminalLenghth, "-");
                 PrintThree("left state", "center", "right state", maxTerminalLenghth);
-            }
-            else
-            {
+            } else {
                 PrintTwo(leftFieldName, centerFieldName, maxTerminalLenghth);
                 PrintTwo(leftCo, centerCo, maxTerminalLenghth, "-");
                 PrintTwo("left state", "center", maxTerminalLenghth);
             }
 
             // down
-            if (downFieldName != "")
-            {
+            if (downFieldName != "") {
                 PrintCenter("|", maxTerminalLenghth);
                 PrintCenter("|", maxTerminalLenghth);
                 PrintCenter("|", maxTerminalLenghth);
@@ -141,12 +115,9 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
                 PrintCenter(downCo, maxTerminalLenghth);
                 PrintCenter("down state", maxTerminalLenghth);
             }
-        }
-        else
-        {
+        } else {
             // up
-            if (upFieldName != "")
-            {
+            if (upFieldName != "") {
                 Print(upFieldName);
                 Print(upCo);
                 Print("up state");
@@ -155,21 +126,17 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
                 Print("|");
             }
 
-            if (rightFieldName != "")
-            {
+            if (rightFieldName != "") {
                 PrintTwo(centerFieldName, rightFieldName, maxTerminalLenghth);
                 PrintTwo(centerCo, rightCo, maxTerminalLenghth, "-");
                 PrintTwo("center", "right state", maxTerminalLenghth);
-            }
-            else
-            {
+            } else {
                 Print(centerFieldName);
                 Print(centerCo);
                 Print("center");
             }
             // down
-            if (downFieldName != "")
-            {
+            if (downFieldName != "") {
                 Print("|");
                 Print("|");
                 Print("|");
@@ -178,21 +145,17 @@ void TextGen::PrintDirection(const Map &m, const Position &p)
                 Print("down state");
             }
         }
-    }
-    else
-    {
+    } else {
         Print<warning>("You has entered an unknown field!");
     }
 }
 
-string TextGen::Input()
-{
+string TextGen::Input() {
     string input;
     Print("> ", "");
     getline(cin, input);
 
-    if (input == "quit")
-    {
+    if (input == "quit") {
         Print("Bye!");
         exit(0);
     }
