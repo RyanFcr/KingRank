@@ -17,11 +17,11 @@ class Role {
    protected:
     string name;
     int level;
-    int attack;         //进攻值
-    int maxHP;          //最大生命
-    int HP;             //现有生命值
-    int maxMP;          //最大魔法值
-    int MP;             //现有魔法值
+    int attack;         // 进攻值
+    int maxHP;          // 最大生命
+    int HP;             // 现有生命值
+    int maxMP;          // 最大魔法值
+    int MP;             // 现有魔法值
     Position position;  // 当前位置
 };
 
