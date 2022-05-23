@@ -1,4 +1,9 @@
 #include "common/Global.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
+using rapidjson::Writer;
+using rapidjson::StringBuffer;
 
 /**
  * @brief Normalize the position

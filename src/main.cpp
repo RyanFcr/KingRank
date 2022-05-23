@@ -11,22 +11,22 @@ int main() {
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();
-    King player = RoleGen::InitKingGen(MapGen::map);
+    RoleGen::InitKing(MapGen::map);
     while (1) {
         input = TextGen::Input();
         if (input == "quit") {
             TextGen::Print("Bye!");
             break;
         } else if (input == "map") {
-            player.ShowMap(MapGen::map);
+            RoleGen::king.ShowMap(MapGen::map);
         } else if (input == "up") {
-            player.GoUp(MapGen::map);
+            RoleGen::king.GoUp(MapGen::map);
         } else if (input == "down") {
-            player.GoDown(MapGen::map);
+            RoleGen::king.GoDown(MapGen::map);
         } else if (input == "right") {
-            player.GoRight(MapGen::map);
+            RoleGen::king.GoRight(MapGen::map);
         } else if (input == "left") {
-            player.GoLeft(MapGen::map);
+            RoleGen::king.GoLeft(MapGen::map);
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

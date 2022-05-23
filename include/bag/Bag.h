@@ -9,8 +9,8 @@ using std::map;
 
 class Bag {
    public:
-    Bag(int _level = 1, int _weightLimit = 10, int _curWeight = 0)
-        : level(_level), weightLimit(_weightLimit), curWeight(_curWeight) {}
+    Bag(int level = 1, int weightLimit = 10, int curWeight = 0)
+        : level(level), weightLimit(weightLimit), curWeight(curWeight) {}
 
     bool Insert(const string& name, int num = 1);
     bool Discard(const string& name, int num = 1);

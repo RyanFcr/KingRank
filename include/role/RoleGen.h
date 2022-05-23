@@ -6,11 +6,15 @@
 
 class RoleGen {
    public:
-    static King InitKingGen(Map& map);
+    static void InitKing(Map& map);
 
    private:
-    static bool LoadKing(King& king);
-    static bool CreateKing(King& king, Map& map);
+    static void SerializeKing();
+    static bool LoadKing();
+    static bool CreateKing(Map& map);
+
+   public:
+    static King king;
 };
 
 #endif

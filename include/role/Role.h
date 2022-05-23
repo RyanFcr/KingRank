@@ -7,12 +7,61 @@ using std::string;
 using std::vector;
 
 #include "common/Global.h"
+#include "rapidjson/writer.h"
+using rapidjson::SizeType;
 
 class Role {
    public:
     Role() {}
-    Role(string name, Position position, int level = 1, int attack = 1, int maxHP = 100, int HP = 100, int maxMP = 100, int MP = 100)
+    Role(string name,
+         Position position,
+         int level = 1,
+         int attack = 1,
+         int maxHP = 100,
+         int HP = 100,
+         int maxMP = 100,
+         int MP = 100)
         : name(name), level(level), attack(attack), maxHP(maxHP), HP(HP), maxMP(maxMP), MP(MP), position(position) {}
+
+    const string& GetName() const { return name; }
+    int GetLevel() const { return level; }
+    int GetAttack() const { return attack; }
+    int GetMaxHP() const { return maxHP; }
+    int GetHP() const { return HP; }
+    int GetMaxMP() const { return maxMP; }
+    int GetMP() const { return MP; }
+    Position GetPosition() const { return position; }
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.String("name");
+        const string name = GetName();
+        writer.String(name.c_str(), static_cast<SizeType>(name.length()));
+
+        writer.String("level");
+        writer.Int(GetLevel());
+
+        writer.String("attack");
+        writer.Int(GetAttack());
+
+        writer.String("maxHP");
+        writer.Int(GetMaxHP());
+
+        writer.String("HP");
+        writer.Int(GetHP());
+
+        writer.String("maxMP");
+        writer.Int(GetHP());
+
+        writer.String("maxMP");
+        writer.Int(GetMaxMP());
+
+        writer.String("MP");
+        writer.Int(GetMP());
+
+        writer.String("position");
+        position.Serialize(writer);
+    }
 
    protected:
     string name;        // 名字
