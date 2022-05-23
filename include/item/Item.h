@@ -15,6 +15,11 @@ class Item {
     Item(string n, string d, int w, ItemId id)
         : name(n), description(d), weight(w), id(id) {}
 
+    const string& GetName() const { return name; }
+    const string& GetDescription() const { return description; }
+    int GetWeight() const { return weight; }
+    ItemId GetItemId() const { return id; }
+
    protected:
     string name;         // 物品名称
     string description;  // 物品介绍

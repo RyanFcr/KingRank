@@ -15,8 +15,8 @@ class Role {
         : name(name), level(level), attack(attack), maxHP(maxHP), HP(HP), maxMP(maxMP), MP(MP), position(position) {}
 
    protected:
-    string name;
-    int level;
+    string name;        // 名字
+    int level;          // 等级
     int attack;         // 进攻值
     int maxHP;          // 最大生命
     int HP;             // 现有生命值

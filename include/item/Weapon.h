@@ -10,6 +10,15 @@ class Weapon : public Item {
     Weapon(string n, string d, int w, int attack, int abrasionLoss)
         : Item(n, d, w, WEAPON_ID), attack(attack), abrasion(maxAbrasion), abrasionLoss(abrasionLoss) {}
 
+    int GetAttack() const { return attack; }
+    int GetAbrasion() const { return abrasion; }
+    int GetAbrasionLoss() const { return abrasionLoss; }
+
+    void SetAttack(int attack_) { attack = attack_; }
+    void SetAbrasion(int abrasion_) { abrasion = abrasion_; }
+    void SetAbrasionLoss(int abrasionLoss_) { abrasionLoss = abrasionLoss_; }
+
+    bool Abrase();
    private:
     int attack;        // 攻击力
     int abrasion;      // 当前磨损量

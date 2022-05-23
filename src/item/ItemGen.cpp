@@ -151,3 +151,45 @@ void ItemGen::InitWeapon(const Value& data) {
         weapons.insert(make_pair(name, Weapon{name, description, weight, attack, abrasionLoss}));
     }
 }
+
+/**
+ * @brief Check whether certain medicine exists
+ * @param name name of the medicine
+ * @return true: exist
+ * @return false: non-exist
+ */
+bool ItemGen::IsMedicineExist(const string &name) {
+    return medicines.count(name) != 0;
+}
+
+/**
+ * @brief Check whether certain weapon exists
+ * @param name name of the weapon
+ * @return true: exist
+ * @return false: non-exist
+ */
+bool ItemGen::IsWeaponExist(const string &name) {
+    return weapons.count(name) != 0;
+}
+
+/**
+ * @brief Get Weapon
+ * @param name 
+ * @return Weapon 
+ * @throw UNKNOWN_ITEM
+ */
+Weapon ItemGen::GetWeapon(const string &name) {
+    if (IsWeaponExist(name)) throw UNKNOWN_ITEM;
+    return weapons[name];
+}
+
+/**
+ * @brief Get Medicine
+ * @param name 
+ * @return Medicine 
+ * @throw UNKNOWN_ITEM
+ */
+Medicine ItemGen::GetMedicine(const string &name) {
+    if (IsMedicineExist(name)) throw UNKNOWN_ITEM;
+    return medicines[name];
+}

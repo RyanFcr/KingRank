@@ -17,9 +17,11 @@ const int maxAbrasion = 100; // 武器的最大磨损量
 #ifdef _WIN32
 const string mapFile = "..\\..\\data\\map.json";
 const string itemFile = "..\\..\\data\\item.json";
+const string roleFile = "..\\..\\data\\role.json";
 #else
 const string mapFile = "../../data/map.json";
 const string itemFile = "../../data/item.json";
+const string roleFile = "../../data/role.json";
 #endif
 
 #endif  // CONFIG_H_

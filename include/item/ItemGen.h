@@ -15,12 +15,16 @@ using rapidjson::Value;
 class ItemGen {
    public:
     static void Init();
+    static bool IsMedicineExist(const string &name);
+    static bool IsWeaponExist(const string &name);
+    static Weapon GetWeapon(const string &name);
+    static Medicine GetMedicine(const string &name);
 
    private:
     static void InitMedicine(const Value& data);
     static void InitWeapon(const Value& data);
 
-   public:
+   private:
     static map<string, Medicine> medicines;
     static map<string, Weapon> weapons;
 };
