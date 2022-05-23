@@ -24,17 +24,16 @@ Map MapGen::map;
 /**
  * @brief Init function of Map
  * `Init' must be called after the construction of Map
- * @throw OPEN_FILE_FAIL, HAS_PARSE_ERROR, bad_alloc
+ * @throw OPEN_FILE_FAIL
+ * @throw HAS_PARSE_ERROR
+ * @throw bad_alloc
  */
 void MapGen::Init() {
-    string error;
-
-    ifstream ifs;
-    ifs.open(mapFile, ios::in);
+    ifstream ifs(mapFile, ios::in);
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
     string mapData;
-    ifs >> mapData;
+    std::getline(ifs, mapData);
     /* paser */
     Document d;
     // Field

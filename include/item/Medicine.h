@@ -5,6 +5,10 @@
 
 class Medicine : public Item {
    public:
+    Medicine() {}
+    Medicine(string n, string d, int w, int HP, int MP)
+        : Item(n, d, w, MEDICINE_ID), HPValue(HP), MPValue(MP) {}
+
     int GetHPValue() const { return HPValue; }
     int GetMPValue() const { return MPValue; }
     void SetHPValue(int HP) { HPValue = HP; }

@@ -17,11 +17,7 @@ const int buff = GREEN_;
 const int title = YELLOW_;
 
 /// Error Type
-enum KRerror {
-    OPEN_FILE_FAIL,
-    HAS_PARSE_ERROR
-
-};
+enum KRerror { OPEN_FILE_FAIL, HAS_PARSE_ERROR, UNKNOWN_ITEM, EXIST_KING };
 
 /// Position Type
 struct Position {
@@ -35,11 +31,39 @@ struct Position {
     void GoDown();
     void GoLeft();
     void GoRight();
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+
+        writer.String("fieldX");
+        writer.Int(fieldX);
+        writer.String("fieldY");
+        writer.Int(fieldY);
+        writer.String("sceneX");
+        writer.Int(sceneX);
+        writer.String("sceneY");
+        writer.Int(sceneY);
+
+        writer.EndObject();
+    }
 };
 
 /// FieldPosition
 struct FieldPosition {
     int fieldX;
     int fieldY;
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+
+        writer.String("fieldX");
+        writer.Int(fieldX);
+        writer.String("fieldY");
+        writer.Int(fieldY);
+
+        writer.EndObject();
+    }
 };
 #endif
