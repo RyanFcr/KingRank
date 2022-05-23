@@ -4,6 +4,9 @@
 #include <string>
 using std::string;
 
+#include "rapidjson/writer.h"
+using rapidjson::SizeType;
+
 enum ItemId {
     WEAPON_ID,
     MEDICINE_ID
@@ -19,6 +22,22 @@ class Item {
     const string& GetDescription() const { return description; }
     int GetWeight() const { return weight; }
     ItemId GetItemId() const { return id; }
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+
+        writer.String("name");
+        writer.String(name.c_str(), static_cast<SizeType>(name.length()));
+        writer.String("description");
+        writer.String(description.c_str(), static_cast<SizeType>(description.length()));
+        writer.String("weight");
+        writer.Int(weight);
+        writer.String("id");
+        writer.Int(int(id));
+
+        writer.EndObject();
+    }
 
    protected:
     string name;         // 物品名称

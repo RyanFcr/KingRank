@@ -8,15 +8,16 @@
 #include "skill/Skill.h"
 #include "text/TextGen.h"
 
-#include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-using rapidjson::Writer;
+#include "rapidjson/writer.h"
 using rapidjson::StringBuffer;
+using rapidjson::Writer;
 
 class King : public Role {
    public:
     King() {}
-    King(string name,
+    King(string kingName,
+         string countryName,
          Position position,
          FieldPosition territoryPosition,
          int attack = 1,
@@ -27,9 +28,10 @@ class King : public Role {
          int MP = 100,
          int experience = 0,
          int money = 0)
-        : Role(name, position, attack, level, maxHP, HP, maxMP, MP),
+        : Role(kingName, position, attack, level, maxHP, HP, maxMP, MP),
           experience(experience),
           territoryPosition(territoryPosition),
+          countryName(countryName),
           money(money) {}
 
     void ShowMap(const Map& m) const;
@@ -50,8 +52,16 @@ class King : public Role {
         writer.String("territoryPosition");
         territoryPosition.Serialize(writer);
 
+        writer.String("countryName");
+        writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
+
         writer.String("money");
         writer.Int(money);
+
+        writer.String("bag");
+        bag.Serialize(writer);
+
+        /// @todo skills
 
         writer.EndObject();
     }
@@ -59,8 +69,9 @@ class King : public Role {
    private:
     int experience;                   // 当前的经验值
     FieldPosition territoryPosition;  // 领地位置
+    string countryName;               // 领地名称
     int money;                        // 拥有的金币量
-    // Bag bag;
+    Bag bag;
     // vector<Skill*> skills;
 };
 

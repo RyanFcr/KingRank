@@ -43,7 +43,7 @@ void RoleGen::InitKing(Map &map) {
 }
 
 bool RoleGen::LoadKing() {
-
+    return false;
 }
 
 /**
@@ -53,17 +53,17 @@ bool RoleGen::LoadKing() {
  * @throw EXIST_KING
  */
 bool RoleGen::CreateKing(Map &map) {
-    string name;
+    string kingName, countryName;
 
     /// set king name
     TextGen::Print<request>("What's your name, young King?");
-    name = TextGen::Input();
+    kingName = TextGen::Input();
 
     /// set kingdom name
-    TextGen::Print("Welcome, " + name + "!");
+    TextGen::Print("Welcome, " + kingName + "!");
     TextGen::Print("You have your own territory, your Kingdom!");
     TextGen::Print<request>("What's your country's name?");
-    name = TextGen::Input();
+    countryName = TextGen::Input();
 
     /// allocate a new land
     // map.MapExtend(name);
@@ -71,12 +71,9 @@ bool RoleGen::CreateKing(Map &map) {
     /// randomly choose a birthplace and territory
     Position birthPlace{rand() % initialMapSize, rand() % initialMapSize, rand() % fieldSize, rand() % fieldSize};
     FieldPosition territoryPosition{birthPlace.fieldX, birthPlace.fieldY};
-    
-    /// initialize bag
-    Bag bag{};
 
     /// construct king
-    king = King{name, birthPlace, territoryPosition};
+    king = King{kingName, countryName, birthPlace, territoryPosition};
 
     // Serialize `king' into json file
     SerializeKing();

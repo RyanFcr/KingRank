@@ -51,9 +51,6 @@ class Role {
         writer.Int(GetHP());
 
         writer.String("maxMP");
-        writer.Int(GetHP());
-
-        writer.String("maxMP");
         writer.Int(GetMaxMP());
 
         writer.String("MP");
