@@ -10,10 +10,15 @@
 using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
+using std::getline;
 using std::ifstream;
 using std::ios;
 using std::make_pair;
 using std::string;
+
+// instantiation
+map<string, Medicine> ItemGen::medicines;
+map<string, Weapon> ItemGen::weapons;
 
 /**
  * @brief Deserialize into `Item' objects from json file
@@ -26,7 +31,7 @@ void ItemGen::Init() {
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
     string itemData;
-    ifs >> itemData;
+    getline(ifs, itemData);
 
     Document d;
     if (d.Parse(itemData.c_str()).HasParseError())
@@ -84,17 +89,17 @@ void ItemGen::InitMedicine(const Value& data) {
             throw HAS_PARSE_ERROR;
         weight = medicine["weight"].GetInt();
 
-        if (!medicine.HasMember("HPValue"))
+        if (!medicine.HasMember("HP"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["HPValue"].IsInt())
+        if (!medicine["HP"].IsInt())
             throw HAS_PARSE_ERROR;
-        HPValue = medicine["HPValue"].GetInt();
+        HPValue = medicine["HP"].GetInt();
 
-        if (!medicine.HasMember("MPValue"))
+        if (!medicine.HasMember("MP"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["MPValue"].IsInt())
+        if (!medicine["MP"].IsInt())
             throw HAS_PARSE_ERROR;
-        MPValue = medicine["MPValue"].GetInt();
+        MPValue = medicine["MP"].GetInt();
 
         medicines.insert(make_pair(name, Medicine{name, description, weight, HPValue, MPValue}));
     }
@@ -109,39 +114,39 @@ void ItemGen::InitWeapon(const Value& data) {
     int weight, attack, abrasionLoss;
 
     for (SizeType i = 0; i < data.Size(); i++) {
-        const Value& medicine = data[i];
-        if (!medicine.IsObject())
+        const Value& weapon = data[i];
+        if (!weapon.IsObject())
             throw HAS_PARSE_ERROR;
 
-        if (!medicine.HasMember("name"))
+        if (!weapon.HasMember("name"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["name"].IsString())
+        if (!weapon["name"].IsString())
             throw HAS_PARSE_ERROR;
-        name = medicine["name"].GetString();
+        name = weapon["name"].GetString();
 
-        if (!medicine.HasMember("description"))
+        if (!weapon.HasMember("description"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["description"].IsString())
+        if (!weapon["description"].IsString())
             throw HAS_PARSE_ERROR;
-        description = medicine["description"].GetString();
+        description = weapon["description"].GetString();
 
-        if (!medicine.HasMember("weight"))
+        if (!weapon.HasMember("weight"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["weight"].IsInt())
+        if (!weapon["weight"].IsInt())
             throw HAS_PARSE_ERROR;
-        weight = medicine["weight"].GetInt();
+        weight = weapon["weight"].GetInt();
 
-        if (!medicine.HasMember("attack"))
+        if (!weapon.HasMember("attack"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["attack"].IsInt())
+        if (!weapon["attack"].IsInt())
             throw HAS_PARSE_ERROR;
-        attack = medicine["attack"].GetInt();
+        attack = weapon["attack"].GetInt();
 
-        if (!medicine.HasMember("abrasionLoss"))
+        if (!weapon.HasMember("abrasionLoss"))
             throw HAS_PARSE_ERROR;
-        if (!medicine["abrasionLoss"].IsInt())
+        if (!weapon["abrasionLoss"].IsInt())
             throw HAS_PARSE_ERROR;
-        abrasionLoss = medicine["abrasionLoss"].GetInt();
+        abrasionLoss = weapon["abrasionLoss"].GetInt();
 
         weapons.insert(make_pair(name, Weapon{name, description, weight, attack, abrasionLoss}));
     }

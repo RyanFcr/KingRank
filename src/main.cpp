@@ -2,10 +2,12 @@
 #include "role/RoleGen.h"
 #include "text/TextGen.h"
 #include "map/MapGen.h"
+#include "item/ItemGen.h"
 
 int main() {
     srand((unsigned)time(NULL));
     string input;
+    ItemGen::Init();
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();

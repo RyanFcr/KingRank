@@ -33,7 +33,7 @@ void MapGen::Init() {
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
     string mapData;
-    ifs >> mapData;
+    std::getline(ifs, mapData);
     /* paser */
     Document d;
     // Field
