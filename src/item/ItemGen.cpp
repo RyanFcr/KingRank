@@ -40,19 +40,19 @@ void ItemGen::Init() {
         throw HAS_PARSE_ERROR;
 
     // Weapons
-    if (!d.HasMember("Weapon"))
+    if (!d.HasMember("weapons"))
         throw HAS_PARSE_ERROR;
-    if (!d["Weapon"].IsArray())
+    if (!d["weapons"].IsArray())
         throw HAS_PARSE_ERROR;
-    const Value& weaponData = d["Weapon"];
+    const Value& weaponData = d["weapons"];
     InitWeapon(weaponData);
 
     // Medicines
-    if (!d.HasMember("Medicine"))
+    if (!d.HasMember("medicines"))
         throw HAS_PARSE_ERROR;
-    if (!d["Medicine"].IsArray())
+    if (!d["medicines"].IsArray())
         throw HAS_PARSE_ERROR;
-    const Value& medicineData = d["Medicine"];
+    const Value& medicineData = d["medicines"];
     InitMedicine(medicineData);
 
     ifs.close();
@@ -190,6 +190,6 @@ Weapon ItemGen::GetWeapon(const string &name) {
  * @throw UNKNOWN_ITEM
  */
 Medicine ItemGen::GetMedicine(const string &name) {
-    if (IsMedicineExist(name)) throw UNKNOWN_ITEM;
+    if (!IsMedicineExist(name)) throw UNKNOWN_ITEM;
     return medicines[name];
 }

@@ -4,6 +4,7 @@
 #include <map>
 using std::map;
 
+#include "common/Config.h"
 #include "item/Medicine.h"
 #include "item/Weapon.h"
 #include "rapidjson/writer.h"
@@ -11,7 +12,7 @@ using rapidjson::SizeType;
 
 class Bag {
    public:
-    Bag(int level = 1, int weightLimit = 10, int curWeight = 0)
+    Bag(int level = initialBagLevel, int weightLimit = initialWeightLimit, int curWeight = 0)
         : level(level), weightLimit(weightLimit), curWeight(curWeight) {}
 
     int GetLevel() const { return level; }
