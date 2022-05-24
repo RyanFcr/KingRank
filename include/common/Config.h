@@ -18,10 +18,12 @@ const int maxAbrasion = 100; // 武器的最大磨损量
 const string mapFile = "..\\..\\data\\map.json";
 const string itemFile = "..\\..\\data\\item.json";
 const string kingFile = "..\\..\\data\\king.json";
+const string skillFile = "..\\..\\data\\skill.json";
 #else
 const string mapFile = "../../data/map.json";
 const string itemFile = "../../data/item.json";
 const string kingFile = "../../data/king.json";
+const string skillFile = "../../data/skill.json";
 #endif
 
 #endif  // CONFIG_H_
