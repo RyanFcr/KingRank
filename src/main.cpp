@@ -3,11 +3,13 @@
 #include "text/TextGen.h"
 #include "map/MapGen.h"
 #include "item/ItemGen.h"
+#include "skill/SkillGen.h"
 
 int main() {
     srand((unsigned)time(NULL));
     string input;
     ItemGen::Init();
+    SkillGen::Init();
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();

@@ -5,6 +5,7 @@
 
 class SupportSkill : public Skill {
    public:
+    SupportSkill() {}
     SupportSkill(const string& n, const string& d, int MPCost, int HPValue)
         : Skill(n, d, MPCost, ATTACK_SKILL_ID), HPValue(HPValue) {}
 

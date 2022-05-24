@@ -190,6 +190,6 @@ Weapon ItemGen::GetWeapon(const string &name) {
  * @throw UNKNOWN_ITEM
  */
 Medicine ItemGen::GetMedicine(const string &name) {
-    if (IsMedicineExist(name)) throw UNKNOWN_ITEM;
+    if (!IsMedicineExist(name)) throw UNKNOWN_ITEM;
     return medicines[name];
 }

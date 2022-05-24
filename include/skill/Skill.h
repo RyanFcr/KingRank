@@ -15,6 +15,7 @@ class Skill {
     const string& GetName() const { return name; }
     const string& GetDescription() const { return description; }
     const SkillId& GetId() const { return id; }
+    int GetMPCost() const { return MPCost; }
 
     void SetName(const string& n) { name = n; }
     void SetDescription(const string& d) { description = d; }

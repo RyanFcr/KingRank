@@ -5,6 +5,8 @@
 #include <utility>
 using std::make_pair;
 
+#include <iostream>
+using std::cout;
 /**
  * @brief insert medicines into the bag
  * @param name Name of medicines
