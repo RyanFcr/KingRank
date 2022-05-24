@@ -8,13 +8,13 @@
 #include "skill/Skill.h"
 #include "text/TextGen.h"
 
+#include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-#include "rapidjson/document.h"
-using rapidjson::StringBuffer;
-using rapidjson::Writer;
-using rapidjson::Value;
 using rapidjson::Document;
+using rapidjson::StringBuffer;
+using rapidjson::Value;
+using rapidjson::Writer;
 
 class King : public Role {
    public:
@@ -42,6 +42,24 @@ class King : public Role {
     const string& GetCountryName() const { return countryName; }
     int GetMoney() const { return money; }
     const Bag& GetBag() const { return bag; }
+
+    void SetExperience(int experience_) { experience = experience_; }
+    void SetTerritoryPosition(const FieldPosition& territoryPosition_) { territoryPosition = territoryPosition_; }
+    void SetCountryName(const string& countryName_) { countryName = countryName_; }
+    void SetMoney(int money_) { money = money_; }
+    void SetBagLevel(int level_) { bag.SetLevel(level_); }
+    void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
+    void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
+
+    bool InsertMedicine(const string& name, int num = 1) {
+        return bag.InsertMedicine(name, num);
+    }
+    bool InsertWeapon(const Weapon& weapon) {
+        return bag.InsertWeapon(weapon);
+    }
+    bool DiscardItem(const string& name, int num = 1) {
+        return bag.Discard(name, num);
+    }
 
     void ShowMap(const Map& m) const;
     void GoUp(const Map& m);

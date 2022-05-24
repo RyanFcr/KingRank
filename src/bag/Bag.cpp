@@ -6,14 +6,13 @@
 using std::make_pair;
 
 /**
- * @brief insert items into the bag
- * depend on the name of items to distinguish items
- * @param name Name of items
- * @param num Number of items(only for medicines)
- * @return false: insertion fail(too full bag, same weapon)
+ * @brief insert medicines into the bag
+ * @param name Name of medicines
+ * @param num Number of medicines
+ * @return false: insertion fail(too full bag)
  * @throw UNKNOWN_ITEM
  */
-bool Bag::Insert(const string& name, int num) {
+bool Bag::InsertMedicine(const string& name, int num) {
     int weight;
 
     // medicine exist
@@ -28,6 +27,20 @@ bool Bag::Insert(const string& name, int num) {
         return false;
     }
 
+    // unknown_item
+    throw UNKNOWN_ITEM;
+}
+
+/**
+ * @brief insert weapon into the bag
+ * @param name Name of weapon
+ * @return false: insertion fail(too full bag)
+ * @throw UNKNOWN_ITEM
+ */
+bool Bag::InsertWeapon(const Weapon& weapon) {
+    int weight;
+    string name = weapon.GetName();
+
     // weapon exist
     if (ItemGen::IsWeaponExist(name)) {
         if (weapons.count(name))
@@ -35,7 +48,7 @@ bool Bag::Insert(const string& name, int num) {
 
         weight = ItemGen::GetWeapon(name).GetWeight();
         if (curWeight + weight <= weightLimit) {
-            weapons.insert(make_pair(name, ItemGen::GetWeapon(name)));
+            weapons.insert(make_pair(name, weapon));
             curWeight += weight;
             return true;
         }

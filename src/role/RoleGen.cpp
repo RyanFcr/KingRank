@@ -50,9 +50,10 @@ void RoleGen::InitKing(Map& map) {
     while (1) {
         input = TextGen::Input();
         if (input == "yes") {
-            if (LoadKing())
+            if (LoadKing()) {
+                TextGen::Print("Welcome! King." + king.GetName() + "!");
                 break;
-            else {
+            } else {
                 TextGen::Print<warning>("Sorry, your territory doesn't exist!");
                 TextGen::Print<request>("Do you really have your own territory, young King?");
             }
@@ -72,9 +73,10 @@ void RoleGen::InitKing(Map& map) {
 /**
  * @brief check whether the name is in the json file
  * @param name
+ * @param index: if exist, return the index of kingDocument["kings"]
  * @return true: redundancy exists
  */
-bool RoleGen::CheckRedundancy(string kingName) {
+bool RoleGen::CheckRedundancy(const string &kingName, int& index) {
     if (!kingDocument.IsObject()) {
         throw HAS_PARSE_ERROR;
     }
@@ -88,15 +90,65 @@ bool RoleGen::CheckRedundancy(string kingName) {
             if (!documentNameValue.IsString())
                 throw HAS_PARSE_ERROR;
             string documentName = documentNameValue.GetString();
-            if (documentName == kingName)
+            if (documentName == kingName) {
+                index = i;
                 return true;
+            }
         }
     }
     return false;
 }
 
+/**
+ * @brief load king from json file to `king'
+ * @return false: load fail(non-exist kng name)
+ */
 bool RoleGen::LoadKing() {
-    return false;
+    string kingName;
+    int index = -1;
+
+    /// set king name
+    TextGen::Print<request>("What's your name, young King?");
+    kingName = TextGen::Input();
+
+    if (!CheckRedundancy(kingName, index)) {
+        return false;
+    }
+    
+    const Value& kingValue = kingDocument["kings"][index].GetObject();
+    king.SetName(kingValue["name"].GetString());
+    king.SetLevel(kingValue["level"].GetInt());
+    king.SetAttack(kingValue["attack"].GetInt());
+    king.SetMaxHP(kingValue["maxHP"].GetInt());
+    king.SetHP(kingValue["HP"].GetInt());
+    king.SetMaxMP(kingValue["maxMP"].GetInt());
+    king.SetMP(kingValue["MP"].GetInt());
+    king.SetPosition(Position{
+        kingValue["position"]["fieldX"].GetInt(),
+        kingValue["position"]["fieldY"].GetInt(),
+        kingValue["position"]["sceneX"].GetInt(),
+        kingValue["position"]["sceneY"].GetInt(),
+    });
+
+    king.SetExperience(kingValue["experience"].GetInt());
+    king.SetTerritoryPosition(FieldPosition{kingValue["territoryPosition"]["fieldX"].GetInt(),
+                                            kingValue["territoryPosition"]["fieldY"].GetInt()});
+    king.SetCountryName(kingValue["countryName"].GetString());
+    king.SetMoney(kingValue["money"].GetInt());
+    king.SetBagLevel(kingValue["bag"]["level"].GetInt());
+    king.SetBagWeightLimit(kingValue["bag"]["weightLimit"].GetInt());
+    king.SetBagCurWeight(kingValue["bag"]["curWeight"].GetInt());
+    for (auto& m : kingValue["bag"]["medicines"].GetObject()) {
+        king.InsertMedicine(m.name.GetString(), m.value.GetInt());
+    }
+
+    for (auto& m : kingValue["bag"]["weapons"].GetObject()) {
+        Weapon weapon{m.name.GetString(),         m.value["description"].GetString(), m.value["weight"].GetInt(),
+                      m.value["attack"].GetInt(), m.value["abrasionLoss"].GetInt(),   m.value["abrasion"].GetInt()};
+        king.InsertWeapon(weapon);
+    }
+
+    return true;
 }
 
 /**
@@ -107,12 +159,13 @@ bool RoleGen::LoadKing() {
  */
 bool RoleGen::CreateKing(Map& map) {
     string kingName, countryName;
+    int index = -1;
 
     /// set king name
     TextGen::Print<request>("What's your name, young King?");
     kingName = TextGen::Input();
 
-    if (CheckRedundancy(kingName))
+    if (CheckRedundancy(kingName, index))
         return false;
 
     /// set kingdom name
@@ -139,6 +192,8 @@ bool RoleGen::CreateKing(Map& map) {
  * @throw OPEN_FILE_FAIL
  */
 void RoleGen::SaveKing() {
+    int index = -1;
+
     ofstream ofs(kingFile, ios::out);
     if (ofs.fail())
         throw OPEN_FILE_FAIL;
@@ -147,9 +202,9 @@ void RoleGen::SaveKing() {
     Writer<StringBuffer> writer(sb);
     Value& kings = kingDocument["kings"];
 
-    if (CheckRedundancy(king.GetName())) {
+    if (CheckRedundancy(king.GetName(), index)) {
         // Modify
-
+        ModifyKing();
     } else {
         // Append
         AppendKing();
@@ -171,6 +226,12 @@ void RoleGen::SaveKing() {
     ofs.close();
 }
 
+/**
+ * @brief Serialize `kingData' to the writer, only called by `SaveKing'
+ * @tparam Writer
+ * @param kingData
+ * @param writer
+ */
 template <typename Writer>
 static void SerializeKing(const Value& kingData, Writer& writer) {
     writer.StartObject();
@@ -337,6 +398,9 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
     writer.EndObject();
 }
 
+/**
+ * @brief append a new king to the DOM object
+ */
 void RoleGen::AppendKing() {
     Value& kings = kingDocument["kings"];
     Document::AllocatorType& allocator = kingDocument.GetAllocator();
@@ -389,4 +453,11 @@ void RoleGen::AppendKing() {
 
     kingValue.AddMember("bag", bagValue, allocator);
     kings.PushBack(kingValue, allocator);
+}
+
+/**
+ * @brief modify certain key of the DOM object
+ */
+void RoleGen::ModifyKing() {
+    /// @todo
 }

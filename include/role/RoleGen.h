@@ -15,8 +15,9 @@ class RoleGen {
    private:
     static bool LoadKing();
     static bool CreateKing(Map& map);
-    static bool CheckRedundancy(string name);
+    static bool CheckRedundancy(const string& name, int& index);
     static void AppendKing();
+    static void ModifyKing();
 
    public:
     static King king;

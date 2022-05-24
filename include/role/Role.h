@@ -34,6 +34,15 @@ class Role {
     int GetMP() const { return MP; }
     Position GetPosition() const { return position; }
 
+    void SetName(const string& name_) { name = name_; }
+    void SetLevel(int level_) { level = level_; }
+    void SetAttack(int attack_) { attack = attack_; }
+    void SetMaxHP(int maxHP_) { maxHP = maxHP_; }
+    void SetHP(int HP_) { HP = HP_; }
+    void SetMaxMP(int maxMP_) { maxMP = maxMP_; }
+    void SetMP(int MP_) { MP = MP_; }
+    void SetPosition(const Position& position_) { position = position_; }
+
     template <typename Writer>
     void Serialize(Writer& writer) const {
         writer.String("name");

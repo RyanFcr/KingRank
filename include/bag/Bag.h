@@ -20,7 +20,11 @@ class Bag {
     const map<string, int>& GetMedicines() const { return medicines; }
     const map<string, Weapon>& GetWeapons() const { return weapons; }
 
-    bool Insert(const string& name, int num = 1);
+    void SetLevel(int level_) { level = level_; }
+    void SetWeightLimit(int weightLimit_) { weightLimit = weightLimit_; }
+    void SetCurWeight(int curWeight_) { curWeight = curWeight_; }
+    bool InsertMedicine(const string& name, int num = 1);
+    bool InsertWeapon(const Weapon& weapon);
     bool Discard(const string& name, int num = 1);
 
     template <typename Writer>

@@ -7,8 +7,8 @@
 class Weapon : public Item {
    public:
     Weapon() {}
-    Weapon(string n, string d, int w, int attack, int abrasionLoss)
-        : Item(n, d, w, WEAPON_ID), attack(attack), abrasion(maxAbrasion), abrasionLoss(abrasionLoss) {}
+    Weapon(string n, string d, int w, int attack, int abrasionLoss, int abrasion = maxAbrasion)
+        : Item(n, d, w, WEAPON_ID), attack(attack), abrasion(abrasion), abrasionLoss(abrasionLoss) {}
 
     int GetAttack() const { return attack; }
     int GetAbrasion() const { return abrasion; }
