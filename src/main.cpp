@@ -16,6 +16,7 @@ int main() {
         input = TextGen::Input();
         if (input == "quit") {
             TextGen::Print("Bye!");
+            RoleGen::SaveKing();
             break;
         } else if (input == "map") {
             RoleGen::king.ShowMap(MapGen::map);
@@ -27,6 +28,8 @@ int main() {
             RoleGen::king.GoRight(MapGen::map);
         } else if (input == "left") {
             RoleGen::king.GoLeft(MapGen::map);
+        } else if (input == "save") {
+            RoleGen::SaveKing();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

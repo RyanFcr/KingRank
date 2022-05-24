@@ -4,3 +4,4 @@ build
 *.exe
 *.out
 test_main.cpp
+buffer.json

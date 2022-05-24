@@ -8,15 +8,19 @@
 #include "skill/Skill.h"
 #include "text/TextGen.h"
 
-#include "rapidjson/writer.h"
+#include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
-using rapidjson::Writer;
+#include "rapidjson/writer.h"
+using rapidjson::Document;
 using rapidjson::StringBuffer;
+using rapidjson::Value;
+using rapidjson::Writer;
 
 class King : public Role {
    public:
     King() {}
-    King(string name,
+    King(string kingName,
+         string countryName,
          Position position,
          FieldPosition territoryPosition,
          int attack = 1,
@@ -27,10 +31,35 @@ class King : public Role {
          int MP = 100,
          int experience = 0,
          int money = 0)
-        : Role(name, position, attack, level, maxHP, HP, maxMP, MP),
+        : Role(kingName, position, attack, level, maxHP, HP, maxMP, MP),
           experience(experience),
           territoryPosition(territoryPosition),
+          countryName(countryName),
           money(money) {}
+
+    int GetExperience() const { return experience; }
+    const FieldPosition& GetTerritoryPosition() const { return territoryPosition; }
+    const string& GetCountryName() const { return countryName; }
+    int GetMoney() const { return money; }
+    const Bag& GetBag() const { return bag; }
+
+    void SetExperience(int experience_) { experience = experience_; }
+    void SetTerritoryPosition(const FieldPosition& territoryPosition_) { territoryPosition = territoryPosition_; }
+    void SetCountryName(const string& countryName_) { countryName = countryName_; }
+    void SetMoney(int money_) { money = money_; }
+    void SetBagLevel(int level_) { bag.SetLevel(level_); }
+    void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
+    void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
+
+    bool InsertMedicine(const string& name, int num = 1) {
+        return bag.InsertMedicine(name, num);
+    }
+    bool InsertWeapon(const Weapon& weapon) {
+        return bag.InsertWeapon(weapon);
+    }
+    bool DiscardItem(const string& name, int num = 1) {
+        return bag.Discard(name, num);
+    }
 
     void ShowMap(const Map& m) const;
     void GoUp(const Map& m);
@@ -50,8 +79,16 @@ class King : public Role {
         writer.String("territoryPosition");
         territoryPosition.Serialize(writer);
 
+        writer.String("countryName");
+        writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
+
         writer.String("money");
         writer.Int(money);
+
+        writer.String("bag");
+        bag.Serialize(writer);
+
+        /// @todo skills
 
         writer.EndObject();
     }
@@ -59,8 +96,9 @@ class King : public Role {
    private:
     int experience;                   // 当前的经验值
     FieldPosition territoryPosition;  // 领地位置
+    string countryName;               // 领地名称
     int money;                        // 拥有的金币量
-    // Bag bag;
+    Bag bag;
     // vector<Skill*> skills;
 };
 

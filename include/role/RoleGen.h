@@ -4,17 +4,25 @@
 #include "map/Map.h"
 #include "role/King.h"
 
+#include "rapidjson/document.h"
+using rapidjson::Document;
+
 class RoleGen {
    public:
     static void InitKing(Map& map);
+    static void SaveKing();
 
    private:
-    static void SerializeKing();
-    static bool LoadKing();
-    static bool CreateKing(Map& map);
+    static bool LoadKing(const string& kingName);
+    static bool CreateKing(const string& kingName, Map& map);
+    static bool CheckRedundancy(const string& name, int& index);
+    static void AppendKing();
 
    public:
     static King king;
+
+   private:
+    static Document kingDocument;
 };
 
 #endif
