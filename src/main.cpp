@@ -28,6 +28,8 @@ int main() {
             RoleGen::king.GoRight(MapGen::map);
         } else if (input == "left") {
             RoleGen::king.GoLeft(MapGen::map);
+        } else if (input == "save") {
+            RoleGen::SaveKing();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

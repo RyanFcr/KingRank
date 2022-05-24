@@ -37,7 +37,7 @@ static void SerializeKing(const Value& kingData, Writer& writer);
  * @throw HAS_PARSE_ERROR
  */
 void RoleGen::InitKing(Map& map) {
-    string input, kingData;
+    string input, kingData, kingName;
 
     ifstream ifs(kingFile, ios::in);
     getline(ifs, kingData);
@@ -50,7 +50,10 @@ void RoleGen::InitKing(Map& map) {
     while (1) {
         input = TextGen::Input();
         if (input == "yes") {
-            if (LoadKing()) {
+            TextGen::Print<request>("What's your name, young King?");
+            kingName = TextGen::Input();
+
+            if (LoadKing(kingName)) {
                 TextGen::Print("Welcome! King." + king.GetName() + "!");
                 break;
             } else {
@@ -58,7 +61,9 @@ void RoleGen::InitKing(Map& map) {
                 TextGen::Print<request>("Do you really have your own territory, young King?");
             }
         } else if (input == "no") {
-            if (CreateKing(map))
+            TextGen::Print<request>("What's your name, young King?");
+            kingName = TextGen::Input();
+            if (CreateKing(kingName, map))
                 break;
             else {
                 TextGen::Print<warning>("Sorry, fail to register your territory!");
@@ -76,7 +81,7 @@ void RoleGen::InitKing(Map& map) {
  * @param index: if exist, return the index of kingDocument["kings"]
  * @return true: redundancy exists
  */
-bool RoleGen::CheckRedundancy(const string &kingName, int& index) {
+bool RoleGen::CheckRedundancy(const string& kingName, int& index) {
     if (!kingDocument.IsObject()) {
         throw HAS_PARSE_ERROR;
     }
@@ -101,20 +106,16 @@ bool RoleGen::CheckRedundancy(const string &kingName, int& index) {
 
 /**
  * @brief load king from json file to `king'
- * @return false: load fail(non-exist kng name)
+ * @param kingName
+ * @return false: load fail(non-exist king name)
  */
-bool RoleGen::LoadKing() {
-    string kingName;
+bool RoleGen::LoadKing(const string& kingName) {
     int index = -1;
-
-    /// set king name
-    TextGen::Print<request>("What's your name, young King?");
-    kingName = TextGen::Input();
 
     if (!CheckRedundancy(kingName, index)) {
         return false;
     }
-    
+
     const Value& kingValue = kingDocument["kings"][index].GetObject();
     king.SetName(kingValue["name"].GetString());
     king.SetLevel(kingValue["level"].GetInt());
@@ -157,13 +158,9 @@ bool RoleGen::LoadKing() {
  * @return false: creation fail (exist king name)
  * @throw HAS_PARSE_ERROR
  */
-bool RoleGen::CreateKing(Map& map) {
-    string kingName, countryName;
+bool RoleGen::CreateKing(const string& kingName, Map& map) {
+    string countryName;
     int index = -1;
-
-    /// set king name
-    TextGen::Print<request>("What's your name, young King?");
-    kingName = TextGen::Input();
 
     if (CheckRedundancy(kingName, index))
         return false;
@@ -189,6 +186,7 @@ bool RoleGen::CreateKing(Map& map) {
 
 /**
  * @brief Save `king' into the json file
+ * @attention for modifying, we erase the origin data and append current king to the document
  * @throw OPEN_FILE_FAIL
  */
 void RoleGen::SaveKing() {
@@ -204,11 +202,11 @@ void RoleGen::SaveKing() {
 
     if (CheckRedundancy(king.GetName(), index)) {
         // Modify
-        ModifyKing();
-    } else {
-        // Append
-        AppendKing();
+        kings.Erase(kings.Begin() + index);
     }
+
+    // Append
+    AppendKing();
 
     // write into file
     writer.StartObject();
@@ -453,11 +451,4 @@ void RoleGen::AppendKing() {
 
     kingValue.AddMember("bag", bagValue, allocator);
     kings.PushBack(kingValue, allocator);
-}
-
-/**
- * @brief modify certain key of the DOM object
- */
-void RoleGen::ModifyKing() {
-    /// @todo
 }
