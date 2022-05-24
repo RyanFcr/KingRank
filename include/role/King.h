@@ -37,6 +37,12 @@ class King : public Role {
           countryName(countryName),
           money(money) {}
 
+    int GetExperience() const { return experience; }
+    const FieldPosition& GetTerritoryPosition() const { return territoryPosition; }
+    const string& GetCountryName() const { return countryName; }
+    int GetMoney() const { return money; }
+    const Bag& GetBag() const { return bag; }
+
     void ShowMap(const Map& m) const;
     void GoUp(const Map& m);
     void GoDown(const Map& m);

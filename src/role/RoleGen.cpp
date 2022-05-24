@@ -8,12 +8,12 @@
 
 #include <fstream>
 using rapidjson::Document;
+using rapidjson::kArrayType;
+using rapidjson::kObjectType;
 using rapidjson::SizeType;
 using rapidjson::StringBuffer;
 using rapidjson::Value;
 using rapidjson::Writer;
-using rapidjson::kObjectType;
-using rapidjson::kArrayType;
 using std::getline;
 using std::ifstream;
 using std::ios;
@@ -145,14 +145,14 @@ void RoleGen::SaveKing() {
 
     StringBuffer sb;
     Writer<StringBuffer> writer(sb);
-    const Value& kings = kingDocument["kings"];
+    Value& kings = kingDocument["kings"];
 
     if (CheckRedundancy(king.GetName())) {
         // Modify
 
     } else {
         // Append
-        // AppendKing();
+        AppendKing();
     }
 
     // write into file
@@ -294,7 +294,7 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
     writer.String("medicines");
     writer.StartObject();
     for (auto& m : kingData["bag"]["medicines"].GetObject()) {
-        const string &mName = m.name.GetString();
+        const string& mName = m.name.GetString();
         writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
         writer.Int(m.value.GetInt());
     }
@@ -303,16 +303,16 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
     writer.String("weapons");
     writer.StartObject();
     for (auto& m : kingData["bag"]["weapons"].GetObject()) {
-        const string &mName = m.name.GetString();
+        const string& mName = m.name.GetString();
         writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
         /// Weapon相关
         writer.StartObject();
 
         writer.String("name");
-        const string &mValueName = m.value["name"].GetString();
+        const string& mValueName = m.value["name"].GetString();
         writer.String(mValueName.c_str(), static_cast<SizeType>(mValueName.length()));
         writer.String("description");
-        const string &mValueDescription = m.value["description"].GetString();
+        const string& mValueDescription = m.value["description"].GetString();
         writer.String(mValueDescription.c_str(), static_cast<SizeType>(mValueDescription.length()));
         writer.String("weight");
         writer.Int(m.value["weight"].GetInt());
@@ -338,10 +338,55 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
 }
 
 void RoleGen::AppendKing() {
-    const Value& kings = kingDocument["kings"];
+    Value& kings = kingDocument["kings"];
     Document::AllocatorType& allocator = kingDocument.GetAllocator();
-    
-    Value kingValue(kObjectType);
 
-    kingDocument.PushBack(kingValue, allocator);
+    Value kingValue(kObjectType);
+    kingValue.AddMember(
+        "name", Value().SetString(king.GetName().c_str(), static_cast<SizeType>(king.GetName().length())), allocator);
+    kingValue.AddMember("level", Value().SetInt(king.GetLevel()), allocator);
+    kingValue.AddMember("attack", Value().SetInt(king.GetAttack()), allocator);
+    kingValue.AddMember("maxHP", Value().SetInt(king.GetMaxHP()), allocator);
+    kingValue.AddMember("HP", Value().SetInt(king.GetHP()), allocator);
+    kingValue.AddMember("maxMP", Value().SetInt(king.GetMaxMP()), allocator);
+    kingValue.AddMember("MP", Value().SetInt(king.GetMP()), allocator);
+    Value positionValue(kObjectType);
+    positionValue.AddMember("fieldX", Value().SetInt(king.GetPosition().fieldX), allocator);
+    positionValue.AddMember("fieldY", Value().SetInt(king.GetPosition().fieldY), allocator);
+    positionValue.AddMember("sceneX", Value().SetInt(king.GetPosition().sceneX), allocator);
+    positionValue.AddMember("sceneY", Value().SetInt(king.GetPosition().sceneY), allocator);
+    kingValue.AddMember("position", positionValue, allocator);
+    kingValue.AddMember("experience", Value().SetInt(king.GetExperience()), allocator);
+    Value territoryPositionValue(kObjectType);
+    territoryPositionValue.AddMember("fieldX", Value().SetInt(king.GetTerritoryPosition().fieldX), allocator);
+    territoryPositionValue.AddMember("fieldY", Value().SetInt(king.GetTerritoryPosition().fieldY), allocator);
+    kingValue.AddMember("territoryPosition", territoryPositionValue, allocator);
+    kingValue.AddMember(
+        "countryName",
+        Value().SetString(king.GetCountryName().c_str(), static_cast<SizeType>(king.GetCountryName().length())),
+        allocator);
+    kingValue.AddMember("money", Value().SetInt(king.GetMoney()), allocator);
+    Value bagValue(kObjectType);
+    bagValue.AddMember("level", Value().SetInt(king.GetBag().GetLevel()), allocator);
+    bagValue.AddMember("weightLimit", Value().SetInt(king.GetBag().GetWeightLimit()), allocator);
+    bagValue.AddMember("curWeight", Value().SetInt(king.GetBag().GetCurWeight()), allocator);
+    Value medicinesValue(kObjectType);
+    for (auto& item : king.GetBag().GetMedicines()) {
+        medicinesValue.AddMember(Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())),
+                                 Value().SetInt(item.second), allocator);
+    }
+    bagValue.AddMember("medicines", medicinesValue, allocator);
+    Value weaponsValue(kObjectType);
+    for (auto& item : king.GetBag().GetWeapons()) {
+        Value weaponValue(kObjectType);
+        weaponValue.AddMember("attack", Value().SetInt(item.second.GetAttack()), allocator);
+        weaponValue.AddMember("abrasion", Value().SetInt(item.second.GetAttack()), allocator);
+        weaponValue.AddMember("abrasionLoss", Value().SetInt(item.second.GetAttack()), allocator);
+        medicinesValue.AddMember(Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())),
+                                 weaponValue, allocator);
+    }
+    bagValue.AddMember("weapons", weaponsValue, allocator);
+
+    kingValue.AddMember("bag", bagValue, allocator);
+    kings.PushBack(kingValue, allocator);
 }

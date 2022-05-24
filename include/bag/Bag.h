@@ -14,6 +14,12 @@ class Bag {
     Bag(int level = 1, int weightLimit = 10, int curWeight = 0)
         : level(level), weightLimit(weightLimit), curWeight(curWeight) {}
 
+    int GetLevel() const { return level; }
+    int GetWeightLimit() const { return weightLimit; }
+    int GetCurWeight() const { return curWeight; }
+    const map<string, int>& GetMedicines() const { return medicines; }
+    const map<string, Weapon>& GetWeapons() const { return weapons; }
+
     bool Insert(const string& name, int num = 1);
     bool Discard(const string& name, int num = 1);
 
