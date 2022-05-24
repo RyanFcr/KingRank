@@ -16,6 +16,7 @@ int main() {
         input = TextGen::Input();
         if (input == "quit") {
             TextGen::Print("Bye!");
+            RoleGen::SaveKing();
             break;
         } else if (input == "map") {
             RoleGen::king.ShowMap(MapGen::map);

@@ -25,8 +25,6 @@ class Item {
 
     template <typename Writer>
     void Serialize(Writer& writer) const {
-        writer.StartObject();
-
         writer.String("name");
         writer.String(name.c_str(), static_cast<SizeType>(name.length()));
         writer.String("description");
@@ -35,8 +33,6 @@ class Item {
         writer.Int(weight);
         writer.String("id");
         writer.Int(int(id));
-
-        writer.EndObject();
     }
 
    protected:

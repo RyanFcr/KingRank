@@ -17,7 +17,7 @@ const int buff = GREEN_;
 const int title = YELLOW_;
 
 /// Error Type
-enum KRerror { OPEN_FILE_FAIL, HAS_PARSE_ERROR, UNKNOWN_ITEM, EXIST_KING };
+enum KRerror { OPEN_FILE_FAIL, HAS_PARSE_ERROR, UNKNOWN_ITEM };
 
 /// Position Type
 struct Position {

@@ -1,10 +1,10 @@
 #include "role/King.h"
 
-void King::ShowMap(const Map &m) const {
+void King::ShowMap(const Map& m) const {
     TextGen::PrintDirection(m, position);
 }
 
-void King::GoUp(const Map &m) {
+void King::GoUp(const Map& m) {
     position.GoUp();
     if (!(m.IsValidPosition(position))) {
         position.GoDown();
@@ -12,7 +12,7 @@ void King::GoUp(const Map &m) {
     }
 }
 
-void King::GoDown(const Map &m) {
+void King::GoDown(const Map& m) {
     position.GoDown();
     if (!(m.IsValidPosition(position))) {
         position.GoUp();
@@ -20,7 +20,7 @@ void King::GoDown(const Map &m) {
     }
 }
 
-void King::GoLeft(const Map &m) {
+void King::GoLeft(const Map& m) {
     position.GoLeft();
     if (!(m.IsValidPosition(position))) {
         position.GoRight();
@@ -28,7 +28,7 @@ void King::GoLeft(const Map &m) {
     }
 }
 
-void King::GoRight(const Map &m) {
+void King::GoRight(const Map& m) {
     position.GoRight();
     if (!(m.IsValidPosition(position))) {
         position.GoLeft();

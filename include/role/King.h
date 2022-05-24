@@ -10,8 +10,11 @@
 
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include "rapidjson/document.h"
 using rapidjson::StringBuffer;
 using rapidjson::Writer;
+using rapidjson::Value;
+using rapidjson::Document;
 
 class King : public Role {
    public:

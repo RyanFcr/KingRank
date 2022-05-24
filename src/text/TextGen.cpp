@@ -154,10 +154,5 @@ string TextGen::Input() {
     string input;
     Print("> ", "");
     getline(cin, input);
-
-    if (input == "quit") {
-        Print("Bye!");
-        exit(0);
-    }
     return input;
 }

@@ -8,7 +8,9 @@ using std::vector;
 
 #include "common/Global.h"
 #include "rapidjson/writer.h"
+#include "rapidjson/document.h"
 using rapidjson::SizeType;
+using rapidjson::Value;
 
 class Role {
    public:
