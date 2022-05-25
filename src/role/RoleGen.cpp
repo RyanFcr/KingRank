@@ -5,6 +5,7 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include "text/TextGen.h"
+#include "common/Macro.h"
 
 #include <fstream>
 using rapidjson::Document;
@@ -41,8 +42,7 @@ void RoleGen::InitKing(Map& map) {
 
     ifstream ifs(kingFile, ios::in);
     getline(ifs, kingData);
-    if (kingDocument.Parse(kingData.c_str()).HasParseError())
-        throw HAS_PARSE_ERROR;
+    CHECK_DOM_OBJECT_HAS_PARSE_ERROR(kingDocument, kingData.c_str())
     ifs.close();
 
     TextGen::Print("Welcome to the world of Kings!");
@@ -82,19 +82,15 @@ void RoleGen::InitKing(Map& map) {
  * @return true: redundancy exists
  */
 bool RoleGen::CheckRedundancy(const string& kingName, int& index) {
-    if (!kingDocument.IsObject()) {
-        throw HAS_PARSE_ERROR;
-    }
+    string documentName;
+    
+    ASSERT_DOM_OBJECT_IS_OBJECT(kingDocument)
     const Value& kings = kingDocument["kings"];
     for (SizeType i = 0; i < kings.Size(); i++) {
         const Value& kingData = kings[i];
-        if (!kingData.IsObject())
-            throw HAS_PARSE_ERROR;
+        ASSERT_DOM_OBJECT_IS_OBJECT(kingData)
         if (kingData.HasMember("name")) {
-            const Value& documentNameValue = kingData["name"];
-            if (!documentNameValue.IsString())
-                throw HAS_PARSE_ERROR;
-            string documentName = documentNameValue.GetString();
+            DOM_OBJECT_MEMBER_TO_VAR_STRING(kingData, "name", documentName)
             if (documentName == kingName) {
                 index = i;
                 return true;
@@ -248,132 +244,59 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
 
     {
         /// role相关
-        writer.String("name");
-        if (!kingData.HasMember("name") || !kingData["name"].IsString())
-            throw HAS_PARSE_ERROR;
-        const string name = kingData["name"].GetString();
-        writer.String(name.c_str(), static_cast<SizeType>(name.length()));
-
-        writer.String("level");
-        if (!kingData.HasMember("level") || !kingData["level"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["level"].GetInt());
-
-        writer.String("attack");
-        if (!kingData.HasMember("attack") || !kingData["attack"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["attack"].GetInt());
-
-        writer.String("maxHP");
-        if (!kingData.HasMember("maxHP") || !kingData["maxHP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["maxHP"].GetInt());
-
-        writer.String("HP");
-        if (!kingData.HasMember("HP") || !kingData["HP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["HP"].GetInt());
-
-        writer.String("maxMP");
-        if (!kingData.HasMember("maxMP") || !kingData["maxMP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["maxMP"].GetInt());
-
-        writer.String("MP");
-        if (!kingData.HasMember("MP") || !kingData["MP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["MP"].GetInt());
+        WRITE_DOM_OBJECT_MEMBER_STRING(kingData, "name")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "level")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "attack")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "maxHP")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "HP")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "maxMP")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "MP")
 
         /// position相关
         writer.String("position");
         {
             writer.StartObject();
 
-            writer.String("fieldX");
-            if (!kingData["position"].HasMember("fieldX") || !kingData["position"]["fieldX"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["position"]["fieldX"].GetInt());
-
-            writer.String("fieldY");
-            if (!kingData["position"].HasMember("fieldY") || !kingData["position"]["fieldY"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["position"]["fieldY"].GetInt());
-
-            writer.String("sceneX");
-            if (!kingData["position"].HasMember("sceneX") || !kingData["position"]["sceneX"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["position"]["sceneX"].GetInt());
-
-            writer.String("sceneY");
-            if (!kingData["position"].HasMember("sceneY") || !kingData["position"]["sceneY"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["position"]["sceneY"].GetInt());
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "fieldX")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "fieldY")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "sceneX")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "sceneX")
 
             writer.EndObject();
         }
 
         /// king相关
-        writer.String("experience");
-        if (!kingData.HasMember("experience") || !kingData["experience"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["experience"].GetInt());
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "experience")
 
         /// territory相关
         writer.String("territoryPosition");
         {
             writer.StartObject();
 
-            writer.String("fieldX");
-            if (!kingData["territoryPosition"].HasMember("fieldX") || !kingData["territoryPosition"]["fieldX"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["territoryPosition"]["fieldX"].GetInt());
-
-            writer.String("fieldY");
-            if (!kingData["territoryPosition"].HasMember("fieldY") || !kingData["territoryPosition"]["fieldY"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["territoryPosition"]["fieldY"].GetInt());
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["territoryPosition"], "fieldX")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["territoryPosition"], "fieldY")
 
             writer.EndObject();
         }
 
         /// 继续king相关
-        writer.String("countryName");
-        if (!kingData.HasMember("countryName") || !kingData["countryName"].IsString())
-            throw HAS_PARSE_ERROR;
-        const string countryName = kingData["countryName"].GetString();
-        writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
-
-        writer.String("money");
-        if (!kingData.HasMember("money") || !kingData["money"].IsInt())
-            throw HAS_PARSE_ERROR;
-        writer.Int(kingData["money"].GetInt());
+        WRITE_DOM_OBJECT_MEMBER_STRING(kingData, "countryName")
+        WRITE_DOM_OBJECT_MEMBER_INT(kingData, "money")
 
         /// bag相关
         writer.String("bag");
         {
             writer.StartObject();
 
-            writer.String("level");
-            if (!kingData["bag"].HasMember("level") || !kingData["bag"]["level"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["bag"]["level"].GetInt());
-
-            writer.String("weightLimit");
-            if (!kingData["bag"].HasMember("weightLimit") || !kingData["bag"]["weightLimit"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["bag"]["weightLimit"].GetInt());
-
-            writer.String("curWeight");
-            if (!kingData["bag"].HasMember("curWeight") || !kingData["bag"]["curWeight"].IsInt())
-                throw HAS_PARSE_ERROR;
-            writer.Int(kingData["bag"]["curWeight"].GetInt());
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["bag"], "level")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["bag"], "weightLimit")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["bag"], "curWeight")
 
             writer.String("medicines");
             {
                 writer.StartObject();
                 for (auto& m : kingData["bag"]["medicines"].GetObject()) {
-                    const string& mName = m.name.GetString();
-                    writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
+                    writer.String(m.name.GetString());
                     writer.Int(m.value.GetInt());
                 }
                 writer.EndObject();
@@ -383,26 +306,17 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
             {
                 writer.StartObject();
                 for (auto& m : kingData["bag"]["weapons"].GetObject()) {
-                    const string& mName = m.name.GetString();
-                    writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
+                    writer.String(m.name.GetString());
                     {
                         /// Weapon相关
                         writer.StartObject();
 
-                        writer.String("description");
-                        const string& mValueDescription = m.value["description"].GetString();
-                        writer.String(mValueDescription.c_str(), static_cast<SizeType>(mValueDescription.length()));
-                        writer.String("weight");
-                        writer.Int(m.value["weight"].GetInt());
-                        writer.String("id");
-                        writer.Int(m.value["id"].GetInt());
-
-                        writer.String("attack");
-                        writer.Int(m.value["attack"].GetInt());
-                        writer.String("abrasion");
-                        writer.Int(m.value["abrasion"].GetInt());
-                        writer.String("abrasionLoss");
-                        writer.Int(m.value["abrasionLoss"].GetInt());
+                        WRITE_DOM_OBJECT_MEMBER_STRING(m.value, "description")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "weight")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "id")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "attack")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "abrasion")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "abrasionLoss")
 
                         writer.EndObject();
                     }
@@ -412,50 +326,44 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
 
             writer.EndObject();
         }
-        
+
         /// skills
         writer.String("attackSkills");
         {
             writer.StartObject();
             for (auto& m : kingData["attackSkills"].GetObject()) {
-                const string& mName = m.name.GetString();
-                writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
+                writer.String(m.name.GetString());
                 {
                     writer.StartObject();
-                    writer.String("description");
-                    const string& mValueDescription = m.value["description"].GetString();
-                    writer.String(mValueDescription.c_str(), static_cast<SizeType>(mValueDescription.length()));
-                    writer.String("MPCost");
-                    writer.Int(m.value["MPCost"].GetInt());
-                    writer.String("damageValue");
-                    writer.Int(m.value["damageValue"].GetInt());
+
+                    WRITE_DOM_OBJECT_MEMBER_STRING(m.value, "description")
+                    WRITE_DOM_OBJECT_MEMBER_INT(m.value, "MPCost")
+                    WRITE_DOM_OBJECT_MEMBER_INT(m.value, "damageValue")
+                    
                     writer.EndObject();
                 }
             }
             writer.EndObject();
         }
-        
+
         writer.String("supportSkills");
         {
             writer.StartObject();
             for (auto& m : kingData["supportSkills"].GetObject()) {
-                const string& mName = m.name.GetString();
-                writer.String(mName.c_str(), static_cast<SizeType>(mName.length()));
+                writer.String(m.name.GetString());
                 {
                     writer.StartObject();
-                    writer.String("description");
-                    const string& mValueDescription = m.value["description"].GetString();
-                    writer.String(mValueDescription.c_str(), static_cast<SizeType>(mValueDescription.length()));
-                    writer.String("MPCost");
-                    writer.Int(m.value["MPCost"].GetInt());
-                    writer.String("HPValue");
-                    writer.Int(m.value["HPValue"].GetInt());
+
+                    WRITE_DOM_OBJECT_MEMBER_STRING(m.value, "description")
+                    WRITE_DOM_OBJECT_MEMBER_INT(m.value, "MPCost")
+                    WRITE_DOM_OBJECT_MEMBER_INT(m.value, "HPValue")
+                    
                     writer.EndObject();
                 }
             }
             writer.EndObject();
         }
-        
+
     }
     writer.EndObject();
 }
@@ -468,39 +376,35 @@ void RoleGen::AppendKing() {
     Document::AllocatorType& allocator = kingDocument.GetAllocator();
 
     Value kingValue(kObjectType);
-    kingValue.AddMember(
-        "name", Value().SetString(king.GetName().c_str(), static_cast<SizeType>(king.GetName().length())), allocator);
-    kingValue.AddMember("level", Value().SetInt(king.GetLevel()), allocator);
-    kingValue.AddMember("attack", Value().SetInt(king.GetAttack()), allocator);
-    kingValue.AddMember("maxHP", Value().SetInt(king.GetMaxHP()), allocator);
-    kingValue.AddMember("HP", Value().SetInt(king.GetHP()), allocator);
-    kingValue.AddMember("maxMP", Value().SetInt(king.GetMaxMP()), allocator);
-    kingValue.AddMember("MP", Value().SetInt(king.GetMP()), allocator);
+    ADD_MEMBER_STRING(kingValue, "name", king.GetName())
+    ADD_MEMBER_INT(kingValue, "level", king.GetLevel())
+    ADD_MEMBER_INT(kingValue, "attack", king.GetAttack())
+    ADD_MEMBER_INT(kingValue, "maxHP", king.GetMaxHP())
+    ADD_MEMBER_INT(kingValue, "HP", king.GetHP())
+    ADD_MEMBER_INT(kingValue, "maxMP", king.GetMaxMP())
+    ADD_MEMBER_INT(kingValue, "MP", king.GetMP())
     {
         Value positionValue(kObjectType);
-        positionValue.AddMember("fieldX", Value().SetInt(king.GetPosition().fieldX), allocator);
-        positionValue.AddMember("fieldY", Value().SetInt(king.GetPosition().fieldY), allocator);
-        positionValue.AddMember("sceneX", Value().SetInt(king.GetPosition().sceneX), allocator);
-        positionValue.AddMember("sceneY", Value().SetInt(king.GetPosition().sceneY), allocator);
+        ADD_MEMBER_INT(positionValue, "fieldX", king.GetPosition().fieldX)
+        ADD_MEMBER_INT(positionValue, "fieldY", king.GetPosition().fieldY)
+        ADD_MEMBER_INT(positionValue, "sceneX", king.GetPosition().sceneX)
+        ADD_MEMBER_INT(positionValue, "sceneY", king.GetPosition().sceneY)
         kingValue.AddMember("position", positionValue, allocator);
     }
-    kingValue.AddMember("experience", Value().SetInt(king.GetExperience()), allocator);
+    ADD_MEMBER_INT(kingValue, "experience", king.GetExperience())
     {
         Value territoryPositionValue(kObjectType);
-        territoryPositionValue.AddMember("fieldX", Value().SetInt(king.GetTerritoryPosition().fieldX), allocator);
-        territoryPositionValue.AddMember("fieldY", Value().SetInt(king.GetTerritoryPosition().fieldY), allocator);
+        ADD_MEMBER_INT(territoryPositionValue, "fieldX", king.GetTerritoryPosition().fieldX)
+        ADD_MEMBER_INT(territoryPositionValue, "fieldY", king.GetTerritoryPosition().fieldY)
         kingValue.AddMember("territoryPosition", territoryPositionValue, allocator);
     }
-    kingValue.AddMember(
-        "countryName",
-        Value().SetString(king.GetCountryName().c_str(), static_cast<SizeType>(king.GetCountryName().length())),
-        allocator);
-    kingValue.AddMember("money", Value().SetInt(king.GetMoney()), allocator);
+    ADD_MEMBER_STRING(kingValue, "countryName", king.GetCountryName())
+    ADD_MEMBER_INT(kingValue, "money", king.GetMoney())
     {
         Value bagValue(kObjectType);
-        bagValue.AddMember("level", Value().SetInt(king.GetBag().GetLevel()), allocator);
-        bagValue.AddMember("weightLimit", Value().SetInt(king.GetBag().GetWeightLimit()), allocator);
-        bagValue.AddMember("curWeight", Value().SetInt(king.GetBag().GetCurWeight()), allocator);
+        ADD_MEMBER_INT(bagValue, "level", king.GetBag().GetLevel())
+        ADD_MEMBER_INT(bagValue, "weightLimit", king.GetBag().GetWeightLimit())
+        ADD_MEMBER_INT(bagValue, "curWeight", king.GetBag().GetCurWeight())
         {
             Value medicinesValue(kObjectType);
             for (auto& item : king.GetBag().GetMedicines()) {
@@ -513,15 +417,12 @@ void RoleGen::AppendKing() {
             Value weaponsValue(kObjectType);
             for (auto& item : king.GetBag().GetWeapons()) {
                 Value weaponValue(kObjectType);
-                weaponValue.AddMember("description",
-                                      Value().SetString(item.second.GetDescription().c_str(),
-                                                        static_cast<SizeType>(item.second.GetDescription().length())),
-                                      allocator);
-                weaponValue.AddMember("id", Value().SetInt(int(item.second.GetItemId())), allocator);
-                weaponValue.AddMember("weight", Value().SetInt(item.second.GetWeight()), allocator);
-                weaponValue.AddMember("attack", Value().SetInt(item.second.GetAttack()), allocator);
-                weaponValue.AddMember("abrasion", Value().SetInt(item.second.GetAbrasion()), allocator);
-                weaponValue.AddMember("abrasionLoss", Value().SetInt(item.second.GetAbrasionLoss()), allocator);
+                ADD_MEMBER_STRING(weaponValue, "description", item.second.GetDescription())
+                ADD_MEMBER_INT(weaponValue, "id", int(item.second.GetItemId()))
+                ADD_MEMBER_INT(weaponValue, "weight", item.second.GetWeight())
+                ADD_MEMBER_INT(weaponValue, "attack", item.second.GetAttack())
+                ADD_MEMBER_INT(weaponValue, "abrasion", item.second.GetAbrasion())
+                ADD_MEMBER_INT(weaponValue, "abrasionLoss", item.second.GetAbrasionLoss())
 
                 weaponsValue.AddMember(
                     Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())), weaponValue,
@@ -536,14 +437,11 @@ void RoleGen::AppendKing() {
         Value attackSkillsValue(kObjectType);
         for (auto& item : king.GetAttackSkills()) {
             Value attackSkillValue(kObjectType);
-            attackSkillValue.AddMember("description",
-                                      Value().SetString(item.second.GetDescription().c_str(),
-                                                        static_cast<SizeType>(item.second.GetDescription().length())),
-                                      allocator);
-            attackSkillValue.AddMember("id", Value().SetInt(int(item.second.GetId())), allocator);
-            attackSkillValue.AddMember("MPCost", Value().SetInt(item.second.GetMPCost()), allocator);
-            attackSkillValue.AddMember("damageValue", Value().SetInt(item.second.GetDamageValue()), allocator);
-
+            ADD_MEMBER_STRING(attackSkillValue, "description", item.second.GetDescription())
+            ADD_MEMBER_INT(attackSkillValue, "id", int(item.second.GetId()))
+            ADD_MEMBER_INT(attackSkillValue, "MPCost", item.second.GetMPCost())
+            ADD_MEMBER_INT(attackSkillValue, "damageValue", item.second.GetDamageValue())
+            
             attackSkillsValue.AddMember(
                 Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())), attackSkillValue,
                 allocator);
@@ -554,13 +452,10 @@ void RoleGen::AppendKing() {
         Value supportSkillsValue(kObjectType);
         for (auto& item : king.GetSupportSkills()) {
             Value supportSkillValue(kObjectType);
-            supportSkillValue.AddMember("description",
-                                      Value().SetString(item.second.GetDescription().c_str(),
-                                                        static_cast<SizeType>(item.second.GetDescription().length())),
-                                      allocator);
-            supportSkillValue.AddMember("id", Value().SetInt(int(item.second.GetId())), allocator);
-            supportSkillValue.AddMember("MPCost", Value().SetInt(item.second.GetMPCost()), allocator);
-            supportSkillValue.AddMember("HPValue", Value().SetInt(item.second.GetHPValue()), allocator);
+            ADD_MEMBER_STRING(supportSkillValue, "description", item.second.GetDescription())
+            ADD_MEMBER_INT(supportSkillValue, "id", int(item.second.GetId()))
+            ADD_MEMBER_INT(supportSkillValue, "MPCost", item.second.GetMPCost())
+            ADD_MEMBER_INT(supportSkillValue, "HPValue", item.second.GetHPValue())
 
             supportSkillsValue.AddMember(
                 Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())), supportSkillValue,
