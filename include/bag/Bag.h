@@ -28,6 +28,8 @@ class Bag {
     bool InsertWeapon(const Weapon& weapon);
     bool Discard(const string& name, int num = 1);
 
+    void ShowBag() const;
+
     template <typename Writer>
     void Serialize(Writer& writer) const {
         writer.StartObject();

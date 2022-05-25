@@ -1,9 +1,9 @@
 #include "common/Global.h"
-#include "role/RoleGen.h"
-#include "text/TextGen.h"
-#include "map/MapGen.h"
 #include "item/ItemGen.h"
+#include "map/MapGen.h"
+#include "role/RoleGen.h"
 #include "skill/SkillGen.h"
+#include "text/TextGen.h"
 
 int main() {
     srand((unsigned)time(NULL));
@@ -32,6 +32,8 @@ int main() {
             RoleGen::king.GoLeft(MapGen::map);
         } else if (input == "save") {
             RoleGen::SaveKing();
+        } else if (input == "bag") {
+            RoleGen::king.ShowBag();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

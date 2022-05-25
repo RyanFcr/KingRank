@@ -12,6 +12,7 @@ using std::string;
 #include "common/Macro.h"
 #include "map/Map.h"
 #include "map/Scene.h"
+#include "bag/Bag.h"
 
 template <int ansiStyle = 0>
 ostream& style(ostream& out) {
@@ -24,6 +25,7 @@ class TextGen {
     static void Init();
     static void PrintTitle();
     static void PrintDirection(const Map& m, const Position& p);
+    static void PrintBag(const Bag& bag);
 
     template <int ansiStyle = 0>
     static void Print(string s, string end = "\n");
@@ -38,6 +40,7 @@ class TextGen {
     static void PrintThree(string s1, string s2, string s3, int totalLength, string fill = " ");
 
     static string Input();
+    static int InputInt();
 };
 
 template <int ansiStyle>

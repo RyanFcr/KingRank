@@ -134,7 +134,8 @@ bool RoleGen::LoadKing(const string& kingName) {
     king.SetMoney(kingValue["money"].GetInt());
     king.SetBagLevel(kingValue["bag"]["level"].GetInt());
     king.SetBagWeightLimit(kingValue["bag"]["weightLimit"].GetInt());
-    king.SetBagCurWeight(kingValue["bag"]["curWeight"].GetInt());
+    /// @attention current weight don't need to set! just insert!
+    king.SetBagCurWeight(0);
     for (auto& m : kingValue["bag"]["medicines"].GetObject()) {
         king.InsertMedicine(m.name.GetString(), m.value.GetInt());
     }

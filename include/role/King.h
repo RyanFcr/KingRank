@@ -85,6 +85,8 @@ class King : public Role {
     void GoLeft(const Map& m);
     void GoRight(const Map& m);
 
+    void ShowBag() const { bag.ShowBag(); }
+
    private:
     void TriggerEvent(const Map& m);
 
