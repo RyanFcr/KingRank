@@ -7,6 +7,14 @@ void King::ShowMap(const Map& m) const {
     TextGen::PrintDirection(m, position);
 }
 
+void King::ShowMoney() const {
+    TextGen::PrintMoney(money);
+}
+
+void King::ShowSkill() const {
+    TextGen::PrintSkill(attackSkills, supportSkills);
+}
+
 void King::GoUp(const Map& m) {
     position.GoUp();
     if (!(m.IsValidPosition(position))) {

@@ -19,6 +19,7 @@ int main() {
         if (input == "quit") {
             TextGen::Print("Bye!");
             RoleGen::SaveKing();
+            MapGen::Save();
             break;
         } else if (input == "map") {
             RoleGen::king.ShowMap(MapGen::map);
@@ -32,8 +33,13 @@ int main() {
             RoleGen::king.GoLeft(MapGen::map);
         } else if (input == "save") {
             RoleGen::SaveKing();
+            MapGen::Save();
         } else if (input == "bag") {
             RoleGen::king.ShowBag();
+        } else if (input == "money") {
+            RoleGen::king.ShowMoney();
+        } else if (input == "skill") {
+            RoleGen::king.ShowSkill();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

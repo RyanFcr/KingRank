@@ -1,11 +1,11 @@
 #include "role/RoleGen.h"
 #include "bag/Bag.h"
 #include "common/Global.h"
+#include "common/Macro.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include "text/TextGen.h"
-#include "common/Macro.h"
 
 #include <fstream>
 using rapidjson::Document;
@@ -42,7 +42,7 @@ void RoleGen::InitKing(Map& map) {
 
     ifstream ifs(kingFile, ios::in);
     getline(ifs, kingData);
-    CHECK_DOM_OBJECT_HAS_PARSE_ERROR(kingDocument, kingData.c_str())
+    PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
     ifs.close();
 
     TextGen::Print("Welcome to the world of Kings!");
@@ -181,11 +181,10 @@ bool RoleGen::CreateKing(const string& kingName, Map& map) {
     countryName = TextGen::Input();
 
     /// allocate a new land
-    // map.MapExtend(name);
+    FieldPosition territoryPosition = map.MapExtend(countryName);
 
-    /// randomly choose a birthplace and territory
-    Position birthPlace{rand() % initialMapSize, rand() % initialMapSize, rand() % fieldSize, rand() % fieldSize};
-    FieldPosition territoryPosition{birthPlace.fieldX, birthPlace.fieldY};
+    /// randomly choose a birthplace
+    Position birthPlace{territoryPosition.fieldX, territoryPosition.fieldY, rand() % fieldSize, rand() % fieldSize};
 
     /// construct king
     king = King{kingName, countryName, birthPlace, territoryPosition};
@@ -340,7 +339,7 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
                     WRITE_DOM_OBJECT_MEMBER_STRING(m.value, "description")
                     WRITE_DOM_OBJECT_MEMBER_INT(m.value, "MPCost")
                     WRITE_DOM_OBJECT_MEMBER_INT(m.value, "damageValue")
-                    
+
                     writer.EndObject();
                 }
             }
@@ -358,13 +357,12 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
                     WRITE_DOM_OBJECT_MEMBER_STRING(m.value, "description")
                     WRITE_DOM_OBJECT_MEMBER_INT(m.value, "MPCost")
                     WRITE_DOM_OBJECT_MEMBER_INT(m.value, "HPValue")
-                    
+
                     writer.EndObject();
                 }
             }
             writer.EndObject();
         }
-
     }
     writer.EndObject();
 }
@@ -383,7 +381,7 @@ void RoleGen::AppendKing() {
     ADD_MEMBER_INT(kingValue, "maxHP", king.GetMaxHP())
     ADD_MEMBER_INT(kingValue, "HP", king.GetHP())
     ADD_MEMBER_INT(kingValue, "maxMP", king.GetMaxMP())
-    ADD_MEMBER_INT(kingValue, "MP", king.GetMP())
+    ADD_MEMBER_INT(kingValue, "MP", king.GetMP()) 
     {
         Value positionValue(kObjectType);
         ADD_MEMBER_INT(positionValue, "fieldX", king.GetPosition().fieldX)
@@ -392,7 +390,7 @@ void RoleGen::AppendKing() {
         ADD_MEMBER_INT(positionValue, "sceneY", king.GetPosition().sceneY)
         kingValue.AddMember("position", positionValue, allocator);
     }
-    ADD_MEMBER_INT(kingValue, "experience", king.GetExperience())
+    ADD_MEMBER_INT(kingValue, "experience", king.GetExperience()) 
     {
         Value territoryPositionValue(kObjectType);
         ADD_MEMBER_INT(territoryPositionValue, "fieldX", king.GetTerritoryPosition().fieldX)
@@ -400,12 +398,12 @@ void RoleGen::AppendKing() {
         kingValue.AddMember("territoryPosition", territoryPositionValue, allocator);
     }
     ADD_MEMBER_STRING(kingValue, "countryName", king.GetCountryName())
-    ADD_MEMBER_INT(kingValue, "money", king.GetMoney())
+    ADD_MEMBER_INT(kingValue, "money", king.GetMoney()) 
     {
         Value bagValue(kObjectType);
         ADD_MEMBER_INT(bagValue, "level", king.GetBag().GetLevel())
         ADD_MEMBER_INT(bagValue, "weightLimit", king.GetBag().GetWeightLimit())
-        ADD_MEMBER_INT(bagValue, "curWeight", king.GetBag().GetCurWeight())
+        ADD_MEMBER_INT(bagValue, "curWeight", king.GetBag().GetCurWeight()) 
         {
             Value medicinesValue(kObjectType);
             for (auto& item : king.GetBag().GetMedicines()) {
@@ -442,7 +440,7 @@ void RoleGen::AppendKing() {
             ADD_MEMBER_INT(attackSkillValue, "id", int(item.second.GetId()))
             ADD_MEMBER_INT(attackSkillValue, "MPCost", item.second.GetMPCost())
             ADD_MEMBER_INT(attackSkillValue, "damageValue", item.second.GetDamageValue())
-            
+
             attackSkillsValue.AddMember(
                 Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())), attackSkillValue,
                 allocator);

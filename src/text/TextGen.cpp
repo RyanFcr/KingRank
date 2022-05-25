@@ -35,7 +35,6 @@ void TextGen::PrintTitle() {
 }
 
 void TextGen::PrintDirection(const Map& m, const Position& p) {
-    /// @attention high coupling!
     if (p.fieldX >= 0 && p.fieldX < m.GetRowNum() && p.fieldY >= 0 && p.fieldY < m.GetColNum(p.fieldX)) {
         // Field Name
         string centerFieldName{m.GetField(p.fieldX, p.fieldY).GetName()};
@@ -46,46 +45,45 @@ void TextGen::PrintDirection(const Map& m, const Position& p) {
         string leftCo{""}, rightCo{""}, upCo{""}, downCo{""};
         string centerCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY) + ")";
 
-        // left
-        if (p.sceneX - 1 < 0 && p.fieldX == 0) {
-            leftFieldName = "";
-            leftCo = "";
-        } else if (p.sceneX - 1 < 0) {
-            leftFieldName = m.GetField(p.fieldX - 1, p.fieldY).GetName();
-            leftCo = "(" + std::to_string(fieldSize - 1) + "," + std::to_string(p.sceneY) + ")";
-        } else
-            leftCo = "(" + std::to_string(p.sceneX - 1) + "," + std::to_string(p.sceneY) + ")";
-
-        // right
-        if (p.sceneX + 1 >= fieldSize && p.fieldX == m.GetColNum(p.fieldX) - 1) {
-            rightFieldName = "";
-            rightCo = "";
-        } else if (p.sceneX + 1 >= fieldSize) {
-            rightFieldName = m.GetField(p.fieldX + 1, p.fieldY).GetName();
-            rightCo = "(" + std::to_string(0) + "," + std::to_string(p.sceneY) + ")";
-        } else
-            rightCo = "(" + std::to_string(p.sceneX + 1) + "," + std::to_string(p.sceneY) + ")";
-
         // down
-        if (p.sceneY - 1 < 0 && p.fieldY == 0) {
+        if (p.sceneX - 1 < 0 && (p.fieldX == 0 || m.GetColNum(p.fieldX - 1) <= p.fieldY)) {
             downFieldName = "";
             downCo = "";
-        } else if (p.sceneY - 1 < 0) {
-            downFieldName = m.GetField(p.fieldX, p.fieldY - 1).GetName();
-            downCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(fieldSize - 1) + ")";
+        } else if (p.sceneX - 1 < 0) {
+            downFieldName = m.GetField(p.fieldX - 1, p.fieldY).GetName();
+            downCo = "(" + std::to_string(fieldSize - 1) + "," + std::to_string(p.sceneY) + ")";
         } else
-            downCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY - 1) + ")";
+            downCo = "(" + std::to_string(p.sceneX - 1) + "," + std::to_string(p.sceneY) + ")";
 
         // up
-        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetRowNum() - 1) {
+        if (p.sceneX + 1 >= fieldSize && (p.fieldX == m.GetRowNum() - 1 || m.GetColNum(p.fieldX + 1) <= p.fieldY)) {
             upFieldName = "";
             upCo = "";
-        } else if (p.sceneY + 1 >= fieldSize) {
-            upFieldName = m.GetField(p.fieldX, p.fieldY + 1).GetName();
-            upCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(0) + ")";
+        } else if (p.sceneX + 1 >= fieldSize) {
+            upFieldName = m.GetField(p.fieldX + 1, p.fieldY).GetName();
+            upCo = "(" + std::to_string(0) + "," + std::to_string(p.sceneY) + ")";
+        } else {
+            upCo = "(" + std::to_string(p.sceneX + 1) + "," + std::to_string(p.sceneY) + ")";
+        }
+        // left
+        if (p.sceneY - 1 < 0 && p.fieldY == 0) {
+            leftFieldName = "";
+            leftCo = "";
+        } else if (p.sceneY - 1 < 0) {
+            leftFieldName = m.GetField(p.fieldX, p.fieldY - 1).GetName();
+            leftCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(fieldSize - 1) + ")";
         } else
-            upCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY + 1) + ")";
+            leftCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY - 1) + ")";
 
+        // right
+        if (p.sceneY + 1 >= fieldSize && p.fieldY == m.GetColNum(p.fieldX) - 1) {
+            rightFieldName = "";
+            rightCo = "";
+        } else if (p.sceneY + 1 >= fieldSize) {
+            rightFieldName = m.GetField(p.fieldX, p.fieldY + 1).GetName();
+            rightCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(0) + ")";
+        } else
+            rightCo = "(" + std::to_string(p.sceneX) + "," + std::to_string(p.sceneY + 1) + ")";
         // draw the map
 
         // if left can go
@@ -159,13 +157,46 @@ void TextGen::PrintBag(const Bag& bag) {
     Print("Weight Limit: " + to_string(bag.GetWeightLimit()));
     Print("Current Weight: " + to_string(bag.GetCurWeight()));
     Print("Weapons:");
-    for (auto& weapon : bag.GetWeapons()) {
-        Print(weapon.first, " ");
+    if (bag.GetWeapons().size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& weapon : bag.GetWeapons()) {
+            Print(weapon.first, " ");
+        }
     }
     Print("");
     Print("Medicines:");
-    for (auto& medicine : bag.GetMedicines()) {
-        Print(medicine.first + ": " + to_string(medicine.second), " ");
+    if (bag.GetMedicines().size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& medicine : bag.GetMedicines()) {
+            Print(medicine.first + ": " + to_string(medicine.second), " ");
+        }
+    }
+    Print("");
+}
+
+void TextGen::PrintMoney(int money) {
+    Print<reward>("Kin: " + to_string(money));
+}
+
+void TextGen::PrintSkill(const map<string, AttackSkill>& attackSkills, const map<string, SupportSkill>& supportSkills) {
+    Print<warning>("Attack Skills:");
+    if (attackSkills.size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& attackSkill : attackSkills) {
+            Print(attackSkill.first, " ");
+        }
+    }
+    Print("");
+    Print<buff>("Support Skills:");
+    if (supportSkills.size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& supportSkill : supportSkills) {
+            Print(supportSkill.first, " ");
+        }
     }
     Print("");
 }

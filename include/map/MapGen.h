@@ -8,12 +8,11 @@ using rapidjson::Document;
 class MapGen {
    public:
     static void Init();
-    static void MapExend();
     static void Free();
+    static void Save();
 
    public:
     static Map map;
-    static Document d;
 };
 
 #endif
