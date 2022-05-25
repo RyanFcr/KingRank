@@ -66,6 +66,8 @@ class King : public Role {
     void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
     void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
 
+    void IncreaseMoney(int money_) { money += money_; }
+
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
     bool DiscardItem(const string& name, int num = 1) { return bag.Discard(name, num); }
@@ -82,6 +84,11 @@ class King : public Role {
     void GoDown(const Map& m);
     void GoLeft(const Map& m);
     void GoRight(const Map& m);
+
+    void ShowBag() const { bag.ShowBag(); }
+
+   private:
+    void TriggerEvent(const Map& m);
 
     template <typename Writer>
     void Serialize(Writer& writer) const {

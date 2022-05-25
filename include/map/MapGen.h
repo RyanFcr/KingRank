@@ -2,6 +2,8 @@
 #define MAP_GEN_H
 
 #include "Map.h"
+#include "rapidjson/document.h"
+using rapidjson::Document;
 
 class MapGen {
    public:
@@ -11,6 +13,7 @@ class MapGen {
 
    public:
     static Map map;
+    static Document d;
 };
 
 #endif

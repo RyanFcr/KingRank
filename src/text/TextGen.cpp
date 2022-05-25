@@ -1,5 +1,10 @@
 #include "text/TextGen.h"
 #include <wchar.h>
+#include <sstream>
+#include <string>
+#include "bag/Bag.h"
+using std::istringstream;
+using std::to_string;
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -150,9 +155,39 @@ void TextGen::PrintDirection(const Map& m, const Position& p) {
     }
 }
 
+void TextGen::PrintBag(const Bag& bag) {
+    Print("Weight Limit: " + to_string(bag.GetWeightLimit()));
+    Print("Current Weight: " + to_string(bag.GetCurWeight()));
+    Print("Weapons:");
+    for (auto& weapon : bag.GetWeapons()) {
+        Print(weapon.first, " ");
+    }
+    Print("");
+    Print("Medicines:");
+    for (auto& medicine : bag.GetMedicines()) {
+        Print(medicine.first + ": " + to_string(medicine.second), " ");
+    }
+    Print("");
+}
+
 string TextGen::Input() {
     string input;
     Print("> ", "");
     getline(cin, input);
     return input;
+}
+
+int TextGen::InputInt() {
+    string input;
+    while (1) {
+        Print("> ", "");
+        getline(cin, input);
+        istringstream iss(input);
+        int val;
+        char remain;
+        if (iss >> val && !(iss >> remain))
+            return val;
+        else
+            Print<warning>("Invalid input! Please enter an integer!");
+    }
 }

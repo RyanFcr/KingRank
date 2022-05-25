@@ -2,6 +2,7 @@
 
 #include "common/Config.h"
 #include "common/Global.h"
+#include "common/Macro.h"
 #include "rapidjson/document.h"
 #include "text/TextGen.h"
 
@@ -20,6 +21,7 @@ using std::vector;
 
 // instantiation
 Map MapGen::map;
+Document MapGen::d;
 
 /**
  * @brief Init function of Map
@@ -34,65 +36,49 @@ void MapGen::Init() {
         throw OPEN_FILE_FAIL;
     string mapData;
     std::getline(ifs, mapData);
-    /* paser */
-    Document d;
     // Field
     string name;
     // Scene
-    int enemyId;
-    if (d.Parse(mapData.c_str()).HasParseError())
-        throw HAS_PARSE_ERROR;
-    if (!d.IsObject())
-        throw HAS_PARSE_ERROR;
-    if (!d.HasMember("fields"))
-        throw HAS_PARSE_ERROR;
-    if (!d["fields"].IsArray())
-        throw HAS_PARSE_ERROR;
+    string enemyName, medicineName;
+    int enemyPossibility, money, moneyPossibility, medicinePossibility;
+
+    CHECK_DOM_OBJECT_HAS_PARSE_ERROR(d, mapData.c_str())
+    ASSERT_DOM_OBJECT_HAS_MEMBER(d, "fields")
+    ASSERT_DOM_OBJECT_IS_ARRAY(d["fields"])
 
     const Value& fieldsRow = d["fields"];
     for (SizeType i = 0; i < fieldsRow.Size(); i++) {
         const Value& fieldsCol = fieldsRow[i];
-        if (!fieldsCol.IsArray())
-            throw HAS_PARSE_ERROR;
-        /// @attention 局部变量v被释放似乎不会有太大问题
         vector<Field*> v;
         Field* f;
 
+        ASSERT_DOM_OBJECT_IS_ARRAY(fieldsCol)
         for (SizeType j = 0; j < fieldsCol.Size(); j++) {
             const Value& field = fieldsCol[j];
-            if (!field.IsObject())
-                throw HAS_PARSE_ERROR;
-
-            if (!field.HasMember("name"))
-                throw HAS_PARSE_ERROR;
-            if (!field["name"].IsString())
-                throw HAS_PARSE_ERROR;
-            name = field["name"].GetString();
-
-            if (!field.HasMember("field"))
-                throw HAS_PARSE_ERROR;
-            if (!field["field"].IsArray())
-                throw HAS_PARSE_ERROR;
+            ASSERT_DOM_OBJECT_IS_OBJECT(field)
+            DOM_OBJECT_MEMBER_TO_VAR_STRING(field, "name", name);
+            ASSERT_DOM_OBJECT_HAS_MEMBER(field, "field")
+            ASSERT_DOM_OBJECT_IS_ARRAY(field["field"])
 
             f = new Field{name};
             const Value& fieldRow = field["field"];
             for (SizeType m = 0; m < fieldRow.Size(); m++) {
                 const Value& fieldCol = fieldRow[m];
-                if (!fieldCol.IsArray())
-                    throw HAS_PARSE_ERROR;
+                ASSERT_DOM_OBJECT_IS_ARRAY(fieldCol)
 
                 for (SizeType n = 0; n < fieldCol.Size(); n++) {
                     const Value& scene = fieldCol[n];
-                    if (!scene.IsObject())
-                        throw HAS_PARSE_ERROR;
+                    ASSERT_DOM_OBJECT_IS_OBJECT(scene)
 
-                    if (!scene.HasMember("enemyId"))
-                        throw HAS_PARSE_ERROR;
-                    if (!scene["enemyId"].IsInt())
-                        throw HAS_PARSE_ERROR;
-                    enemyId = scene["enemyId"].GetInt();
+                    DOM_OBJECT_MEMBER_TO_VAR_STRING(scene, "enemyName", enemyName)
+                    DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "enemyPossibility", enemyPossibility)
+                    DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "money", money)
+                    DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "moneyPossibility", moneyPossibility)
+                    DOM_OBJECT_MEMBER_TO_VAR_STRING(scene, "medicineName", medicineName)
+                    DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "medicinePossibility", medicinePossibility)
 
-                    f->GetScene(m, n).Init(enemyId);
+                    f->GetScene(m, n).Init(enemyName, enemyPossibility, money, moneyPossibility, medicineName,
+                                           medicinePossibility);
                 }
             }
             map.PushField(f, i);
@@ -124,8 +110,7 @@ void MapGen::Init() {
     // }
 }
 
-void MapGen::MapExend() {
-}
+void MapGen::MapExend() {}
 
 void MapGen::Free() {
     map.Clear();

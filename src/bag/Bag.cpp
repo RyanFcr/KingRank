@@ -1,6 +1,7 @@
 #include "bag/Bag.h"
 #include "common/Global.h"
 #include "item/ItemGen.h"
+#include "text/TextGen.h"
 
 #include <utility>
 using std::make_pair;
@@ -95,4 +96,11 @@ bool Bag::Discard(const string& name, int num) {
 
     // unknown_item
     throw UNKNOWN_ITEM;
+}
+
+/**
+ * @brief print the items in the bag
+ */
+void Bag::ShowBag() const {
+    TextGen::PrintBag(*this);
 }
