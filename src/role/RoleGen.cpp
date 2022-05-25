@@ -83,7 +83,7 @@ void RoleGen::InitKing(Map& map) {
  */
 bool RoleGen::CheckRedundancy(const string& kingName, int& index) {
     string documentName;
-    
+
     ASSERT_DOM_OBJECT_IS_OBJECT(kingDocument)
     const Value& kings = kingDocument["kings"];
     for (SizeType i = 0; i < kings.Size(); i++) {
@@ -260,7 +260,7 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
             WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "fieldX")
             WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "fieldY")
             WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "sceneX")
-            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "sceneX")
+            WRITE_DOM_OBJECT_MEMBER_INT(kingData["position"], "sceneY")
 
             writer.EndObject();
         }

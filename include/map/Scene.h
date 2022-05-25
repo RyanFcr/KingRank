@@ -18,6 +18,13 @@ class Scene {
         medicinePossibility = meP;
     };
 
+    const string& GetEnemyName() const { return enemyName; }
+    int GetEnemyPossibility() const { return enemyPossibility; }
+    int GetMoney() const { return money; }
+    int GetMoneyPossibility() const { return moneyPossibility; }
+    const string& GetMedicineName() const { return medicineName; }
+    int GetMedicinePossibility() const { return moneyPossibility; }
+
    private:
     string enemyName;  // 出现敌人的名字
     int enemyPossibility; // 出现敌人的概率

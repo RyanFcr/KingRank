@@ -4,6 +4,7 @@
 #include <vector>
 using std::vector;
 
+#include "Scene.h"
 #include "Field.h"
 #include "common/Global.h"
 
