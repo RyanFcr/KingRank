@@ -36,6 +36,8 @@ int main() {
             RoleGen::king.ShowBag();
         } else if (input == "money") {
             RoleGen::king.ShowMoney();
+        } else if (input == "skill") {
+            RoleGen::king.ShowSkill();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

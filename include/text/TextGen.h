@@ -8,11 +8,13 @@ using std::cout;
 using std::ostream;
 using std::string;
 
+#include "bag/Bag.h"
 #include "common/Global.h"
 #include "common/Macro.h"
 #include "map/Map.h"
 #include "map/Scene.h"
-#include "bag/Bag.h"
+#include "skill/AttackSkill.h"
+#include "skill/SupportSkill.h"
 
 template <int ansiStyle = 0>
 ostream& style(ostream& out) {
@@ -27,6 +29,8 @@ class TextGen {
     static void PrintDirection(const Map& m, const Position& p);
     static void PrintBag(const Bag& bag);
     static void PrintMoney(int money);
+    static void PrintSkill(const map<string, AttackSkill>& attackSkills,
+                           const map<string, SupportSkill>& supportSkills);
 
     template <int ansiStyle = 0>
     static void Print(string s, string end = "\n");

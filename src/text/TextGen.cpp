@@ -161,8 +161,7 @@ void TextGen::PrintBag(const Bag& bag) {
     Print("Weapons:");
     if (bag.GetWeapons().size() == 0) {
         Print("empty", "");
-    }
-    else {
+    } else {
         for (auto& weapon : bag.GetWeapons()) {
             Print(weapon.first, " ");
         }
@@ -171,8 +170,7 @@ void TextGen::PrintBag(const Bag& bag) {
     Print("Medicines:");
     if (bag.GetMedicines().size() == 0) {
         Print("empty", "");
-    }
-    else {
+    } else {
         for (auto& medicine : bag.GetMedicines()) {
             Print(medicine.first + ": " + to_string(medicine.second), " ");
         }
@@ -182,6 +180,27 @@ void TextGen::PrintBag(const Bag& bag) {
 
 void TextGen::PrintMoney(int money) {
     Print<reward>("Kin: " + to_string(money));
+}
+
+void TextGen::PrintSkill(const map<string, AttackSkill>& attackSkills, const map<string, SupportSkill>& supportSkills) {
+    Print<warning>("Attack Skills:");
+    if (attackSkills.size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& attackSkill : attackSkills) {
+            Print(attackSkill.first, " ");
+        }
+    }
+    Print("");
+    Print<buff>("Support Skills:");
+    if (supportSkills.size() == 0) {
+        Print("empty", "");
+    } else {
+        for (auto& supportSkill : supportSkills) {
+            Print(supportSkill.first, " ");
+        }
+    }
+    Print("");
 }
 
 string TextGen::Input() {
