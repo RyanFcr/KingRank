@@ -42,7 +42,7 @@ void RoleGen::InitKing(Map& map) {
 
     ifstream ifs(kingFile, ios::in);
     getline(ifs, kingData);
-    CHECK_DOM_OBJECT_HAS_PARSE_ERROR(kingDocument, kingData.c_str())
+    PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
     ifs.close();
 
     TextGen::Print("Welcome to the world of Kings!");

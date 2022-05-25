@@ -3,17 +3,19 @@
 #include "common/Config.h"
 #include "common/Global.h"
 #include "common/Macro.h"
-#include "rapidjson/document.h"
 #include "text/TextGen.h"
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
 
-// #include <exception>
 #include <fstream>
 #include <iostream>
 #include <vector>
 using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
-// using std::bad_alloc;
+using rapidjson::Writer;
+using rapidjson::StringBuffer;
+using std::ofstream;
 using std::ifstream;
 using std::ios;
 using std::string;
@@ -21,7 +23,6 @@ using std::vector;
 
 // instantiation
 Map MapGen::map;
-Document MapGen::d;
 
 /**
  * @brief Init function of Map
@@ -42,7 +43,8 @@ void MapGen::Init() {
     string enemyName, medicineName;
     int enemyPossibility, money, moneyPossibility, medicinePossibility;
 
-    CHECK_DOM_OBJECT_HAS_PARSE_ERROR(d, mapData.c_str())
+    Document d;
+    PARSE_DOM_OBJECT(d, mapData.c_str())
     ASSERT_DOM_OBJECT_HAS_MEMBER(d, "fields")
     ASSERT_DOM_OBJECT_IS_ARRAY(d["fields"])
 
@@ -110,8 +112,30 @@ void MapGen::Init() {
     // }
 }
 
-void MapGen::MapExend() {}
+/**
+ * @brief map will extend a new field
+ * 
+ */
+void MapGen::MapExend() {
+
+}
 
 void MapGen::Free() {
     map.Clear();
+}
+
+/**
+ * @brief save the map to json file 
+ * @throw OPEN_FILE_FAIL
+ */
+void MapGen::Save() {
+    ofstream ofs(mapFile, ios::out);
+    if (ofs.fail())
+        throw OPEN_FILE_FAIL;
+    StringBuffer sb;
+    Writer<StringBuffer> writer(sb);
+    map.Serialize(writer);
+    string kingData = sb.GetString();
+    ofs << kingData;
+    ofs.close();
 }

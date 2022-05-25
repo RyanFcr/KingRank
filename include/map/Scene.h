@@ -1,11 +1,21 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
+#include "common/Macro.h"
+
 #include <string>
 #include <iostream>
 using std::cout;
 using std::endl;
 using std::string;
+
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+using rapidjson::SizeType;
+using rapidjson::StringBuffer;
+using rapidjson::Value;
+using rapidjson::Writer;
 
 class Scene {
    public:
@@ -24,6 +34,18 @@ class Scene {
     int GetMoneyPossibility() const { return moneyPossibility; }
     const string& GetMedicineName() const { return medicineName; }
     int GetMedicinePossibility() const { return moneyPossibility; }
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+        SERIALIZE_STRING("enemyName", enemyName)
+        SERIALIZE_INT("enemyPossibility", enemyPossibility)
+        SERIALIZE_INT("money", money)
+        SERIALIZE_INT("moneyPossibility", moneyPossibility)
+        SERIALIZE_STRING("medicineName", medicineName)
+        SERIALIZE_INT("medicinePossibility", medicinePossibility)
+        writer.EndObject();
+    }
 
    private:
     string enemyName;  // 出现敌人的名字

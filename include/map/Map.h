@@ -4,9 +4,17 @@
 #include <vector>
 using std::vector;
 
-#include "Scene.h"
 #include "Field.h"
+#include "Scene.h"
 #include "common/Global.h"
+
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+using rapidjson::SizeType;
+using rapidjson::StringBuffer;
+using rapidjson::Value;
+using rapidjson::Writer;
 
 class Map {
    public:
@@ -24,6 +32,24 @@ class Map {
     void Clear();
 
     bool IsValidPosition(Position& p) const;
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+        writer.String("fields");
+
+        writer.StartArray();
+        for (auto row : fields) {
+            writer.StartArray();
+            for (auto col : row) {
+                col->Serialize(writer);
+            }
+            writer.EndArray();
+        }
+        writer.EndArray();
+
+        writer.EndObject();
+    }
 
    private:
     vector<vector<Field*>> fields;
