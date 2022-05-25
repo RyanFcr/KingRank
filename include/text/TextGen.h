@@ -26,6 +26,7 @@ class TextGen {
     static void PrintTitle();
     static void PrintDirection(const Map& m, const Position& p);
     static void PrintBag(const Bag& bag);
+    static void PrintMoney(int money);
 
     template <int ansiStyle = 0>
     static void Print(string s, string end = "\n");

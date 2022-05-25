@@ -159,15 +159,29 @@ void TextGen::PrintBag(const Bag& bag) {
     Print("Weight Limit: " + to_string(bag.GetWeightLimit()));
     Print("Current Weight: " + to_string(bag.GetCurWeight()));
     Print("Weapons:");
-    for (auto& weapon : bag.GetWeapons()) {
-        Print(weapon.first, " ");
+    if (bag.GetWeapons().size() == 0) {
+        Print("empty", "");
+    }
+    else {
+        for (auto& weapon : bag.GetWeapons()) {
+            Print(weapon.first, " ");
+        }
     }
     Print("");
     Print("Medicines:");
-    for (auto& medicine : bag.GetMedicines()) {
-        Print(medicine.first + ": " + to_string(medicine.second), " ");
+    if (bag.GetMedicines().size() == 0) {
+        Print("empty", "");
+    }
+    else {
+        for (auto& medicine : bag.GetMedicines()) {
+            Print(medicine.first + ": " + to_string(medicine.second), " ");
+        }
     }
     Print("");
+}
+
+void TextGen::PrintMoney(int money) {
+    Print<reward>("Kin: " + to_string(money));
 }
 
 string TextGen::Input() {
