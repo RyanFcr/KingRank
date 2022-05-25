@@ -6,9 +6,11 @@
 #include "Weapon.h"
 #include "rapidjson/document.h"
 
+#include <vector>
 #include <map>
 #include <string>
 using std::map;
+using std::vector;
 using std::string;
 using rapidjson::Value;
 
@@ -19,6 +21,8 @@ class ItemGen {
     static bool IsWeaponExist(const string &name);
     static Weapon GetWeapon(const string &name);
     static Medicine GetMedicine(const string &name);
+    static string GetRandomMedicineName();
+    static string GetRandomWeaponName();
 
    private:
     static void InitMedicine(const Value& data);
@@ -27,6 +31,8 @@ class ItemGen {
    private:
     static map<string, Medicine> medicines;
     static map<string, Weapon> weapons;
+    static vector<string> medicineNames;
+    static vector<string> weaponNames;
 };
 
 #endif

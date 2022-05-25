@@ -15,10 +15,13 @@ using std::ifstream;
 using std::ios;
 using std::make_pair;
 using std::string;
+using std::vector;
 
 // instantiation
 map<string, Medicine> ItemGen::medicines;
 map<string, Weapon> ItemGen::weapons;
+vector<string> ItemGen::weaponNames;
+vector<string> ItemGen::medicineNames;
 
 /**
  * @brief Deserialize into `Item' objects from json file
@@ -102,6 +105,7 @@ void ItemGen::InitMedicine(const Value& data) {
         MPValue = medicine["MP"].GetInt();
 
         medicines.insert(make_pair(name, Medicine{name, description, weight, HPValue, MPValue}));
+        medicineNames.push_back(name);
     }
 }
 
@@ -149,6 +153,7 @@ void ItemGen::InitWeapon(const Value& data) {
         abrasionLoss = weapon["abrasionLoss"].GetInt();
 
         weapons.insert(make_pair(name, Weapon{name, description, weight, attack, abrasionLoss}));
+        weaponNames.push_back(name);
     }
 }
 
@@ -192,4 +197,18 @@ Weapon ItemGen::GetWeapon(const string &name) {
 Medicine ItemGen::GetMedicine(const string &name) {
     if (!IsMedicineExist(name)) throw UNKNOWN_ITEM;
     return medicines[name];
+}
+
+string ItemGen::GetRandomMedicineName() {
+    if (medicineNames.size() == 0)
+        return "";
+    int index = rand() % (medicineNames.size());
+    return medicineNames[index];
+}
+
+string ItemGen::GetRandomWeaponName() {
+    if (weaponNames.size() == 0)
+        return "";
+    int index = rand() % (weaponNames.size());
+    return weaponNames[index];
 }

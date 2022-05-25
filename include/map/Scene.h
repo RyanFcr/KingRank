@@ -3,8 +3,8 @@
 
 #include "common/Macro.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 using std::cout;
 using std::endl;
 using std::string;
@@ -19,7 +19,9 @@ using rapidjson::Writer;
 
 class Scene {
    public:
-    void Init(string eN, int eP, int m, int mP, string meN, int meP) {
+    void InitPlainScene();
+    void InitCountryScene();
+    void Load(const string& eN, int eP, int m, int mP, const string& meN, int meP) {
         enemyName = eN;
         enemyPossibility = eP;
         money = m;
@@ -48,12 +50,12 @@ class Scene {
     }
 
    private:
-    string enemyName;  // 出现敌人的名字
-    int enemyPossibility; // 出现敌人的概率
-    int money; // 出现钱的数量
-    int moneyPossibility; // 出现钱的概率
-    string medicineName; // 出现药品的名字
-    int medicinePossibility; // 出现药品的概率
+    string enemyName;         // 出现敌人的名字
+    int enemyPossibility;     // 出现敌人的概率
+    int money;                // 出现钱的数量
+    int moneyPossibility;     // 出现钱的概率
+    string medicineName;      // 出现药品的名字
+    int medicinePossibility;  // 出现药品的概率
 };
 
 #endif  // SCENE_H_

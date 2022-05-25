@@ -79,7 +79,7 @@ void MapGen::Init() {
                     DOM_OBJECT_MEMBER_TO_VAR_STRING(scene, "medicineName", medicineName)
                     DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "medicinePossibility", medicinePossibility)
 
-                    f->GetScene(m, n).Init(enemyName, enemyPossibility, money, moneyPossibility, medicineName,
+                    f->GetScene(m, n).Load(enemyName, enemyPossibility, money, moneyPossibility, medicineName,
                                            medicinePossibility);
                 }
             }
@@ -110,14 +110,6 @@ void MapGen::Init() {
     //     TextGen::Print<warning>(error);
     //     exit(1);  // exit forcefully
     // }
-}
-
-/**
- * @brief map will extend a new field
- * 
- */
-void MapGen::MapExend() {
-
 }
 
 void MapGen::Free() {

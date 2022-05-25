@@ -18,18 +18,16 @@ using rapidjson::Writer;
 
 class Field {
    public:
-    Field(string name)
-        : name(name) {}
-    Scene& GetScene(int row, int col) {
-        return field[row][col];
-    }
+    Field(string name = initialFieldName) : name(name) {}
+    void InitScenes();
+    Scene& GetScene(int row, int col) { return field[row][col]; }
     const string& GetName() const { return name; }
 
     template <typename Writer>
     void Serialize(Writer& writer) const {
         writer.StartObject();
         SERIALIZE_STRING("name", name)
-        
+
         writer.String("field");
         writer.StartArray();
         for (int i = 0; i < fieldSize; i++) {
