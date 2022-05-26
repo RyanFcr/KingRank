@@ -34,11 +34,12 @@ class King : public Role {
          int MP = initialMP,
          int experience = initialExperience,
          int money = initialMoney)
-        : Role(kingName, position, attack, level, maxHP, HP, maxMP, MP),
+        : Role(kingName, attack, level, maxHP, HP, maxMP, MP),
           experience(experience),
           territoryPosition(territoryPosition),
           countryName(countryName),
-          money(money) {
+          money(money),
+          position(position) {
         for (auto& item : initialMedicines) {
             InsertMedicine(item.first, item.second);
         }
@@ -55,8 +56,7 @@ class King : public Role {
     const string& GetCountryName() const { return countryName; }
     int GetMoney() const { return money; }
     const Bag& GetBag() const { return bag; }
-    const map<string, AttackSkill>& GetAttackSkills() const { return attackSkills; }
-    const map<string, SupportSkill>& GetSupportSkills() const { return supportSkills; }
+    Position GetPosition() const { return position; }
 
     void SetExperience(int experience_) { experience = experience_; }
     void SetTerritoryPosition(const FieldPosition& territoryPosition_) { territoryPosition = territoryPosition_; }
@@ -65,19 +65,13 @@ class King : public Role {
     void SetBagLevel(int level_) { bag.SetLevel(level_); }
     void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
     void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
+    void SetPosition(const Position& position_) { position = position_; }
 
     void IncreaseMoney(int money_) { money += money_; }
 
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
     bool DiscardItem(const string& name, int num = 1) { return bag.Discard(name, num); }
-
-    void MasterAttackSkill(const AttackSkill& attackSkill) {
-        attackSkills.insert(make_pair(attackSkill.GetName(), attackSkill));
-    }
-    void MasterSupportSkill(const SupportSkill& supportSkill) {
-        supportSkills.insert(make_pair(supportSkill.GetName(), supportSkill));
-    }
 
     void ShowMap(const Map& m) const;
     void GoUp(const Map& m);
@@ -92,40 +86,39 @@ class King : public Role {
    private:
     void TriggerEvent(const Map& m);
 
-    template <typename Writer>
-    void Serialize(Writer& writer) const {
-        writer.StartObject();
+    // template <typename Writer>
+    // void Serialize(Writer& writer) const {
+    //     writer.StartObject();
 
-        Role::Serialize(writer);
+    //     Role::Serialize(writer);
 
-        writer.String("experience");
-        writer.Int(experience);
+    //     writer.String("experience");
+    //     writer.Int(experience);
 
-        writer.String("territoryPosition");
-        territoryPosition.Serialize(writer);
+    //     writer.String("territoryPosition");
+    //     territoryPosition.Serialize(writer);
 
-        writer.String("countryName");
-        writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
+    //     writer.String("countryName");
+    //     writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
 
-        writer.String("money");
-        writer.Int(money);
+    //     writer.String("money");
+    //     writer.Int(money);
 
-        writer.String("bag");
-        bag.Serialize(writer);
+    //     writer.String("bag");
+    //     bag.Serialize(writer);
 
-        /// @todo skills
+    //     /// @todo skills
 
-        writer.EndObject();
-    }
+    //     writer.EndObject();
+    // }
 
    private:
-    int experience;                           // 当前的经验值
-    FieldPosition territoryPosition;          // 领地位置
-    string countryName;                       // 领地名称
-    int money;                                // 拥有的金币量
-    Bag bag;                                  // 背包
-    map<string, AttackSkill> attackSkills;    // 攻击技能列表
-    map<string, SupportSkill> supportSkills;  // 辅助技能列表
+    int experience;                   // 当前的经验值
+    FieldPosition territoryPosition;  // 领地位置
+    string countryName;               // 领地名称
+    int money;                        // 拥有的金币量
+    Bag bag;                          // 背包
+    Position position;                // 当前位置
 };
 
 #endif  // KING_H_

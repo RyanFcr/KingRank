@@ -49,11 +49,13 @@ const string mapFile = "..\\..\\data\\map.json";
 const string itemFile = "..\\..\\data\\item.json";
 const string kingFile = "..\\..\\data\\king.json";
 const string skillFile = "..\\..\\data\\skill.json";
+const string enemyFile = "..\\..\\data\\enemy.json";
 #else
 const string mapFile = "../../data/map.json";
 const string itemFile = "../../data/item.json";
 const string kingFile = "../../data/king.json";
 const string skillFile = "../../data/skill.json";
+const string enemyFile = "../../data/enemy.json";
 #endif
 
 #endif  // CONFIG_H_

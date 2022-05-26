@@ -10,6 +10,7 @@ int main() {
     string input;
     ItemGen::Init();
     SkillGen::Init();
+    RoleGen::InitEnemy();
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();
