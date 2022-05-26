@@ -11,6 +11,9 @@ class Enemy : public Role {
    public:
     Enemy(string name, int level, int attack, int maxHP, int HP, int maxMP, int MP, int experienceVal, int moneyVal)
         : Role(name, level, attack, maxHP, HP, maxMP, MP), experienceVal(experienceVal), moneyVal(moneyVal) {}
+    
+    int GetExperienceVal() const { return experienceVal; }
+    int GetMoneyVal() const { return moneyVal; }
 
    private:
     int experienceVal;  // 得到的经验值

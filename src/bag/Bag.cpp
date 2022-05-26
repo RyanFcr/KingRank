@@ -104,3 +104,8 @@ bool Bag::Discard(const string& name, int num) {
 void Bag::ShowBag() const {
     TextGen::PrintBag(*this);
 }
+
+void Bag::DiscardAll() {
+    medicines.clear();
+    weapons.clear();
+}

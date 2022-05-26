@@ -38,6 +38,10 @@ class Role {
     int GetMP() const { return MP; }
     const map<string, AttackSkill>& GetAttackSkills() const { return attackSkills; }
     const map<string, SupportSkill>& GetSupportSkills() const { return supportSkills; }
+    const AttackSkill& GetAttackSkill(const string& skillName) const { return attackSkills.at(skillName); }
+    const SupportSkill& GetSupportSkill(const string& skillName) const { return supportSkills.at(skillName); }
+    const AttackSkill& GetRandomAttackSkill();
+    const SupportSkill& GetRandomSupportSkill();
 
     void SetName(const string& name_) { name = name_; }
     void SetLevel(int level_) { level = level_; }
@@ -47,6 +51,13 @@ class Role {
     void SetMaxMP(int maxMP_) { maxMP = maxMP_; }
     void SetMP(int MP_) { MP = MP_; }
 
+    void IncreaseLevel(int delta) { level += delta; }
+    void IncreaseAttack(int delta) { attack += delta; }
+    void IncreaseMaxHP(int delta) { maxHP += delta; }
+    void IncreaseMaxMP(int delta) { maxMP += delta; }
+    void IncreaseMP(int delta) { MP += delta; }
+    void IncreaseHP(int delta) { HP += delta; }
+
     void MasterAttackSkill(const AttackSkill& attackSkill) {
         attackSkills.insert(make_pair(attackSkill.GetName(), attackSkill));
     }
@@ -54,33 +65,8 @@ class Role {
         supportSkills.insert(make_pair(supportSkill.GetName(), supportSkill));
     }
 
-    // template <typename Writer>
-    // void Serialize(Writer& writer) const {
-    //     writer.String("name");
-    //     const string name = GetName();
-    //     writer.String(name.c_str(), static_cast<SizeType>(name.length()));
-
-    //     writer.String("level");
-    //     writer.Int(GetLevel());
-
-    //     writer.String("attack");
-    //     writer.Int(GetAttack());
-
-    //     writer.String("maxHP");
-    //     writer.Int(GetMaxHP());
-
-    //     writer.String("HP");
-    //     writer.Int(GetHP());
-
-    //     writer.String("maxMP");
-    //     writer.Int(GetMaxMP());
-
-    //     writer.String("MP");
-    //     writer.Int(GetMP());
-
-    //     writer.String("position");
-    //     position.Serialize(writer);
-    // }
+    bool HasAttackSkill(const string& name) { return attackSkills.count(name) != 0; }
+    bool HasSupportSkill(const string& name) { return supportSkills.count(name) != 0; }
 
    protected:
     string name;                              // 名字

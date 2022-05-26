@@ -29,8 +29,10 @@ class TextGen {
     static void PrintDirection(const Map& m, const Position& p);
     static void PrintBag(const Bag& bag);
     static void PrintMoney(int money);
-    static void PrintSkill(const map<string, AttackSkill>& attackSkills,
+    static void PrintSkills(const map<string, AttackSkill>& attackSkills,
                            const map<string, SupportSkill>& supportSkills);
+    static void PrintAttackSkills(const map<string, AttackSkill>& attackSkills);
+    static void PrintSupportSkills(const map<string, SupportSkill>& supportSkills);
 
     template <int ansiStyle = 0>
     static void Print(string s, string end = "\n");

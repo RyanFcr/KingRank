@@ -27,6 +27,7 @@ const int initialMaxMP = 100;       // 初始最大魔法
 const int initialMP = 100;          // 初始魔法
 const int initialExperience = 100;  // 初始经验
 const int initialMoney = 100;       // 初始金钱
+const int escapePossibility = 30;   // 逃跑概率
 
 // 技能相关
 const string initialAttackSkills[]{"普通攻击"};
@@ -42,6 +43,9 @@ const int unitWeightLimitPrice = 1000;  // 背包单位容量价格
 // 物品相关
 const int maxAbrasion = 100;  // 武器的最大磨损量
 const pair<string, int> initialMedicines[]{pair<string, int>("肉包", 1), pair<string, int>("魔法丸子", 1)};
+
+// 战斗相关
+const int kingFirst = 50;  // 国王先的概率
 
 // 文件相关
 #ifdef _WIN32

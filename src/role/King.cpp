@@ -1,6 +1,9 @@
 #include "role/King.h"
 #include <string>
 #include "item/ItemGen.h"
+#include "role/RoleGen.h"
+#include "combat/CombatSystem.h"
+
 using std::to_string;
 
 void King::ShowMap(const Map& m) const {
@@ -11,8 +14,16 @@ void King::ShowMoney() const {
     TextGen::PrintMoney(money);
 }
 
-void King::ShowSkill() const {
-    TextGen::PrintSkill(attackSkills, supportSkills);
+void King::ShowSkills() const {
+    TextGen::PrintSkills(attackSkills, supportSkills);
+}
+
+void King::ShowAttackSkills() const {
+    TextGen::PrintAttackSkills(attackSkills);
+}
+
+void King::ShowSupportSkills() const {
+    TextGen::PrintSupportSkills(supportSkills);
 }
 
 void King::GoUp(const Map& m) {
@@ -89,4 +100,19 @@ void King::TriggerEvent(const Map& m) {
         } else
             TextGen::Print<warning>("You ignore " + medicineName + "!");
     }
+
+    // Combat
+    if (rand() % 100 <= s.GetEnemyPossibility()) {
+        Enemy e = RoleGen::enemys.at(s.GetEnemyName());
+        TextGen::Print<warning>("You meet with " + e.GetName() + "!");
+        CombatSystem::Combat(*this, e);
+    }
+}
+
+void King::Resurrect() {
+    SetPosition({territoryPosition.fieldX, territoryPosition.fieldY, rand() % fieldSize, rand() % fieldSize});
+    SetMoney(0);
+    SetHP(maxHP);
+    SetMP(maxMP);
+    bag.DiscardAll();
 }

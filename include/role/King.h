@@ -81,36 +81,14 @@ class King : public Role {
 
     void ShowBag() const { bag.ShowBag(); }
     void ShowMoney() const;
-    void ShowSkill() const;
+    void ShowSkills() const;
+    void ShowAttackSkills() const;
+    void ShowSupportSkills() const;
+
+    void Resurrect();
 
    private:
     void TriggerEvent(const Map& m);
-
-    // template <typename Writer>
-    // void Serialize(Writer& writer) const {
-    //     writer.StartObject();
-
-    //     Role::Serialize(writer);
-
-    //     writer.String("experience");
-    //     writer.Int(experience);
-
-    //     writer.String("territoryPosition");
-    //     territoryPosition.Serialize(writer);
-
-    //     writer.String("countryName");
-    //     writer.String(countryName.c_str(), static_cast<SizeType>(countryName.length()));
-
-    //     writer.String("money");
-    //     writer.Int(money);
-
-    //     writer.String("bag");
-    //     bag.Serialize(writer);
-
-    //     /// @todo skills
-
-    //     writer.EndObject();
-    // }
 
    private:
     int experience;                   // 当前的经验值

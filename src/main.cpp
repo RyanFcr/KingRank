@@ -40,7 +40,7 @@ int main() {
         } else if (input == "money") {
             RoleGen::king.ShowMoney();
         } else if (input == "skill") {
-            RoleGen::king.ShowSkill();
+            RoleGen::king.ShowSkills();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }
