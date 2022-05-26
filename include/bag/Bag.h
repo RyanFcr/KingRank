@@ -27,6 +27,7 @@ class Bag {
     bool InsertMedicine(const string& name, int num = 1);
     bool InsertWeapon(const Weapon& weapon);
     bool Discard(const string& name, int num = 1);
+    void DiscardAll();
 
     void ShowBag() const;
 

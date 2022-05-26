@@ -10,6 +10,7 @@ int main() {
     string input;
     ItemGen::Init();
     SkillGen::Init();
+    RoleGen::InitEnemy();
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();
@@ -39,7 +40,7 @@ int main() {
         } else if (input == "money") {
             RoleGen::king.ShowMoney();
         } else if (input == "skill") {
-            RoleGen::king.ShowSkill();
+            RoleGen::king.ShowSkills();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

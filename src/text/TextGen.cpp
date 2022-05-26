@@ -180,7 +180,12 @@ void TextGen::PrintMoney(int money) {
     Print<reward>("Kin: " + to_string(money));
 }
 
-void TextGen::PrintSkill(const map<string, AttackSkill>& attackSkills, const map<string, SupportSkill>& supportSkills) {
+void TextGen::PrintSkills(const map<string, AttackSkill>& attackSkills, const map<string, SupportSkill>& supportSkills) {
+    PrintAttackSkills(attackSkills);
+    PrintSupportSkills(supportSkills);
+}
+
+void TextGen::PrintAttackSkills(const map<string, AttackSkill>& attackSkills) {
     Print<warning>("Attack Skills:");
     if (attackSkills.size() == 0) {
         Print("empty", "");
@@ -190,6 +195,9 @@ void TextGen::PrintSkill(const map<string, AttackSkill>& attackSkills, const map
         }
     }
     Print("");
+}
+
+void TextGen::PrintSupportSkills(const map<string, SupportSkill>& supportSkills) {
     Print<buff>("Support Skills:");
     if (supportSkills.size() == 0) {
         Print("empty", "");

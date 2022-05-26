@@ -3,6 +3,7 @@
 
 #include "map/Map.h"
 #include "role/King.h"
+#include "role/Enemy.h"
 
 #include "rapidjson/document.h"
 using rapidjson::Document;
@@ -10,6 +11,7 @@ using rapidjson::Document;
 class RoleGen {
    public:
     static void InitKing(Map& map);
+    static void InitEnemy();
     static void SaveKing();
 
    private:
@@ -20,6 +22,7 @@ class RoleGen {
 
    public:
     static King king;
+    static map<string, Enemy> enemys;
 
    private:
     static Document kingDocument;
