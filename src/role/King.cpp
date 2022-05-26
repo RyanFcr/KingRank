@@ -102,7 +102,7 @@ void King::TriggerEvent(const Map& m) {
     }
 
     // Combat
-    if (rand() % 100 <= s.GetEnemyPossibility()) {
+    if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
         Enemy e = RoleGen::enemys.at(s.GetEnemyName());
         TextGen::Print<warning>("You meet with " + e.GetName() + "!");
         CombatSystem::Combat(*this, e);
