@@ -2,6 +2,7 @@
 #include "item/ItemGen.h"
 #include "map/MapGen.h"
 #include "role/RoleGen.h"
+#include "role/EnemyGen.h"
 #include "skill/SkillGen.h"
 #include "text/TextGen.h"
 
@@ -10,7 +11,7 @@ int main() {
     string input;
     ItemGen::Init();
     SkillGen::Init();
-    RoleGen::InitEnemy();
+    EnemyGen::InitEnemy();
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();

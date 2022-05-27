@@ -3,6 +3,7 @@
 #include "combat/CombatSystem.h"
 #include "item/ItemGen.h"
 #include "role/RoleGen.h"
+#include "role/EnemyGen.h"
 
 using std::to_string;
 
@@ -113,7 +114,7 @@ void King::TriggerEvent(const Map& m) {
 
     // Combat
     if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
-        Enemy e = RoleGen::enemys.at(s.GetEnemyName());
+        Enemy e = EnemyGen::enemys.at(s.GetEnemyName());
         TextGen::Print<warning>("You meet with " + e.GetName() + "!");
         CombatSystem::Combat(*this, e);
     }
