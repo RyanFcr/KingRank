@@ -52,6 +52,7 @@ class King : public Role {
     }
 
     int GetExperience() const { return experience; }
+    int GetLevelUpExperience() const { return 100 + level * ((level + 10) / 10) * 10; }
     const FieldPosition& GetTerritoryPosition() const { return territoryPosition; }
     const string& GetCountryName() const { return countryName; }
     int GetMoney() const { return money; }
@@ -68,6 +69,7 @@ class King : public Role {
     void SetPosition(const Position& position_) { position = position_; }
 
     void IncreaseMoney(int money_) { money += money_; }
+    void IncreaseExperience(int experience_);
 
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
@@ -80,10 +82,13 @@ class King : public Role {
     void GoRight(const Map& m);
 
     void ShowBag() const { bag.ShowBag(); }
+    void ShowMedicine() const { bag.ShowMedicine(); }
+    void ShowWeapon() const { bag.ShowWeapon(); }
     void ShowMoney() const;
     void ShowSkills() const;
     void ShowAttackSkills() const;
     void ShowSupportSkills() const;
+    void ShowState() const;
 
     void Resurrect();
 

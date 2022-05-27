@@ -1,8 +1,8 @@
 #include "role/King.h"
 #include <string>
+#include "combat/CombatSystem.h"
 #include "item/ItemGen.h"
 #include "role/RoleGen.h"
-#include "combat/CombatSystem.h"
 
 using std::to_string;
 
@@ -15,15 +15,25 @@ void King::ShowMoney() const {
 }
 
 void King::ShowSkills() const {
-    TextGen::PrintSkills(attackSkills, supportSkills);
+    TextGen::PrintSkills(attackSkillNames, supportSkillNames);
 }
 
 void King::ShowAttackSkills() const {
-    TextGen::PrintAttackSkills(attackSkills);
+    TextGen::PrintAttackSkills(attackSkillNames);
 }
 
 void King::ShowSupportSkills() const {
-    TextGen::PrintSupportSkills(supportSkills);
+    TextGen::PrintSupportSkills(supportSkillNames);
+}
+
+void King::ShowState() const {
+    TextGen::Print("Name: " + GetName());
+    TextGen::Print("Level: " + to_string(GetLevel()));
+    TextGen::Print("Exp: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
+    TextGen::Print("HP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
+    TextGen::Print("MP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
+    TextGen::Print("Attack:" + to_string(GetAttack()));
+    TextGen::Print("Country: " + GetCountryName());
 }
 
 void King::GoUp(const Map& m) {
@@ -102,7 +112,7 @@ void King::TriggerEvent(const Map& m) {
     }
 
     // Combat
-    if (rand() % 100 <= s.GetEnemyPossibility()) {
+    if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
         Enemy e = RoleGen::enemys.at(s.GetEnemyName());
         TextGen::Print<warning>("You meet with " + e.GetName() + "!");
         CombatSystem::Combat(*this, e);
@@ -115,4 +125,51 @@ void King::Resurrect() {
     SetHP(maxHP);
     SetMP(maxMP);
     bag.DiscardAll();
+}
+
+void King::IncreaseExperience(int experience_) {
+    experience += experience_;
+    if (experience >= GetLevelUpExperience()) {
+        IncreaseLevel(1);
+        SetExperience(0);
+
+        TextGen::Print("Level up! Now your level is ", "");
+        TextGen::Print<buff>(to_string(GetLevel()));
+
+        switch (level) {
+            case 2:
+                IncreaseMaxHP(100);
+                break;
+            case 3:
+                IncreaseAttack(2);
+                break;
+            case 4:
+                IncreaseMaxMP(50);
+                break;
+            case 5:
+                IncreaseMaxHP(200);
+                break;
+            case 6:
+                IncreaseAttack(2);
+                break;
+            case 7:
+                IncreaseMaxHP(300);
+                break;
+            case 8:
+                IncreaseMaxMP(100);
+                break;
+            case 9:
+                IncreaseAttack(5);
+                break;
+            case 10:
+                IncreaseMaxHP(300);
+                IncreaseMaxMP(50);
+                break;
+            default:
+                break;
+        }
+
+        SetHP(GetMaxHP());
+        SetMP(GetMaxMP());
+    }
 }

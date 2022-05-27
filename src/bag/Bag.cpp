@@ -3,9 +3,6 @@
 #include "item/ItemGen.h"
 #include "text/TextGen.h"
 
-#include <utility>
-using std::make_pair;
-
 #include <iostream>
 using std::cout;
 /**
@@ -25,6 +22,10 @@ bool Bag::InsertMedicine(const string& name, int num) {
             // have enought space
             medicines[name] += num;
             curWeight += num * weight;
+
+            medicineNames.clear();
+            for (auto& item : medicines)
+                medicineNames.push_back(item);
             return true;
         }
         return false;
@@ -53,6 +54,10 @@ bool Bag::InsertWeapon(const Weapon& weapon) {
         if (curWeight + weight <= weightLimit) {
             weapons.insert(make_pair(name, weapon));
             curWeight += weight;
+
+            weaponNames.clear();
+            for (auto& item : weapons)
+                weaponNames.push_back(item.first);
             return true;
         }
         return false;
@@ -78,6 +83,12 @@ bool Bag::Discard(const string& name, int num) {
             // have enough medicines
             medicines[name] -= num;
             curWeight -= num * weight;
+            if (medicines[name] == 0)
+                medicines.erase(name);
+
+            medicineNames.clear();
+            for (auto& item : medicines)
+                medicineNames.push_back(item);
             return true;
         }
         return false;
@@ -91,6 +102,12 @@ bool Bag::Discard(const string& name, int num) {
         weight = ItemGen::GetWeapon(name).GetWeight();
         weapons.erase(name);
         curWeight -= weight;
+        if (medicines[name] == 0)
+                medicines.erase(name);
+
+        weaponNames.clear();
+        for (auto& item : weapons)
+            weaponNames.push_back(item.first);
         return true;
     }
 
@@ -105,7 +122,17 @@ void Bag::ShowBag() const {
     TextGen::PrintBag(*this);
 }
 
+void Bag::ShowMedicine() const {
+    TextGen::PrintMedicine(medicineNames);
+}
+
+void Bag::ShowWeapon() const {
+    TextGen::PrintWeapon(weaponNames);
+}
+
 void Bag::DiscardAll() {
     medicines.clear();
     weapons.clear();
+    medicineNames.clear();
+    weaponNames.clear();
 }
