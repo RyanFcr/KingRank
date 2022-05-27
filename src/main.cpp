@@ -41,6 +41,8 @@ int main() {
             RoleGen::king.ShowMoney();
         } else if (input == "skill") {
             RoleGen::king.ShowSkills();
+        } else if (input == "state") {
+            RoleGen::king.ShowState();
         } else
             TextGen::Print<warning>("Invalid Input!");
     }

@@ -156,21 +156,29 @@ void TextGen::PrintDirection(const Map& m, const Position& p) {
 void TextGen::PrintBag(const Bag& bag) {
     Print("Weight Limit: " + to_string(bag.GetWeightLimit()));
     Print("Current Weight: " + to_string(bag.GetCurWeight()));
-    Print("Weapons:");
-    if (bag.GetWeapons().size() == 0) {
+    PrintMedicine(bag.GetMedicineNames());
+    PrintWeapon(bag.GetWeaponNames());
+}
+
+void TextGen::PrintMedicine(const vector<pair<string, int>> medicineNames) {
+    Print("Medicines:");
+    if (medicineNames.size() == 0) {
         Print("empty", "");
     } else {
-        for (auto& weapon : bag.GetWeapons()) {
-            Print(weapon.first, " ");
+        for (size_t i = 0; i < medicineNames.size(); i++) {
+            Print(to_string(int(i)) + ". " + medicineNames[i].first + ":" + to_string(medicineNames[i].second), "  ");
         }
     }
     Print("");
-    Print("Medicines:");
-    if (bag.GetMedicines().size() == 0) {
+}
+
+void TextGen::PrintWeapon(const vector<string> weaponNames) {
+    Print("Weapons:");
+    if (weaponNames.size() == 0) {
         Print("empty", "");
     } else {
-        for (auto& medicine : bag.GetMedicines()) {
-            Print(medicine.first + ": " + to_string(medicine.second), " ");
+        for (size_t i = 0; i < weaponNames.size(); i++) {
+            Print(to_string(int(i)) + ". " + weaponNames[i], " ");
         }
     }
     Print("");

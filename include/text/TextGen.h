@@ -27,6 +27,8 @@ class TextGen {
     static void Init();
     static void PrintTitle();
     static void PrintDirection(const Map& m, const Position& p);
+    static void PrintMedicine(const vector<pair<string, int>> medicineNames);
+    static void PrintWeapon(const vector<string> weaponNames);
     static void PrintBag(const Bag& bag);
     static void PrintMoney(int money);
     static void PrintSkills(const vector<string>& attackSkills, const vector<string>& supportSkills);

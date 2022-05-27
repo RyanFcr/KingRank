@@ -2,7 +2,12 @@
 #define BAG_H_
 
 #include <map>
+#include <utility>
+#include <vector>
+using std::make_pair;
 using std::map;
+using std::pair;
+using std::vector;
 
 #include "common/Config.h"
 #include "item/Medicine.h"
@@ -20,6 +25,9 @@ class Bag {
     int GetCurWeight() const { return curWeight; }
     const map<string, int>& GetMedicines() const { return medicines; }
     const map<string, Weapon>& GetWeapons() const { return weapons; }
+    const vector<pair<string, int>>& GetMedicineNames() const { return medicineNames; }
+    const vector<string>& GetWeaponNames() const { return weaponNames; }
+    const string& GetMedicineNameByIndex(int index) const { return medicineNames[index].first; }
 
     void SetLevel(int level_) { level = level_; }
     void SetWeightLimit(int weightLimit_) { weightLimit = weightLimit_; }
@@ -30,43 +38,22 @@ class Bag {
     void DiscardAll();
 
     void ShowBag() const;
+    void ShowMedicine() const;
+    void ShowWeapon() const;
 
-    template <typename Writer>
-    void Serialize(Writer& writer) const {
-        writer.StartObject();
-
-        writer.String("level");
-        writer.Int(level);
-        writer.String("weightLimit");
-        writer.Int(weightLimit);
-        writer.String("curWeight");
-        writer.Int(curWeight);
-
-        writer.String("medicines");
-        writer.StartObject();
-        for (auto& item : medicines) {
-            writer.String(item.first.c_str(), static_cast<SizeType>(item.first.length()));
-            writer.Int(item.second);
-        }
-        writer.EndObject();
-
-        writer.String("weapons");
-        writer.StartObject();
-        for (auto& item : weapons) {
-            writer.String(item.first.c_str(), static_cast<SizeType>(item.first.length()));
-            item.second.Serialize(writer);
-        }
-        writer.EndObject();
-
-        writer.EndObject();
-    }
+    bool HasMedicineByIndex(size_t index) const { return medicineNames.size() > index; }
+    bool HasWeaponByIndex(size_t index) const { return weaponNames.size() > index; }
+    bool HasNoMedicine() const { return medicineNames.size() == 0; }
+    bool HasNoWeapon() const { return weaponNames.size() == 0; }
 
    private:
-    int level;                    // 背包等级
-    int weightLimit;              // 重量上限
-    int curWeight;                // 当前重量
-    map<string, int> medicines;   // 存放的药瓶(数量不定)
-    map<string, Weapon> weapons;  // 存放的武器(数量最多为1，但可以强化)
+    int level;                                // 背包等级
+    int weightLimit;                          // 重量上限
+    int curWeight;                            // 当前重量
+    map<string, int> medicines;               // 存放的药品(数量不定)
+    map<string, Weapon> weapons;              // 存放的武器(数量最多为1，但可以强化)
+    vector<pair<string, int>> medicineNames;  // 药品名列表
+    vector<string> weaponNames;               // 武器名列表
 };
 
 #endif  // BAG_H_

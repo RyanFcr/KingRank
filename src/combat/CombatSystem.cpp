@@ -1,5 +1,6 @@
 #include "combat/CombatSystem.h"
 #include "common/Config.h"
+#include "item/ItemGen.h"
 #include "role/Enemy.h"
 #include "role/King.h"
 #include "text/TextGen.h"
@@ -54,6 +55,8 @@ void CombatSystem::CombatWin(King& king, Enemy& enemy) {
     TextGen::Print("Congratulations, King! You get ", "");
     TextGen::Print<buff>(to_string(experienceVal) + " EXP", " and ");
     TextGen::Print<reward>(to_string(moneyVal) + " Kin", "!\n");
+    king.IncreaseMoney(moneyVal);
+    king.IncreaseExperience(experienceVal);
 }
 
 void CombatSystem::CombatLose(King& king) {
@@ -65,10 +68,11 @@ void CombatSystem::CombatLose(King& king) {
 void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
     string input;
     int inputInt;
-    int MPCost, damageVal, HPVal;
+    int MPCost, damageVal, HPVal, MPVal;
 
     escape = false;
     while (1) {
+        TextGen::Print<request>("Please input combat instruction!");
         input = TextGen::Input();
         if (input == "escape") {
             if (king.GetLevel() < 5 || rand() % 100 <= escapePossibility) {
@@ -108,7 +112,9 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                 TextGen::Print("You use ", "");
                 TextGen::Print<buff>(supportSkill.GetName(), "!\n");
                 MPCost = supportSkill.GetMPCost();
-                HPVal = supportSkill.GetHPValue();
+                HPVal = supportSkill.GetHPValue() * king.GetMaxHP() / 100;
+                if (HPVal + king.GetHP() >= king.GetMaxHP())
+                    HPVal = king.GetMaxHP() - king.GetHP();
                 king.IncreaseMP(-MPCost);
                 king.IncreaseHP(HPVal);
                 TextGen::Print("You consume ", "");
@@ -119,15 +125,47 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
             } else {
                 TextGen::Print<warning>("Invalid input!");
             }
-        } else {
+        } else if (input == "state") {
+            king.ShowState();
+        } else if (input == "bag") {
+            king.ShowBag();
+        } else if (input == "medicine") {
+            if (king.GetBag().HasNoMedicine()) {
+                TextGen::Print<warning>("You have no medicine!");
+            } else {
+                TextGen::Print<request>("Which medicine do your want to use?");
+                king.ShowMedicine();
+                inputInt = TextGen::InputInt();
+                if (king.GetBag().HasMedicineByIndex(inputInt)) {
+                    const string& medicineName = king.GetBag().GetMedicineNameByIndex(inputInt);
+                    const Medicine& medicine = ItemGen::GetMedicine(medicineName);
+                    HPVal = medicine.GetHPValue() * king.GetMaxHP() / 100;
+                    MPVal = medicine.GetMPValue() * king.GetMaxMP() / 100;
+                    if (HPVal + king.GetHP() >= king.GetMaxHP())
+                        HPVal = king.GetMaxHP() - king.GetHP();
+                    if (MPVal + king.GetMP() >= king.GetMaxMP())
+                        MPVal = king.GetMaxMP() - king.GetMP();
+                    king.IncreaseMP(MPVal);
+                    king.IncreaseHP(HPVal);
+                    king.DiscardItem(medicineName, 1);
+                    TextGen::Print("You use a " + medicineName);
+                    TextGen::Print("You restore ", "");
+                    TextGen::Print<BLUE_>(to_string(MPVal), " MP! ");
+                    TextGen::Print("You restore ", "");
+                    TextGen::Print<RED_>(to_string(HPVal), " HP!\n");
+                    break;
+                } else {
+                    TextGen::Print<warning>("Invalid input!");
+                }
+            }
+        } else
             TextGen::Print<warning>("Invalid input!");
-        }
     }
 }
 
 void CombatSystem::EnemyTurn(King& king, Enemy& enemy) {
     int MPCost, damageVal;
-    
+
     const AttackSkill& attackSkill = enemy.GetRandomAttackSkill();
     MPCost = attackSkill.GetMPCost();
     damageVal = attackSkill.GetDamageValue() * enemy.GetAttack();
