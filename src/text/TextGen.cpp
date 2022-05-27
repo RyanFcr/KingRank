@@ -180,30 +180,32 @@ void TextGen::PrintMoney(int money) {
     Print<reward>("Kin: " + to_string(money));
 }
 
-void TextGen::PrintSkills(const map<string, AttackSkill>& attackSkills, const map<string, SupportSkill>& supportSkills) {
+void TextGen::PrintSkills(const vector<string>& attackSkills, const vector<string>& supportSkills) {
     PrintAttackSkills(attackSkills);
     PrintSupportSkills(supportSkills);
 }
 
-void TextGen::PrintAttackSkills(const map<string, AttackSkill>& attackSkills) {
+void TextGen::PrintAttackSkills(const vector<string>& attackSkills) {
+    /// @attention too long string!
     Print<warning>("Attack Skills:");
     if (attackSkills.size() == 0) {
         Print("empty", "");
     } else {
-        for (auto& attackSkill : attackSkills) {
-            Print(attackSkill.first, " ");
+        for (size_t i = 0; i < attackSkills.size(); i++) {
+            Print(to_string(int(i)) + ". " + attackSkills[i], " ");
         }
     }
     Print("");
 }
 
-void TextGen::PrintSupportSkills(const map<string, SupportSkill>& supportSkills) {
+void TextGen::PrintSupportSkills(const vector<string>& supportSkills) {
+    /// @attention too long string!
     Print<buff>("Support Skills:");
     if (supportSkills.size() == 0) {
         Print("empty", "");
     } else {
-        for (auto& supportSkill : supportSkills) {
-            Print(supportSkill.first, " ");
+        for (size_t i = 0; i < supportSkills.size(); i++) {
+            Print(to_string(int(i)) + ". " + supportSkills[i], " ");
         }
     }
     Print("");

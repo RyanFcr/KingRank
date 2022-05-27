@@ -4,12 +4,12 @@
 #include "skill/AttackSkill.h"
 #include "skill/SupportSkill.h"
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
+using std::map;
 using std::string;
 using std::vector;
-using std::map;
 
 #include "common/Global.h"
 #include "rapidjson/document.h"
@@ -20,13 +20,7 @@ using rapidjson::Value;
 class Role {
    public:
     Role() {}
-    Role(string name,
-         int level = 1,
-         int attack = 1,
-         int maxHP = 100,
-         int HP = 100,
-         int maxMP = 100,
-         int MP = 100)
+    Role(string name, int level = 1, int attack = 1, int maxHP = 100, int HP = 100, int maxMP = 100, int MP = 100)
         : name(name), level(level), attack(attack), maxHP(maxHP), HP(HP), maxMP(maxMP), MP(MP) {}
 
     const string& GetName() const { return name; }
@@ -40,6 +34,8 @@ class Role {
     const map<string, SupportSkill>& GetSupportSkills() const { return supportSkills; }
     const AttackSkill& GetAttackSkill(const string& skillName) const { return attackSkills.at(skillName); }
     const SupportSkill& GetSupportSkill(const string& skillName) const { return supportSkills.at(skillName); }
+    const AttackSkill& GetAttackSkillByIndex(int index) const { return attackSkills.at(attackSkillNames[index]); }
+    const SupportSkill& GetSupportSkillByIndex(int index) const { return supportSkills.at(supportSkillNames[index]); }
     const AttackSkill& GetRandomAttackSkill();
     const SupportSkill& GetRandomSupportSkill();
 
@@ -60,13 +56,25 @@ class Role {
 
     void MasterAttackSkill(const AttackSkill& attackSkill) {
         attackSkills.insert(make_pair(attackSkill.GetName(), attackSkill));
+
+        attackSkillNames.clear();
+        attackSkillNames.reserve(attackSkills.size());
+        for (auto& item : attackSkills)
+            attackSkillNames.emplace_back(item.first);
     }
     void MasterSupportSkill(const SupportSkill& supportSkill) {
         supportSkills.insert(make_pair(supportSkill.GetName(), supportSkill));
+
+        supportSkillNames.clear();
+        supportSkillNames.reserve(supportSkills.size());
+        for (auto& item : supportSkills)
+            supportSkillNames.emplace_back(item.first);
     }
 
-    bool HasAttackSkill(const string& name) { return attackSkills.count(name) != 0; }
-    bool HasSupportSkill(const string& name) { return supportSkills.count(name) != 0; }
+    bool HasAttackSkill(const string& name) const { return attackSkills.count(name) != 0; }
+    bool HasSupportSkill(const string& name) const { return supportSkills.count(name) != 0; }
+    bool HasAttackSkillByIndex(size_t index) const { return attackSkillNames.size() > index; }
+    bool HasSupportSkillByIndex(size_t index) const { return supportSkillNames.size() > index; }
 
    protected:
     string name;                              // 名字
@@ -78,6 +86,8 @@ class Role {
     int MP;                                   // 现有魔法值
     map<string, AttackSkill> attackSkills;    // 攻击技能列表
     map<string, SupportSkill> supportSkills;  // 辅助技能列表
+    vector<string> attackSkillNames;          // 攻击技能名列表
+    vector<string> supportSkillNames;         // 辅助技能名列表
 };
 
 #endif  // ROLE_H_

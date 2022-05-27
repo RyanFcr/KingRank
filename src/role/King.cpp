@@ -15,15 +15,15 @@ void King::ShowMoney() const {
 }
 
 void King::ShowSkills() const {
-    TextGen::PrintSkills(attackSkills, supportSkills);
+    TextGen::PrintSkills(attackSkillNames, supportSkillNames);
 }
 
 void King::ShowAttackSkills() const {
-    TextGen::PrintAttackSkills(attackSkills);
+    TextGen::PrintAttackSkills(attackSkillNames);
 }
 
 void King::ShowSupportSkills() const {
-    TextGen::PrintSupportSkills(supportSkills);
+    TextGen::PrintSupportSkills(supportSkillNames);
 }
 
 void King::GoUp(const Map& m) {

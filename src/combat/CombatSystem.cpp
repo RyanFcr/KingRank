@@ -64,7 +64,8 @@ void CombatSystem::CombatLose(King& king) {
 
 void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
     string input;
-    int MPCost, damageVal;
+    int inputInt;
+    int MPCost, damageVal, HPVal;
 
     escape = false;
     while (1) {
@@ -81,23 +82,43 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
         } else if (input == "attack") {
             TextGen::Print<request>("Which skill do your want to use?");
             king.ShowAttackSkills();
-            input = TextGen::Input();
-            if (king.HasAttackSkill(input)) {
+            inputInt = TextGen::InputInt();
+            if (king.HasAttackSkillByIndex(inputInt)) {
+                const AttackSkill& attackSkill = king.GetAttackSkillByIndex(inputInt);
                 TextGen::Print("You use ", "");
-                TextGen::Print<warning>(input, "!\n");
-                MPCost = king.GetAttackSkill(input).GetMPCost();
-                damageVal = king.GetAttackSkill(input).GetDamageValue() * king.GetAttack();
+                TextGen::Print<warning>(attackSkill.GetName(), "!\n");
+                MPCost = attackSkill.GetMPCost();
+                damageVal = attackSkill.GetDamageValue() * king.GetAttack();
                 king.IncreaseMP(-MPCost);
                 enemy.IncreaseHP(-damageVal);
                 TextGen::Print("You consume ", "");
                 TextGen::Print<BLUE_>(to_string(MPCost), " MP! ");
                 TextGen::Print("You cause ", "");
                 TextGen::Print<RED_>(to_string(damageVal), " damage!\n");
+                break;
             } else {
                 TextGen::Print<warning>("Invalid input!");
             }
         } else if (input == "support") {
-            /// @todo
+            TextGen::Print<request>("Which skill do your want to use?");
+            king.ShowSupportSkills();
+            inputInt = TextGen::InputInt();
+            if (king.HasSupportSkillByIndex(inputInt)) {
+                const SupportSkill& supportSkill = king.GetSupportSkillByIndex(inputInt);
+                TextGen::Print("You use ", "");
+                TextGen::Print<buff>(supportSkill.GetName(), "!\n");
+                MPCost = supportSkill.GetMPCost();
+                HPVal = supportSkill.GetHPValue();
+                king.IncreaseMP(-MPCost);
+                king.IncreaseHP(HPVal);
+                TextGen::Print("You consume ", "");
+                TextGen::Print<BLUE_>(to_string(MPCost), " MP! ");
+                TextGen::Print("You restore ", "");
+                TextGen::Print<RED_>(to_string(HPVal), " HP!\n");
+                break;
+            } else {
+                TextGen::Print<warning>("Invalid input!");
+            }
         } else {
             TextGen::Print<warning>("Invalid input!");
         }
