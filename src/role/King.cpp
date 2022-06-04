@@ -2,29 +2,48 @@
 #include <string>
 #include "combat/CombatSystem.h"
 #include "item/ItemGen.h"
-#include "role/RoleGen.h"
 #include "role/EnemyGen.h"
+#include "role/RoleGen.h"
 
 using std::to_string;
 
 void King::ShowMap(const Map& m) const {
-    TextGen::PrintDirection(m, position);
+    m.ShowDirection(position);
 }
 
 void King::ShowMoney() const {
-    TextGen::PrintMoney(money);
+    TextGen::Print<reward>("Kin: " + to_string(money));
 }
 
 void King::ShowSkills() const {
-    TextGen::PrintSkills(attackSkillNames, supportSkillNames);
+    ShowAttackSkills();
+    ShowSupportSkills();
 }
 
 void King::ShowAttackSkills() const {
-    TextGen::PrintAttackSkills(attackSkillNames);
+    /// @attention too long string!
+    TextGen::Print<warning>("Attack Skills:");
+    if (attackSkillNames.size() == 0) {
+        TextGen::Print("empty", "");
+    } else {
+        for (size_t i = 0; i < attackSkillNames.size(); i++) {
+            TextGen::Print(to_string(int(i)) + ". " + attackSkillNames[i], " ");
+        }
+    }
+    TextGen::Print("");
 }
 
 void King::ShowSupportSkills() const {
-    TextGen::PrintSupportSkills(supportSkillNames);
+    /// @attention too long string!
+    TextGen::Print<buff>("Support Skills:");
+    if (supportSkillNames.size() == 0) {
+        TextGen::Print("empty", "");
+    } else {
+        for (size_t i = 0; i < supportSkillNames.size(); i++) {
+            TextGen::Print(to_string(int(i)) + ". " + supportSkillNames[i], " ");
+        }
+    }
+    TextGen::Print("");
 }
 
 void King::ShowState() const {
