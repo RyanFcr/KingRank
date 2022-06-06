@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "Medicine.h"
 #include "Weapon.h"
+#include "common/Macro.h"
 #include "rapidjson/document.h"
 
 #include <vector>

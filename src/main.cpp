@@ -5,10 +5,13 @@
 #include "role/EnemyGen.h"
 #include "skill/SkillGen.h"
 #include "text/TextGen.h"
+#include "event/EventSystem.h"
 
 int main() {
     srand((unsigned)time(NULL));
     string input;
+    bool ret;
+
     ItemGen::Init();
     SkillGen::Init();
     EnemyGen::InitEnemy();
@@ -26,13 +29,17 @@ int main() {
         } else if (input == "map") {
             RoleGen::king.ShowMap(MapGen::map);
         } else if (input == "up") {
-            RoleGen::king.GoUp(MapGen::map);
+            ret = RoleGen::king.GoUp(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
         } else if (input == "down") {
-            RoleGen::king.GoDown(MapGen::map);
+            ret = RoleGen::king.GoDown(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
         } else if (input == "right") {
-            RoleGen::king.GoRight(MapGen::map);
+            ret = RoleGen::king.GoRight(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
         } else if (input == "left") {
-            RoleGen::king.GoLeft(MapGen::map);
+            ret = RoleGen::king.GoLeft(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
         } else if (input == "save") {
             RoleGen::SaveKing();
             MapGen::Save();

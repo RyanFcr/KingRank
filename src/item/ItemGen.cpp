@@ -37,24 +37,17 @@ void ItemGen::Init() {
     getline(ifs, itemData);
 
     Document d;
-    if (d.Parse(itemData.c_str()).HasParseError())
-        throw HAS_PARSE_ERROR;
-    if (!d.IsObject())
-        throw HAS_PARSE_ERROR;
+    PARSE_DOM_OBJECT(d, itemData.c_str())
 
     // Weapons
-    if (!d.HasMember("weapons"))
-        throw HAS_PARSE_ERROR;
-    if (!d["weapons"].IsArray())
-        throw HAS_PARSE_ERROR;
+    ASSERT_DOM_OBJECT_HAS_MEMBER(d, "weapons")
+    ASSERT_DOM_OBJECT_IS_ARRAY(d["weapons"])
     const Value& weaponData = d["weapons"];
     InitWeapon(weaponData);
 
     // Medicines
-    if (!d.HasMember("medicines"))
-        throw HAS_PARSE_ERROR;
-    if (!d["medicines"].IsArray())
-        throw HAS_PARSE_ERROR;
+    ASSERT_DOM_OBJECT_HAS_MEMBER(d, "medicines")
+    ASSERT_DOM_OBJECT_IS_ARRAY(d["medicines"])
     const Value& medicineData = d["medicines"];
     InitMedicine(medicineData);
 
@@ -67,44 +60,20 @@ void ItemGen::Init() {
  */
 void ItemGen::InitMedicine(const Value& data) {
     string name, description;
-    int weight, HPValue, MPValue;
+    int weight, HPValue, MPValue, price;
 
     for (SizeType i = 0; i < data.Size(); i++) {
         const Value& medicine = data[i];
-        if (!medicine.IsObject())
-            throw HAS_PARSE_ERROR;
+        ASSERT_DOM_OBJECT_IS_OBJECT(medicine)
 
-        if (!medicine.HasMember("name"))
-            throw HAS_PARSE_ERROR;
-        if (!medicine["name"].IsString())
-            throw HAS_PARSE_ERROR;
-        name = medicine["name"].GetString();
+        DOM_OBJECT_MEMBER_TO_VAR_STRING(medicine, "name", name)
+        DOM_OBJECT_MEMBER_TO_VAR_STRING(medicine, "description", description)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(medicine, "weight", weight)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(medicine, "HP", HPValue)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(medicine, "MP", MPValue)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(medicine, "price", price)
 
-        if (!medicine.HasMember("description"))
-            throw HAS_PARSE_ERROR;
-        if (!medicine["description"].IsString())
-            throw HAS_PARSE_ERROR;
-        description = medicine["description"].GetString();
-
-        if (!medicine.HasMember("weight"))
-            throw HAS_PARSE_ERROR;
-        if (!medicine["weight"].IsInt())
-            throw HAS_PARSE_ERROR;
-        weight = medicine["weight"].GetInt();
-
-        if (!medicine.HasMember("HP"))
-            throw HAS_PARSE_ERROR;
-        if (!medicine["HP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        HPValue = medicine["HP"].GetInt();
-
-        if (!medicine.HasMember("MP"))
-            throw HAS_PARSE_ERROR;
-        if (!medicine["MP"].IsInt())
-            throw HAS_PARSE_ERROR;
-        MPValue = medicine["MP"].GetInt();
-
-        medicines.insert(make_pair(name, Medicine{name, description, weight, HPValue, MPValue}));
+        medicines.insert(make_pair(name, Medicine{name, description, weight, price, HPValue, MPValue}));
         medicineNames.push_back(name);
     }
 }
@@ -115,44 +84,20 @@ void ItemGen::InitMedicine(const Value& data) {
  */
 void ItemGen::InitWeapon(const Value& data) {
     string name, description;
-    int weight, attack, abrasionLoss;
+    int weight, attack, abrasionLoss, price;
 
     for (SizeType i = 0; i < data.Size(); i++) {
         const Value& weapon = data[i];
-        if (!weapon.IsObject())
-            throw HAS_PARSE_ERROR;
+        ASSERT_DOM_OBJECT_IS_OBJECT(weapon)
 
-        if (!weapon.HasMember("name"))
-            throw HAS_PARSE_ERROR;
-        if (!weapon["name"].IsString())
-            throw HAS_PARSE_ERROR;
-        name = weapon["name"].GetString();
+        DOM_OBJECT_MEMBER_TO_VAR_STRING(weapon, "name", name)
+        DOM_OBJECT_MEMBER_TO_VAR_STRING(weapon, "description", description)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(weapon, "weight", weight)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(weapon, "attack", attack)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(weapon, "abrasionLoss", abrasionLoss)
+        DOM_OBJECT_MEMBER_TO_VAR_INT(weapon, "price", price)
 
-        if (!weapon.HasMember("description"))
-            throw HAS_PARSE_ERROR;
-        if (!weapon["description"].IsString())
-            throw HAS_PARSE_ERROR;
-        description = weapon["description"].GetString();
-
-        if (!weapon.HasMember("weight"))
-            throw HAS_PARSE_ERROR;
-        if (!weapon["weight"].IsInt())
-            throw HAS_PARSE_ERROR;
-        weight = weapon["weight"].GetInt();
-
-        if (!weapon.HasMember("attack"))
-            throw HAS_PARSE_ERROR;
-        if (!weapon["attack"].IsInt())
-            throw HAS_PARSE_ERROR;
-        attack = weapon["attack"].GetInt();
-
-        if (!weapon.HasMember("abrasionLoss"))
-            throw HAS_PARSE_ERROR;
-        if (!weapon["abrasionLoss"].IsInt())
-            throw HAS_PARSE_ERROR;
-        abrasionLoss = weapon["abrasionLoss"].GetInt();
-
-        weapons.insert(make_pair(name, Weapon{name, description, weight, attack, abrasionLoss}));
+        weapons.insert(make_pair(name, Weapon{name, description, weight, price, attack, abrasionLoss}));
         weaponNames.push_back(name);
     }
 }

@@ -4,8 +4,6 @@
 #include "Config.h"
 #include "Macro.h"
 
-// static int fieldNum = initialMapSize * initialMapSize;
-
 const int maxTerminalLenghth = 50;
 
 /// Text Type
@@ -66,4 +64,14 @@ struct FieldPosition {
         writer.EndObject();
     }
 };
+
+/// possibility
+/**
+ * @brief 正太函数
+ * @param mu 期望
+ * @param sigma 标准差
+ * @param poss 几率
+ * @return true 
+ */
+bool NormalDistribution(double mu, double sigma, double poss);
 #endif
