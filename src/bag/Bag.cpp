@@ -5,6 +5,7 @@
 
 #include <iostream>
 using std::cout;
+using std::to_string;
 /**
  * @brief insert medicines into the bag
  * @param name Name of medicines
@@ -103,7 +104,7 @@ bool Bag::Discard(const string& name, int num) {
         weapons.erase(name);
         curWeight -= weight;
         if (medicines[name] == 0)
-                medicines.erase(name);
+            medicines.erase(name);
 
         weaponNames.clear();
         for (auto& item : weapons)
@@ -119,15 +120,35 @@ bool Bag::Discard(const string& name, int num) {
  * @brief print the items in the bag
  */
 void Bag::ShowBag() const {
-    TextGen::PrintBag(*this);
+    TextGen::Print("Weight Limit: " + to_string(GetWeightLimit()));
+    TextGen::Print("Current Weight: " + to_string(GetCurWeight()));
+    ShowMedicine();
+    ShowWeapon();
 }
 
 void Bag::ShowMedicine() const {
-    TextGen::PrintMedicine(medicineNames);
+    TextGen::Print("Medicines:");
+    if (medicineNames.size() == 0) {
+        TextGen::Print("empty", "");
+    } else {
+        for (size_t i = 0; i < medicineNames.size(); i++) {
+            TextGen::Print(to_string(int(i)) + ". " + medicineNames[i].first + ":" + to_string(medicineNames[i].second),
+                           "  ");
+        }
+    }
+    TextGen::Print("");
 }
 
 void Bag::ShowWeapon() const {
-    TextGen::PrintWeapon(weaponNames);
+    TextGen::Print("Weapons:");
+    if (weaponNames.size() == 0) {
+        TextGen::Print("empty", "");
+    } else {
+        for (size_t i = 0; i < weaponNames.size(); i++) {
+            TextGen::Print(to_string(int(i)) + ". " + weaponNames[i], " ");
+        }
+    }
+    TextGen::Print("");
 }
 
 void Bag::DiscardAll() {

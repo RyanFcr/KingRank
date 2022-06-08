@@ -7,6 +7,7 @@ using std::vector;
 #include "Field.h"
 #include "Scene.h"
 #include "common/Global.h"
+#include "text/TextGen.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
@@ -33,6 +34,8 @@ class Map {
     void Clear();
 
     bool IsValidPosition(Position& p) const;
+
+    void ShowDirection(const Position& p) const;
 
     template <typename Writer>
     void Serialize(Writer& writer) const {

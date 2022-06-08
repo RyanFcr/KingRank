@@ -1,10 +1,11 @@
 #include "map/Scene.h"
 #include "common/Config.h"
 #include "item/ItemGen.h"
+#include "role/EnemyGen.h"
 
 void Scene::InitPlainScene() {
     /// @todo enemy!
-    enemyName = "";
+    enemyName = EnemyGen::GetRandomEnemyName();
     enemyPossibility = rand() % plainEnemyPossibilityMax;
     money = rand() % plainMoneyMax;
     moneyPossibility = rand() % plainMoneyPossibilityMax;

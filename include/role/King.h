@@ -5,19 +5,8 @@
 #include "bag/Bag.h"
 #include "common/Global.h"
 #include "map/Map.h"
-#include "skill/AttackSkill.h"
-#include "skill/Skill.h"
 #include "skill/SkillGen.h"
-#include "skill/SupportSkill.h"
 #include "text/TextGen.h"
-
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
-using rapidjson::Document;
-using rapidjson::StringBuffer;
-using rapidjson::Value;
-using rapidjson::Writer;
 
 class King : public Role {
    public:
@@ -76,10 +65,10 @@ class King : public Role {
     bool DiscardItem(const string& name, int num = 1) { return bag.Discard(name, num); }
 
     void ShowMap(const Map& m) const;
-    void GoUp(const Map& m);
-    void GoDown(const Map& m);
-    void GoLeft(const Map& m);
-    void GoRight(const Map& m);
+    bool GoUp(const Map& m);
+    bool GoDown(const Map& m);
+    bool GoLeft(const Map& m);
+    bool GoRight(const Map& m);
 
     void ShowBag() const { bag.ShowBag(); }
     void ShowMedicine() const { bag.ShowMedicine(); }
@@ -91,9 +80,6 @@ class King : public Role {
     void ShowState() const;
 
     void Resurrect();
-
-   private:
-    void TriggerEvent(const Map& m);
 
    private:
     int experience;                   // 当前的经验值

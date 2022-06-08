@@ -19,15 +19,15 @@ const int countryMoneyPossibilityMax = 100;     // 领地金币最大概率
 const int countryMedicinePossibilityMax = 100;  // 领地药品最大概率
 
 // 人物相关
-const int initialAttack = 1;        // 初始攻击力
-const int initialLevel = 1;         // 初始等级
-const int initialMaxHP = 100;       // 初始最大生命
-const int initialHP = 100;          // 初始生命
-const int initialMaxMP = 100;       // 初始最大魔法
-const int initialMP = 100;          // 初始魔法
-const int initialExperience = 100;  // 初始经验
-const int initialMoney = 100;       // 初始金钱
-const int escapePossibility = 30;   // 逃跑概率
+const int initialAttack = 1;       // 初始攻击力
+const int initialLevel = 1;        // 初始等级
+const int initialMaxHP = 100;      // 初始最大生命
+const int initialHP = 100;         // 初始生命
+const int initialMaxMP = 100;      // 初始最大魔法
+const int initialMP = 100;         // 初始魔法
+const int initialExperience = 0;   // 初始经验
+const int initialMoney = 100;      // 初始金钱
+const int escapePossibility = 30;  // 逃跑概率
 
 // 技能相关
 const string initialAttackSkills[]{"普通攻击"};
