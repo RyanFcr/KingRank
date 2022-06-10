@@ -1,1 +1,22 @@
-{"enemys":[{"name":"史莱姆","level":1,"attack":1,"maxHP":20,"HP":20,"maxMP":20,"MP":20,"experienceVal":5,"moneyVal":100,"attackSkills":{"普通攻击":{"MPCost":0,"damageValue":10}},"supportSkills":{}}]}
+{
+    "enemys": [
+        {
+            "name": "史莱姆",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 20,
+            "HP": 20,
+            "maxMP": 20,
+            "MP": 20,
+            "experienceVal": 5,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {}
+        }
+    ]
+}

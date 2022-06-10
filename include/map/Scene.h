@@ -21,13 +21,14 @@ class Scene {
    public:
     void InitPlainScene();
     void InitCountryScene();
-    void Load(const string& eN, int eP, int m, int mP, const string& meN, int meP) {
+    void Load(const string& eN, int eP, int m, int mP, const string& meN, int meP, int shopP) {
         enemyName = eN;
         enemyPossibility = eP;
         money = m;
         moneyPossibility = mP;
         medicineName = meN;
         medicinePossibility = meP;
+        shopPossibility = shopP;
     };
 
     const string& GetEnemyName() const { return enemyName; }
@@ -36,6 +37,10 @@ class Scene {
     int GetMoneyPossibility() const { return moneyPossibility; }
     const string& GetMedicineName() const { return medicineName; }
     int GetMedicinePossibility() const { return moneyPossibility; }
+    int GetShopPossibility() const { return shopPossibility; }
+
+    void SetMoneyPossibility(int poss) { moneyPossibility = poss; }
+    void SetMedicinePossibility(int poss) { medicinePossibility = poss; }
 
     template <typename Writer>
     void Serialize(Writer& writer) const {
@@ -46,6 +51,7 @@ class Scene {
         SERIALIZE_INT("moneyPossibility", moneyPossibility)
         SERIALIZE_STRING("medicineName", medicineName)
         SERIALIZE_INT("medicinePossibility", medicinePossibility)
+        SERIALIZE_INT("shopPossibility", shopPossibility)
         writer.EndObject();
     }
 
@@ -56,6 +62,7 @@ class Scene {
     int moneyPossibility;     // 出现钱的概率
     string medicineName;      // 出现药品的名字
     int medicinePossibility;  // 出现药品的概率
+    int shopPossibility;      // 出现商店的概率
 };
 
 #endif  // SCENE_H_

@@ -4,7 +4,35 @@
 using std::to_string;
 
 void King::ShowMap(const Map& m) const {
-    m.ShowDirection(position);
+    string stateString;
+    int stateStyle;
+
+    // set state
+    if (HP >= 0.7 * maxHP) {
+        if (MP >= 0.7 * maxMP) {
+            stateString = "Healty";
+            stateStyle = GREEN_;
+        } else if (MP >= 0.3 * maxMP) {
+            stateString = "Medium MP";
+            stateStyle = YELLOW_;
+        } else {
+            stateString = "Dangerous MP";
+            stateStyle = RED_;
+        }
+    } else if (HP >= 0.3 * maxHP) {
+        if (MP >= 0.3 * maxMP) {
+            stateString = "Medium HP";
+            stateStyle = YELLOW_;
+        } else {
+            stateString = "Dangerous MP";
+            stateStyle = RED_;
+        }
+    } else {
+        stateString = "Dangerous HP";
+        stateStyle = RED_;
+    }
+
+    m.ShowDirection(position, stateString, stateStyle);
 }
 
 void King::ShowMoney() const {
@@ -48,7 +76,7 @@ void King::ShowState() const {
     TextGen::Print("Exp: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
     TextGen::Print("HP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
     TextGen::Print("MP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
-    TextGen::Print("Attack:" + to_string(GetAttack()));
+    TextGen::Print("Attack: " + to_string(GetAttack()));
     TextGen::Print("Country: " + GetCountryName());
 }
 
@@ -90,6 +118,19 @@ bool King::GoRight(const Map& m) {
         return false;
     } else
         return true;
+}
+
+void King::GoHome(const Map& m) {
+    if (position.fieldX == territoryPosition.fieldX && position.fieldY == territoryPosition.fieldY) {
+        TextGen::Print<warning>("You are currently in your territory!");
+        return;
+    }
+
+    position.fieldX = territoryPosition.fieldX;
+    position.fieldY = territoryPosition.fieldY;
+    position.sceneX = 0;
+    position.sceneY = 0;
+    TextGen::Print("Welcome back to your territory, your Grace!");
 }
 
 void King::Resurrect() {

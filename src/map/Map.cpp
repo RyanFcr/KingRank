@@ -8,6 +8,10 @@ Scene Map::GetScene(const Position& p) const {
     return fields[p.fieldX][p.fieldY]->GetScene(p.sceneX, p.sceneY);
 }
 
+Scene& Map::GetSceneForChange(const Position& p) {
+    return fields[p.fieldX][p.fieldY]->GetScene(p.sceneX, p.sceneY);
+}
+
 /**
  * @brief Push a new field to *row*-th row of map
  * @attention the field should be allocated outside the function
@@ -55,6 +59,12 @@ bool Map::IsValidPosition(Position& p) const {
         return true;
 }
 
+/**
+ * @brief extend the map when a new user logins in
+ * extend the map with two plains and one country
+ * @param countryName name of the new user's name
+ * @return FieldPosition: the field of the king's name
+ */
 FieldPosition Map::MapExtend(string countryName) {
     int index;
     for (int i = 0; i < extendPlain; i++) {
@@ -70,7 +80,17 @@ FieldPosition Map::MapExtend(string countryName) {
     return PushField(country, index);
 }
 
-void Map::ShowDirection(const Position& p) const {
+/**
+ * @brief show directions of the given position
+ * show the direction one can go nearby
+ * @param p given position
+ */
+void Map::ShowDirection(const Position& p, const string centerString, int centerStyle) const {
+    // Get State
+    string stateString[4]{"up", "down", "left", "right"};  // up down left right
+    int stateStyle[4]{0, 0, 0, 0};                         // up down left right
+
+    // Print Direction
     if (p.fieldX >= 0 && p.fieldX < GetRowNum() && p.fieldY >= 0 && p.fieldY < GetColNum(p.fieldX)) {
         // Field Name
         string centerFieldName{GetField(p.fieldX, p.fieldY).GetName()};
@@ -128,7 +148,7 @@ void Map::ShowDirection(const Position& p) const {
             if (upFieldName != "") {
                 TextGen::PrintCenter(upFieldName, maxTerminalLenghth);
                 TextGen::PrintCenter(upCo, maxTerminalLenghth);
-                TextGen::PrintCenter("up state", maxTerminalLenghth);
+                TextGen::PrintCenter(stateString[0], maxTerminalLenghth, stateStyle[0]);
                 TextGen::PrintCenter("|", maxTerminalLenghth);
                 TextGen::PrintCenter("|", maxTerminalLenghth);
                 TextGen::PrintCenter("|", maxTerminalLenghth);
@@ -138,11 +158,12 @@ void Map::ShowDirection(const Position& p) const {
             if (rightFieldName != "") {
                 TextGen::PrintThree(leftFieldName, centerFieldName, rightFieldName, maxTerminalLenghth);
                 TextGen::PrintThree(leftCo, centerCo, rightCo, maxTerminalLenghth, "-");
-                TextGen::PrintThree("left state", "center", "right state", maxTerminalLenghth);
+                TextGen::PrintThree(stateString[2], centerString, stateString[3], maxTerminalLenghth, " ",
+                                    stateStyle[2], centerStyle, stateStyle[3]);
             } else {
                 TextGen::PrintTwo(leftFieldName, centerFieldName, maxTerminalLenghth);
                 TextGen::PrintTwo(leftCo, centerCo, maxTerminalLenghth, "-");
-                TextGen::PrintTwo("left state", "center", maxTerminalLenghth);
+                TextGen::PrintTwo(stateString[2], centerString, maxTerminalLenghth, " ", stateStyle[2], centerStyle);
             }
 
             // down
@@ -152,14 +173,14 @@ void Map::ShowDirection(const Position& p) const {
                 TextGen::PrintCenter("|", maxTerminalLenghth);
                 TextGen::PrintCenter(downFieldName, maxTerminalLenghth);
                 TextGen::PrintCenter(downCo, maxTerminalLenghth);
-                TextGen::PrintCenter("down state", maxTerminalLenghth);
+                TextGen::PrintCenter(stateString[1], maxTerminalLenghth, stateStyle[1]);
             }
         } else {
             // up
             if (upFieldName != "") {
                 TextGen::Print(upFieldName);
                 TextGen::Print(upCo);
-                TextGen::Print("up state");
+                TextGen::Print(stateString[0], "\n", stateStyle[0]);
                 TextGen::Print("|");
                 TextGen::Print("|");
                 TextGen::Print("|");
@@ -168,11 +189,11 @@ void Map::ShowDirection(const Position& p) const {
             if (rightFieldName != "") {
                 TextGen::PrintTwo(centerFieldName, rightFieldName, maxTerminalLenghth);
                 TextGen::PrintTwo(centerCo, rightCo, maxTerminalLenghth, "-");
-                TextGen::PrintTwo("center", "right state", maxTerminalLenghth);
+                TextGen::PrintTwo(centerString, stateString[3], maxTerminalLenghth, " ", centerStyle, stateStyle[3]);
             } else {
                 TextGen::Print(centerFieldName);
                 TextGen::Print(centerCo);
-                TextGen::Print("center");
+                TextGen::Print(centerString, "\n", centerStyle);
             }
             // down
             if (downFieldName != "") {
@@ -181,7 +202,7 @@ void Map::ShowDirection(const Position& p) const {
                 TextGen::Print("|");
                 TextGen::Print(downFieldName);
                 TextGen::Print(downCo);
-                TextGen::Print("down state");
+                TextGen::Print(stateString[1], "\n", stateStyle[1]);
             }
         }
     } else {

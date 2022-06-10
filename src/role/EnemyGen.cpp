@@ -31,7 +31,7 @@ void EnemyGen::InitEnemy() {
     ifstream ifs(enemyFile, ios::in);
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
-    getline(ifs, enemyString);
+    enemyString = ReadFormatJson(ifs);
     ifs.close();
 
     Document d;

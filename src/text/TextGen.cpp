@@ -55,3 +55,55 @@ int TextGen::InputInt() {
             Print<warning>("Invalid input! Please enter an integer!");
     }
 }
+
+void TextGen::Print(string s, string end, int ansiStyle) {
+    cout << "\033[" << ansiStyle << "m" << s << "\033[" << 0 << "m" << end;
+}
+
+void TextGen::PrintCenter(string s, int totalLength, int ansiStyle) {
+    int len = s.length();
+    if (len <= totalLength) {
+        for (int i = 0; i < (totalLength - len) / 2; i++) {
+            cout << " ";
+        }
+    }
+    Print(s, "\n", ansiStyle);
+}
+
+void TextGen::PrintTwo(string s1, string s2, int totalLength, string fill, int ansiStyle1, int ansiStyle2) {
+    Print(s1, "", ansiStyle1);
+    int len1 = s1.length();
+    int len2 = s2.length();
+    if (len2 <= totalLength) {
+        for (int i = 0; i < (totalLength - len2) / 2 - len1; i++) {
+            cout << fill;
+        }
+    }
+    Print(s2, "\n", ansiStyle2);
+}
+
+void TextGen::PrintThree(string s1,
+                         string s2,
+                         string s3,
+                         int totalLength,
+                         string fill,
+                         int ansiStyle1,
+                         int ansiStyle2,
+                         int ansiStyle3) {
+    Print(s1, "", ansiStyle1);
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int len3 = s3.length();
+    if (len2 <= totalLength) {
+        for (int i = 0; i < (totalLength - len2) / 2 - len1; i++) {
+            cout << fill;
+        }
+    }
+    Print(s2, "", ansiStyle2);
+    if (len3 <= totalLength) {
+        for (int i = 0; i < (totalLength - len2) / 2 - len3; i++) {
+            cout << fill;
+        }
+    }
+    Print(s3, "\n", ansiStyle3);
+}

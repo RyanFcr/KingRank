@@ -4,6 +4,8 @@
 #include "Config.h"
 #include "Macro.h"
 
+#include <fstream>
+
 const int maxTerminalLenghth = 50;
 
 /// Text Type
@@ -66,12 +68,19 @@ struct FieldPosition {
 };
 
 /// possibility
-/**
- * @brief 正太函数
- * @param mu 期望
- * @param sigma 标准差
- * @param poss 几率
- * @return true 
+/** 
+ * @brief Generate a possibility according to normal distribution 
+ * @param mu expectation
+ * @param sigma variance
+ * @return possibility
  */
-bool NormalDistribution(double mu, double sigma, double poss);
+double NormalDistribution(double mu, double sigma);
+
+/// read format json
+/**
+ * @brief Read from file and generate a json string
+ * @param ifs json file
+ * @return string: json string
+ */
+std::string ReadFormatJson(std::ifstream& ifs);
 #endif

@@ -9,7 +9,7 @@ using rapidjson::Document;
 
 class RoleGen {
    public:
-    static void InitKing(Map& map);
+    static bool InitKing(Map& map);
     static void SaveKing();
 
    private:

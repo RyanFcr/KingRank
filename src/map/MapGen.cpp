@@ -5,7 +5,7 @@
 #include "common/Macro.h"
 #include "text/TextGen.h"
 #include "rapidjson/document.h"
-#include "rapidjson/writer.h"
+#include "rapidjson/prettywriter.h"
 
 #include <fstream>
 #include <iostream>
@@ -13,7 +13,7 @@
 using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
-using rapidjson::Writer;
+using rapidjson::PrettyWriter;
 using rapidjson::StringBuffer;
 using std::ofstream;
 using std::ifstream;
@@ -36,12 +36,14 @@ void MapGen::Init() {
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
     string mapData;
-    std::getline(ifs, mapData);
+    mapData = ReadFormatJson(ifs);
+    ifs.close();
+
     // Field
     string name;
     // Scene
     string enemyName, medicineName;
-    int enemyPossibility, money, moneyPossibility, medicinePossibility;
+    int enemyPossibility, money, moneyPossibility, medicinePossibility, shopPossibility;
 
     Document d;
     PARSE_DOM_OBJECT(d, mapData.c_str())
@@ -78,38 +80,15 @@ void MapGen::Init() {
                     DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "moneyPossibility", moneyPossibility)
                     DOM_OBJECT_MEMBER_TO_VAR_STRING(scene, "medicineName", medicineName)
                     DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "medicinePossibility", medicinePossibility)
+                    DOM_OBJECT_MEMBER_TO_VAR_INT(scene, "shopPossibility", shopPossibility)
 
                     f->GetScene(m, n).Load(enemyName, enemyPossibility, money, moneyPossibility, medicineName,
-                                           medicinePossibility);
+                                           medicinePossibility, shopPossibility);
                 }
             }
             map.PushField(f, i);
         }
     }
-    ifs.close();
-
-    // } catch (KRerror errorId) {
-    //     switch (errorId) {
-    //         case OPEN_FILE_FAIL:
-    //             error = "Can't find map data! Please check the integrity of the game!";
-    //             TextGen::Print<warning>(error);
-    //             exit(1);  // exit forcefully
-    //             break;
-
-    //         case HAS_PARSE_ERROR:
-    //             error = "Map data has parse error! Please check the validity of the data!";
-    //             TextGen::Print<warning>(error);
-    //             exit(1);  // exit forcefully
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // } catch (const std::bad_alloc& e) {
-    //     error = "Not enough memory!";
-    //     TextGen::Print<warning>(error);
-    //     exit(1);  // exit forcefully
-    // }
 }
 
 void MapGen::Free() {
@@ -125,7 +104,7 @@ void MapGen::Save() {
     if (ofs.fail())
         throw OPEN_FILE_FAIL;
     StringBuffer sb;
-    Writer<StringBuffer> writer(sb);
+    PrettyWriter<StringBuffer> writer(sb);
     map.Serialize(writer);
     string kingData = sb.GetString();
     ofs << kingData;

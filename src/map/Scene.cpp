@@ -2,22 +2,25 @@
 #include "common/Config.h"
 #include "item/ItemGen.h"
 #include "role/EnemyGen.h"
+#include "common/Global.h"
 
 void Scene::InitPlainScene() {
     /// @todo enemy!
     enemyName = EnemyGen::GetRandomEnemyName();
-    enemyPossibility = rand() % plainEnemyPossibilityMax;
-    money = rand() % plainMoneyMax;
-    moneyPossibility = rand() % plainMoneyPossibilityMax;
+    enemyPossibility = NormalDistribution(plainEnemyExpect, plainEnemySigma);
+    money = NormalDistribution(plainMoneyNumExpect, plainMoneyNumSigma);
+    moneyPossibility = NormalDistribution(plainMoneyExpect, plainMoneySigma);
     medicineName = ItemGen::GetRandomMedicineName();
-    medicinePossibility = rand() % plainMedicinePossibilityMax;
+    medicinePossibility = NormalDistribution(plainMedicineExpect, plainMedicineSigma);
+    shopPossibility = NormalDistribution(plainShopExpect, plainShopSigma);
 }
 
 void Scene::InitCountryScene() {
     enemyName = "";
     enemyPossibility = 0;
-    money = rand() % countryMoneyMax;
-    moneyPossibility = rand() % countryMoneyPossibilityMax;
+    money = NormalDistribution(countryMoneyNumExpect, countryMoneyNumSigma);
+    moneyPossibility = NormalDistribution(countryMoneyExpect, countryMoneySigma);
     medicineName = ItemGen::GetRandomMedicineName();
-    medicinePossibility = rand() % countryMedicinePossibilityMax;
+    medicinePossibility = NormalDistribution(countryMedicineExpect, countryMedicineSigma);
+    shopPossibility = NormalDistribution(countryShopExpect, countryShopSigma);
 }

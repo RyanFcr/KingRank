@@ -10,6 +10,7 @@ using std::vector;
 
 class Shop {
    public:
+    Shop();
     void ShowShopItems() const;
    private:
     vector<string> medicines;
