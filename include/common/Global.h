@@ -4,9 +4,9 @@
 #include "Config.h"
 #include "Macro.h"
 
-static int fieldNum = initialMapSize * initialMapSize;
+#include <fstream>
 
-const int maxTerminalLenghth = 100;
+const int maxTerminalLenghth = 50;
 
 /// Text Type
 const int plain = RESET_;
@@ -17,11 +17,7 @@ const int buff = GREEN_;
 const int title = YELLOW_;
 
 /// Error Type
-enum KRerror {
-    OPEN_FILE_FAIL,
-    HAS_PARSE_ERROR
-
-};
+enum KRerror { OPEN_FILE_FAIL, HAS_PARSE_ERROR, UNKNOWN_ITEM };
 
 /// Position Type
 struct Position {
@@ -35,6 +31,56 @@ struct Position {
     void GoDown();
     void GoLeft();
     void GoRight();
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+
+        writer.String("fieldX");
+        writer.Int(fieldX);
+        writer.String("fieldY");
+        writer.Int(fieldY);
+        writer.String("sceneX");
+        writer.Int(sceneX);
+        writer.String("sceneY");
+        writer.Int(sceneY);
+
+        writer.EndObject();
+    }
 };
 
+/// FieldPosition
+struct FieldPosition {
+    int fieldX;
+    int fieldY;
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+
+        writer.String("fieldX");
+        writer.Int(fieldX);
+        writer.String("fieldY");
+        writer.Int(fieldY);
+
+        writer.EndObject();
+    }
+};
+
+/// possibility
+/** 
+ * @brief Generate a possibility according to normal distribution 
+ * @param mu expectation
+ * @param sigma variance
+ * @return possibility
+ */
+double NormalDistribution(double mu, double sigma);
+
+/// read format json
+/**
+ * @brief Read from file and generate a json string
+ * @param ifs json file
+ * @return string: json string
+ */
+std::string ReadFormatJson(std::ifstream& ifs);
 #endif

@@ -1,38 +1,60 @@
-#include "map/Map.h"
-#include "text/TextGen.h"
-#include "role/RoleGen.h"
 #include "common/Global.h"
+#include "item/ItemGen.h"
+#include "map/MapGen.h"
+#include "role/RoleGen.h"
+#include "role/EnemyGen.h"
+#include "skill/SkillGen.h"
+#include "text/TextGen.h"
+#include "event/EventSystem.h"
 
 int main() {
     srand((unsigned)time(NULL));
     string input;
-    Map map;
-    map.Init();
+    bool ret, login;
+
+    ItemGen::Init();
+    SkillGen::Init();
+    EnemyGen::InitEnemy();
+    MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();
-    King player = RoleGen::InitKingGen(map);
-    while (1) {
+    login = RoleGen::InitKing(MapGen::map);
+    while (login) {
         input = TextGen::Input();
         if (input == "quit") {
             TextGen::Print("Bye!");
+            RoleGen::SaveKing();
+            MapGen::Save();
             break;
-        }
-        else if (input == "map") {
-            player.ShowMap(map);
-        }
-        else if (input == "up") {
-            player.GoUp(map);
-        }
-        else if (input == "down") {
-            player.GoDown(map);
-        }
-        else if (input == "right") {
-            player.GoRight(map);
-        }
-        else if (input == "left") {
-            player.GoLeft(map);
-        }
-        else
+        } else if (input == "map") {
+            RoleGen::king.ShowMap(MapGen::map);
+        } else if (input == "up") {
+            ret = RoleGen::king.GoUp(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+        } else if (input == "down") {
+            ret = RoleGen::king.GoDown(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+        } else if (input == "right") {
+            ret = RoleGen::king.GoRight(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+        } else if (input == "left") {
+            ret = RoleGen::king.GoLeft(MapGen::map);
+            if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+        } else if (input == "home") {
+            RoleGen::king.GoHome(MapGen::map);
+        } else if (input == "save") {
+            RoleGen::SaveKing();
+            MapGen::Save();
+        } else if (input == "bag") {
+            RoleGen::king.ShowBag();
+        } else if (input == "money") {
+            RoleGen::king.ShowMoney();
+        } else if (input == "skill") {
+            RoleGen::king.ShowSkills();
+        } else if (input == "state") {
+            RoleGen::king.ShowState();
+        } else
             TextGen::Print<warning>("Invalid Input!");
     }
+    MapGen::Free();
 }

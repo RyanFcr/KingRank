@@ -1,32 +1,94 @@
 #ifndef KING_H_
 #define KING_H_
 
-#include "bag/Bag.h"
 #include "Role.h"
-#include "skill/Skill.h"
+#include "bag/Bag.h"
 #include "common/Global.h"
 #include "map/Map.h"
+#include "skill/SkillGen.h"
 #include "text/TextGen.h"
 
-class King : public Role
-{
-public:
-    King(string name, Position position, int territoryId, Bag bag,int attack = 1,  int level = 1, int maxHP = 100, int HP = 100,
-         int maxMP = 100, int MP = 100,int experience = 0, int money = 0)
-        : Role(name, position, attack, level, maxHP, HP, maxMP, MP), experience(experience), territoryId(territoryId), money(money), bag(bag){
+class King : public Role {
+   public:
+    King() {}
+    King(string kingName,
+         string countryName,
+         Position position,
+         FieldPosition territoryPosition,
+         int attack = initialAttack,
+         int level = initialLevel,
+         int maxHP = initialMaxHP,
+         int HP = initialHP,
+         int maxMP = initialMaxMP,
+         int MP = initialMP,
+         int experience = initialExperience,
+         int money = initialMoney)
+        : Role(kingName, attack, level, maxHP, HP, maxMP, MP),
+          experience(experience),
+          territoryPosition(territoryPosition),
+          countryName(countryName),
+          money(money),
+          position(position) {
+        for (auto& item : initialMedicines) {
+            InsertMedicine(item.first, item.second);
+        }
+        for (auto& attackSkillName : initialAttackSkills) {
+            MasterAttackSkill(SkillGen::attackSkills[attackSkillName]);
+        }
+        for (auto& supportSkillName : initialSupportSkills) {
+            MasterSupportSkill(SkillGen::supportSkills[supportSkillName]);
+        }
     }
-    void ShowMap(const Map &m);
-    void GoUp(const Map &m);
-    void GoDown(const Map &m);
-    void GoLeft(const Map &m);
-    void GoRight(const Map &m);
 
-private:
-    int experience;  //当前的经验值
-    int territoryId; // 领地编号
-    int money;       //拥有的金币量
-    Bag bag;
-    vector<Skill *> skills;
+    int GetExperience() const { return experience; }
+    int GetLevelUpExperience() const { return 100 + level * ((level + 10) / 10) * 10; }
+    const FieldPosition& GetTerritoryPosition() const { return territoryPosition; }
+    const string& GetCountryName() const { return countryName; }
+    int GetMoney() const { return money; }
+    const Bag& GetBag() const { return bag; }
+    Position GetPosition() const { return position; }
+
+    void SetExperience(int experience_) { experience = experience_; }
+    void SetTerritoryPosition(const FieldPosition& territoryPosition_) { territoryPosition = territoryPosition_; }
+    void SetCountryName(const string& countryName_) { countryName = countryName_; }
+    void SetMoney(int money_) { money = money_; }
+    void SetBagLevel(int level_) { bag.SetLevel(level_); }
+    void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
+    void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
+    void SetPosition(const Position& position_) { position = position_; }
+
+    void IncreaseMoney(int money_) { money += money_; }
+    void IncreaseExperience(int experience_);
+
+    bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
+    bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
+    bool DiscardItem(const string& name, int num = 1) { return bag.Discard(name, num); }
+
+    void ShowMap(const Map& m) const;
+    bool GoUp(const Map& m);
+    bool GoDown(const Map& m);
+    bool GoLeft(const Map& m);
+    bool GoRight(const Map& m);
+    void GoHome(const Map& m);
+
+    void ShowBag() const { bag.ShowBag(); }
+    void ShowMedicine() const { bag.ShowMedicine(); }
+    void ShowWeapon() const { bag.ShowWeapon(); }
+    void ShowMoney() const;
+    void ShowSkills() const;
+    void ShowAttackSkills() const;
+    void ShowSupportSkills() const;
+    void ShowState() const;
+
+    void Resurrect();
+
+   private:
+    int experience;                   // 当前的经验值
+    FieldPosition territoryPosition;  // 领地位置
+    string countryName;               // 领地名称
+    int money;                        // 拥有的金币量
+    Bag bag;                          // 背包
+    Position position;                // 当前位置
 };
 
-#endif // KING_H_
+#endif  // KING_H_

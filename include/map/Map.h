@@ -5,28 +5,59 @@
 using std::vector;
 
 #include "Field.h"
+#include "Scene.h"
 #include "common/Global.h"
+#include "text/TextGen.h"
+
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+using rapidjson::SizeType;
+using rapidjson::StringBuffer;
+using rapidjson::Value;
+using rapidjson::Writer;
 
 class Map {
-public:
-    void Init();
-    void MapExtend(string name = "");
-    Scene GetScene(const Position &p) const;
+   public:
+    Scene GetScene(const Position& p) const;
     Field GetField(const int fieldX, const int fieldY) const;
     int GetRowNum() const { return fields.size(); }
     int GetColNum(int row) const {
-        if (row < 0 || row >= GetRowNum()) return 0;
-        else return fields[row].size();
+        if (row < 0 || row >= GetRowNum())
+            return 0;
+        else
+            return fields[row].size();
     }
-    bool IsValidPosition(Position &p) const;
 
-    ~Map() {
-        for (int i = 0; i < fields.size(); i++)
-            for (int j = 0; j < fields[i].size(); j++)
-                delete fields[i][j];
+    FieldPosition PushField(Field* field, int row = -1);
+    FieldPosition MapExtend(string countryName);
+    void Clear();
+    /// 
+
+    bool IsValidPosition(Position& p) const;
+
+    void ShowDirection(const Position& p) const;
+
+    template <typename Writer>
+    void Serialize(Writer& writer) const {
+        writer.StartObject();
+        writer.String("fields");
+
+        writer.StartArray();
+        for (auto row : fields) {
+            writer.StartArray();
+            for (auto col : row) {
+                col->Serialize(writer);
+            }
+            writer.EndArray();
+        }
+        writer.EndArray();
+
+        writer.EndObject();
     }
-private:
+
+   private:
     vector<vector<Field*>> fields;
 };
 
-#endif // MAP_H_
+#endif  // MAP_H_

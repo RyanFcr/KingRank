@@ -1,4 +1,11 @@
 #include "common/Global.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+
+#include <sstream>
+using std::stringstream;
+
+#include <random>
 
 /**
  * @brief Normalize the position
@@ -23,22 +30,40 @@ void Position::Normalize() {
     }
 }
 
-void Position::GoUp() { 
-    sceneY++; 
-    Normalize(); 
-}
-
-void Position::GoDown() { 
-    sceneY--; 
-    Normalize(); 
-}
-
-void Position::GoLeft() { 
-    sceneX--; 
+void Position::GoUp() {
+    sceneX++;
     Normalize();
 }
 
-void Position::GoRight() { 
-    sceneX++; 
-    Normalize(); 
+void Position::GoDown() {
+    sceneX--;
+    Normalize();
+}
+
+void Position::GoLeft() {
+    sceneY--;
+    Normalize();
+}
+
+void Position::GoRight() {
+    sceneY++;
+    Normalize();
+}
+
+double NormalDistribution(double mu, double sigma) {
+    std::random_device rd;
+    std::default_random_engine rng{rd()};
+    std::normal_distribution norm{mu, sigma};
+    return std::max(norm(rng), 0.0);
+}
+
+std::string ReadFormatJson(std::ifstream& ifs) {
+    stringstream json;
+    char ch;
+
+    while (ifs.get(ch).good()) {
+        if (!isspace(ch))
+            json << ch;
+    }
+    return json.str();
 }
