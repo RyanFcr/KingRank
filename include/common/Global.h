@@ -4,6 +4,8 @@
 #include "Config.h"
 #include "Macro.h"
 
+#include <fstream>
+
 const int maxTerminalLenghth = 50;
 
 /// Text Type
@@ -73,4 +75,12 @@ struct FieldPosition {
  * @return possibility
  */
 double NormalDistribution(double mu, double sigma);
+
+/// read format json
+/**
+ * @brief Read from file and generate a json string
+ * @param ifs json file
+ * @return string: json string
+ */
+std::string ReadFormatJson(std::ifstream& ifs);
 #endif

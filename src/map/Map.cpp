@@ -55,6 +55,12 @@ bool Map::IsValidPosition(Position& p) const {
         return true;
 }
 
+/**
+ * @brief extend the map when a new user logins in
+ * extend the map with two plains and one country
+ * @param countryName name of the new user's name
+ * @return FieldPosition: the field of the king's name
+ */
 FieldPosition Map::MapExtend(string countryName) {
     int index;
     for (int i = 0; i < extendPlain; i++) {
@@ -70,6 +76,11 @@ FieldPosition Map::MapExtend(string countryName) {
     return PushField(country, index);
 }
 
+/**
+ * @brief show directions of the given position
+ * show the direction one can go nearby
+ * @param p given position
+ */
 void Map::ShowDirection(const Position& p) const {
     if (p.fieldX >= 0 && p.fieldX < GetRowNum() && p.fieldY >= 0 && p.fieldY < GetColNum(p.fieldX)) {
         // Field Name

@@ -4,7 +4,7 @@
 #include "common/Macro.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
+#include "rapidjson/prettywriter.h"
 #include "text/TextGen.h"
 
 #include <fstream>
@@ -14,8 +14,7 @@ using rapidjson::kObjectType;
 using rapidjson::SizeType;
 using rapidjson::StringBuffer;
 using rapidjson::Value;
-using rapidjson::Writer;
-using std::getline;
+using rapidjson::PrettyWriter;
 using std::ifstream;
 using std::ios;
 using std::ofstream;
@@ -35,15 +34,16 @@ static void SerializeKing(const Value& kingData, Writer& writer);
 /**
  * @brief initialize king by creating or loading
  * @param map
+ * @return true: login success
  * @throw HAS_PARSE_ERROR
  */
-void RoleGen::InitKing(Map& map) {
+bool RoleGen::InitKing(Map& map) {
     string input, kingData, kingName;
 
     ifstream ifs(kingFile, ios::in);
-    getline(ifs, kingData);
-    PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
+    kingData = ReadFormatJson(ifs);
     ifs.close();
+    PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
 
     TextGen::Print("Welcome to the world of Kings!");
     TextGen::Print<request>("Do you have your own territory, young King?");
@@ -52,7 +52,10 @@ void RoleGen::InitKing(Map& map) {
         if (input == "yes") {
             TextGen::Print<request>("What's your name, young King?");
             kingName = TextGen::Input();
-
+            if (kingName == "quit") {
+                TextGen::Print("Bye!");
+                return false;
+            }
             if (LoadKing(kingName)) {
                 TextGen::Print("Welcome! King." + king.GetName() + "!");
                 break;
@@ -63,16 +66,24 @@ void RoleGen::InitKing(Map& map) {
         } else if (input == "no") {
             TextGen::Print<request>("What's your name, young King?");
             kingName = TextGen::Input();
+            if (kingName == "quit") {
+                TextGen::Print("Bye!");
+                return false;
+            }
             if (CreateKing(kingName, map))
                 break;
             else {
                 TextGen::Print<warning>("Sorry, fail to register your territory!");
                 TextGen::Print<request>("Have you already had your own territory, young King?");
             }
+        } else if (input == "quit") {
+            TextGen::Print("Bye!");
+            return false;
         } else {
             TextGen::Print<warning>("Invalid Input!");
         }
     }
+    return true;
 }
 
 /**
@@ -205,7 +216,7 @@ void RoleGen::SaveKing() {
         throw OPEN_FILE_FAIL;
 
     StringBuffer sb;
-    Writer<StringBuffer> writer(sb);
+    PrettyWriter<StringBuffer> writer(sb);
     Value& kings = kingDocument["kings"];
 
     if (CheckRedundancy(king.GetName(), index)) {

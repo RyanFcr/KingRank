@@ -69,6 +69,7 @@ class King : public Role {
     bool GoDown(const Map& m);
     bool GoLeft(const Map& m);
     bool GoRight(const Map& m);
+    void GoHome(const Map& m);
 
     void ShowBag() const { bag.ShowBag(); }
     void ShowMedicine() const { bag.ShowMedicine(); }

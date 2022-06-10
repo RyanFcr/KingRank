@@ -10,7 +10,7 @@
 int main() {
     srand((unsigned)time(NULL));
     string input;
-    bool ret;
+    bool ret, login;
 
     ItemGen::Init();
     SkillGen::Init();
@@ -18,8 +18,8 @@ int main() {
     MapGen::Init();
     TextGen::Init();
     TextGen::PrintTitle();
-    RoleGen::InitKing(MapGen::map);
-    while (1) {
+    login = RoleGen::InitKing(MapGen::map);
+    while (login) {
         input = TextGen::Input();
         if (input == "quit") {
             TextGen::Print("Bye!");
@@ -40,6 +40,8 @@ int main() {
         } else if (input == "left") {
             ret = RoleGen::king.GoLeft(MapGen::map);
             if (ret) EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+        } else if (input == "home") {
+            RoleGen::king.GoHome(MapGen::map);
         } else if (input == "save") {
             RoleGen::SaveKing();
             MapGen::Save();

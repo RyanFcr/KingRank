@@ -12,6 +12,7 @@ void Scene::InitPlainScene() {
     moneyPossibility = NormalDistribution(plainMoneyExpect, plainMoneySigma);
     medicineName = ItemGen::GetRandomMedicineName();
     medicinePossibility = NormalDistribution(plainMedicineExpect, plainMedicineSigma);
+    shopPossibility = NormalDistribution(plainShopExpect, plainShopSigma);
 }
 
 void Scene::InitCountryScene() {
@@ -21,4 +22,5 @@ void Scene::InitCountryScene() {
     moneyPossibility = NormalDistribution(countryMoneyExpect, countryMoneySigma);
     medicineName = ItemGen::GetRandomMedicineName();
     medicinePossibility = NormalDistribution(countryMedicineExpect, countryMedicineSigma);
+    shopPossibility = NormalDistribution(countryShopExpect, countryShopSigma);
 }

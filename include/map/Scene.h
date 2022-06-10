@@ -21,13 +21,14 @@ class Scene {
    public:
     void InitPlainScene();
     void InitCountryScene();
-    void Load(const string& eN, int eP, int m, int mP, const string& meN, int meP) {
+    void Load(const string& eN, int eP, int m, int mP, const string& meN, int meP, int shopP) {
         enemyName = eN;
         enemyPossibility = eP;
         money = m;
         moneyPossibility = mP;
         medicineName = meN;
         medicinePossibility = meP;
+        shopPossibility = shopP;
     };
 
     const string& GetEnemyName() const { return enemyName; }
@@ -46,6 +47,7 @@ class Scene {
         SERIALIZE_INT("moneyPossibility", moneyPossibility)
         SERIALIZE_STRING("medicineName", medicineName)
         SERIALIZE_INT("medicinePossibility", medicinePossibility)
+        SERIALIZE_INT("shopPossibility", shopPossibility)
         writer.EndObject();
     }
 
@@ -56,6 +58,7 @@ class Scene {
     int moneyPossibility;     // 出现钱的概率
     string medicineName;      // 出现药品的名字
     int medicinePossibility;  // 出现药品的概率
+    int shopPossibility;      // 出现商店的概率
 };
 
 #endif  // SCENE_H_

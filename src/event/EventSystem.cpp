@@ -1,17 +1,21 @@
 #include "event/EventSystem.h"
-#include "item/ItemGen.h"
-#include "role/EnemyGen.h"
 #include "combat/CombatSystem.h"
 #include "common/Global.h"
+#include "item/ItemGen.h"
+#include "role/EnemyGen.h"
 
 #include <string>
 using std::to_string;
 
 void EventSystem::TriggerEvent(King& king, const Map& m) {
-    int inputInt;
-    int totalMoney = 0, totalMedicineNumber = 0;
     Scene s = m.GetScene(king.GetPosition());
-    string medicineName = s.GetMedicineName();
+    MoneyEvent(king, s);
+    MedicineEvent(king, s);
+    CombatEvent(king, s);
+}
+
+void EventSystem::MoneyEvent(King& king, const Scene& s) {
+    int totalMoney = 0;
 
     // Get Money
     while (rand() % 100 < s.GetMoneyPossibility()) {
@@ -21,6 +25,12 @@ void EventSystem::TriggerEvent(King& king, const Map& m) {
         TextGen::Print<reward>("Congratulation! You get " + to_string(totalMoney) + " Kin!");
         king.IncreaseMoney(totalMoney);
     }
+}
+
+void EventSystem::MedicineEvent(King& king, const Scene& s) {
+    int totalMedicineNumber = 0;
+    int inputInt;
+    string medicineName = s.GetMedicineName();
 
     // Get Medicine
     while (rand() % 100 < s.GetMedicinePossibility()) {
@@ -45,7 +55,9 @@ void EventSystem::TriggerEvent(King& king, const Map& m) {
         } else
             TextGen::Print<warning>("You ignore " + medicineName + "!");
     }
+}
 
+void EventSystem::CombatEvent(King& king, const Scene& s) {
     // Combat
     if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
         Enemy e = EnemyGen::enemys.at(s.GetEnemyName());

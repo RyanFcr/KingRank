@@ -27,7 +27,8 @@ void SkillGen::Init() {
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
     string skillData;
-    getline(ifs, skillData);
+    skillData = ReadFormatJson(ifs);
+    ifs.close();
 
     Document d;
     if (d.Parse(skillData.c_str()).HasParseError())
@@ -96,7 +97,4 @@ void SkillGen::Init() {
 
         supportSkills.insert(make_pair(name, SupportSkill{name, description, MPCost, HPValue}));
     }
-    
-
-    ifs.close();
 }

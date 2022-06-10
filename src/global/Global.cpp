@@ -1,9 +1,9 @@
 #include "common/Global.h"
-#include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 
-using rapidjson::Writer;
-using rapidjson::StringBuffer;
+#include <sstream>
+using std::stringstream;
 
 #include <random>
 
@@ -55,4 +55,15 @@ double NormalDistribution(double mu, double sigma) {
     std::default_random_engine rng{rd()};
     std::normal_distribution norm{mu, sigma};
     return std::max(norm(rng), 0.0);
+}
+
+std::string ReadFormatJson(std::ifstream& ifs) {
+    stringstream json;
+    char ch;
+
+    while (ifs.get(ch).good()) {
+        if (!isspace(ch))
+            json << ch;
+    }
+    return json.str();
 }

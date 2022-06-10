@@ -33,8 +33,7 @@ void ItemGen::Init() {
     ifstream ifs(itemFile, ios::in);
     if (ifs.fail())
         throw OPEN_FILE_FAIL;
-    string itemData;
-    getline(ifs, itemData);
+    string itemData = ReadFormatJson(ifs);
 
     Document d;
     PARSE_DOM_OBJECT(d, itemData.c_str())

@@ -48,7 +48,7 @@ void King::ShowState() const {
     TextGen::Print("Exp: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
     TextGen::Print("HP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
     TextGen::Print("MP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
-    TextGen::Print("Attack:" + to_string(GetAttack()));
+    TextGen::Print("Attack: " + to_string(GetAttack()));
     TextGen::Print("Country: " + GetCountryName());
 }
 
@@ -90,6 +90,19 @@ bool King::GoRight(const Map& m) {
         return false;
     } else
         return true;
+}
+
+void King::GoHome(const Map& m) {
+    if (position.fieldX == territoryPosition.fieldX && position.fieldY == territoryPosition.fieldY) {
+        TextGen::Print<warning>("You are currently in your territory!");
+        return;
+    }
+
+    position.fieldX = territoryPosition.fieldX;
+    position.fieldY = territoryPosition.fieldY;
+    position.sceneX = 0;
+    position.sceneY = 0;
+    TextGen::Print("Welcome back to your territory, your Grace!");
 }
 
 void King::Resurrect() {

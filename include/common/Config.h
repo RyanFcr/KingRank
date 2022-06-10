@@ -25,6 +25,12 @@ const int countryMoneyNumSigma = 25;                         // 领地金币数�
 const int countryMedicineExpect = 15;                        // 领地药品概率期望
 const int countryMedicineSigma = countryMedicineExpect / 3;  // 领地药品概率期望
 
+// 商店相关
+const int plainShopExpect = 3;                       // 平原商店概率期望
+const int plainShopSigma = plainShopExpect / 3;      // 平原商店方差
+const int countryShopExpect = 5;                     // 领地商店概率期望
+const int countryShopSigma = countryShopExpect / 3;  // 领地商店方差
+
 // 人物相关
 const int initialAttack = 1;       // 初始攻击力
 const int initialLevel = 1;        // 初始等级

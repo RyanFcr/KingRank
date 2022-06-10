@@ -1,1 +1,18 @@
-{"attackSkills":[{"name":"普通攻击","description":"只是普普通通的攻击","MPCost":0,"damageValue":10}],"supportSkills":[{"name":"治疗术","description":"每次使用可以恢复全部血量","MPCost":20,"HPValue":100}]}
+{
+    "attackSkills": [
+        {
+            "name": "普通攻击",
+            "description": "只是普普通通的攻击",
+            "MPCost": 0,
+            "damageValue": 10
+        }
+    ],
+    "supportSkills": [
+        {
+            "name": "治疗术",
+            "description": "每次使用可以恢复全部血量",
+            "MPCost": 20,
+            "HPValue": 100
+        }
+    ]
+}
