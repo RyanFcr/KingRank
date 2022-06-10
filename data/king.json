@@ -5,29 +5,29 @@
             "level": 1,
             "attack": 1,
             "maxHP": 100,
-            "HP": 100,
+            "HP": 50,
             "maxMP": 100,
-            "MP": 100,
+            "MP": 80,
             "position": {
                 "fieldX": 0,
-                "fieldY": 2,
+                "fieldY": 0,
                 "sceneX": 0,
-                "sceneY": 0
+                "sceneY": 1
             },
-            "experience": 0,
+            "experience": 15,
             "territoryPosition": {
                 "fieldX": 0,
                 "fieldY": 2
             },
             "countryName": "admin",
-            "money": 100,
+            "money": 4497,
             "bag": {
                 "level": 1,
                 "weightLimit": 10,
                 "curWeight": 6,
                 "medicines": {
-                    "肉包": 1,
-                    "魔法丸子": 1
+                    "肉包": 0,
+                    "魔法丸子": 2
                 },
                 "weapons": {}
             },

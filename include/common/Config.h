@@ -30,6 +30,10 @@ const int plainShopExpect = 3;                       // 平原商店概率期望
 const int plainShopSigma = plainShopExpect / 3;      // 平原商店方差
 const int countryShopExpect = 5;                     // 领地商店概率期望
 const int countryShopSigma = countryShopExpect / 3;  // 领地商店方差
+const int shopMedicineNumExpect = 4;                 // 商店药品数量期望
+const int shopMedicineNumSigma = 1;                  // 商店药品数量方差
+const int shopWeaponNumExpect = 3;                   // 商店武器数量期望
+const int shopWeaponNumSigma = 1;                    // 商店武器数量方差
 
 // 人物相关
 const int initialAttack = 1;       // 初始攻击力

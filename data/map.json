@@ -54,7 +54,7 @@
                             "enemyName": "",
                             "enemyPossibility": 8,
                             "money": 27,
-                            "moneyPossibility": 30,
+                            "moneyPossibility": 13,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 5,
                             "shopPossibility": 2
@@ -63,7 +63,7 @@
                             "enemyName": "",
                             "enemyPossibility": 16,
                             "money": 108,
-                            "moneyPossibility": 28,
+                            "moneyPossibility": 6,
                             "medicineName": "肉包",
                             "medicinePossibility": 6,
                             "shopPossibility": 1
