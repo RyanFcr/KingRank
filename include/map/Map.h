@@ -32,6 +32,7 @@ class Map {
     FieldPosition PushField(Field* field, int row = -1);
     FieldPosition MapExtend(string countryName);
     void Clear();
+    /// 
 
     bool IsValidPosition(Position& p) const;
 

@@ -50,9 +50,9 @@ void Position::GoRight() {
     Normalize();
 }
 
-bool NormalDistribution(double mu, double sigma, double poss) {
+double NormalDistribution(double mu, double sigma) {
     std::random_device rd;
     std::default_random_engine rng{rd()};
     std::normal_distribution norm{mu, sigma};
-    return norm(rng) < poss;
+    return std::max(norm(rng), 0.0);
 }

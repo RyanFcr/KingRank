@@ -87,29 +87,6 @@ void MapGen::Init() {
         }
     }
     ifs.close();
-
-    // } catch (KRerror errorId) {
-    //     switch (errorId) {
-    //         case OPEN_FILE_FAIL:
-    //             error = "Can't find map data! Please check the integrity of the game!";
-    //             TextGen::Print<warning>(error);
-    //             exit(1);  // exit forcefully
-    //             break;
-
-    //         case HAS_PARSE_ERROR:
-    //             error = "Map data has parse error! Please check the validity of the data!";
-    //             TextGen::Print<warning>(error);
-    //             exit(1);  // exit forcefully
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // } catch (const std::bad_alloc& e) {
-    //     error = "Not enough memory!";
-    //     TextGen::Print<warning>(error);
-    //     exit(1);  // exit forcefully
-    // }
 }
 
 void MapGen::Free() {

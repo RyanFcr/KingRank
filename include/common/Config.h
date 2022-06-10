@@ -6,17 +6,24 @@ using std::pair;
 using std::string;
 
 // 地图相关
-const int initialMapSize = 1;                   // 地图的边长(以土地作为单位)
-const int extendPlain = 2;                      // 每次增加的平原数量(即无主人的领地)
-const string initialFieldName = "Plain";        // 默认土地名:平原
-const int fieldSize = 2;                        // 土地的边长
-const int plainEnemyPossibilityMax = 100;       // 平原敌人最大概率
-const int plainMoneyMax = 1000;                 // 平原金币最大值
-const int plainMoneyPossibilityMax = 100;       // 平原金币最大概率
-const int plainMedicinePossibilityMax = 100;    // 平原药品最大概率
-const int countryMoneyMax = 100;                // 领地金币最大值
-const int countryMoneyPossibilityMax = 100;     // 领地金币最大概率
-const int countryMedicinePossibilityMax = 100;  // 领地药品最大概率
+const int initialMapSize = 1;                                // 地图的边长(以土地作为单位)
+const int extendPlain = 2;                                   // 每次增加的平原数量(即无主人的领地)
+const string initialFieldName = "Plain";                     // 默认土地名:平原
+const int fieldSize = 2;                                     // 土地的边长
+const int plainEnemyExpect = 10;                             // 平原敌人概率期望
+const int plainEnemySigma = plainEnemyExpect / 3;            // 平原敌人概率方差
+const int plainMoneyExpect = 20;                             // 平原金币概率期望
+const int plainMoneySigma = plainMoneyExpect / 3;            // 平原金币概率方差
+const int plainMoneyNumExpect = 50;                          // 平原金币数量期望
+const int plainMoneyNumSigma = 25;                           // 平原金币概率方差
+const int plainMedicineExpect = 10;                          // 平原药品概率期望
+const int plainMedicineSigma = plainMedicineExpect / 3;      // 平原药品概率方差
+const int countryMoneyExpect = 40;                           // 领地金币概率期望
+const int countryMoneySigma = countryMoneyExpect / 3;        // 领地金币概率方差
+const int countryMoneyNumExpect = 100;                       // 领地金币数量期望
+const int countryMoneyNumSigma = 25;                         // 领地金币数量方差
+const int countryMedicineExpect = 15;                        // 领地药品概率期望
+const int countryMedicineSigma = countryMedicineExpect / 3;  // 领地药品概率期望
 
 // 人物相关
 const int initialAttack = 1;       // 初始攻击力

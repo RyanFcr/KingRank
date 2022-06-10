@@ -66,12 +66,11 @@ struct FieldPosition {
 };
 
 /// possibility
-/**
- * @brief 正太函数
- * @param mu 期望
- * @param sigma 标准差
- * @param poss 几率
- * @return true 
+/** 
+ * @brief Generate a possibility according to normal distribution 
+ * @param mu expectation
+ * @param sigma variance
+ * @return possibility
  */
-bool NormalDistribution(double mu, double sigma, double poss);
+double NormalDistribution(double mu, double sigma);
 #endif
