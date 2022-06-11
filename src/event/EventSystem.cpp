@@ -19,22 +19,18 @@ void EventSystem::TriggerEvent(King& king, Map& m) {
 }
 /**
  * @brief Npc对话事件
- * 
- * @param king 
- * @param s 
+ *
+ * @param king
+ * @param s
  */
 void EventSystem::NpcEvent(King& king, Scene& s) {
     Position kingPosition = king.GetPosition();
 
-    map<Position, Npc, decltype(PositionCmp)*>::iterator it_find;
-    it_find = NpcGen::Npcs.find(kingPosition);
-    if(it_find!=NpcGen::Npcs.end()) {
-        Npc npc = NpcGen::Npcs[kingPosition];
+    if (NpcGen::Npcs.count(kingPosition)) {
+        Npc& npc = NpcGen::Npcs[kingPosition];
         npc.NpcSpeak("0");
         string input = TextGen::Input();
         npc.NpcSpeak(input);
-        // string statement =
-        // TextGen::Print<reward>()
     } else {
         return;
     }
@@ -158,9 +154,12 @@ void EventSystem::ShopEvent(King& king, Scene& s) {
                         TextGen::Print<warning>("您没有足够的背包容量!");
                     } else {
                         king.IncreaseMoney(-price);
-                        king.InsertWeapon(weapon);
                         shop.SellOutWeaponByIndex(inputInt);
-                        TextGen::Print<buff>("购买成功!");
+                        if (king.InsertWeapon(weapon)) {
+                            TextGen::Print<buff>("购买成功!");
+                        } else {
+                            TextGen::Print<buff>("您的 " + itemName + " 获得了升级!(磨损度恢复,攻击增加)");
+                        }
                     }
                 }
             }

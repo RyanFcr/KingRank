@@ -22,13 +22,15 @@ class King : public Role {
          int maxMP = initialMaxMP,
          int MP = initialMP,
          int experience = initialExperience,
-         int money = initialMoney)
+         int money = initialMoney,
+         string curWeapon = "")
         : Role(kingName, attack, level, maxHP, HP, maxMP, MP),
           experience(experience),
           territoryPosition(territoryPosition),
           countryName(countryName),
           money(money),
-          position(position) {
+          position(position),
+          curWeapon(curWeapon) {
         for (auto& item : initialMedicines) {
             InsertMedicine(item.first, item.second);
         }
@@ -47,6 +49,7 @@ class King : public Role {
     int GetMoney() const { return money; }
     const Bag& GetBag() const { return bag; }
     Position GetPosition() const { return position; }
+    const string& GetCurrentWeapon() const { return curWeapon; }
 
     void SetExperience(int experience_) { experience = experience_; }
     void SetTerritoryPosition(const FieldPosition& territoryPosition_) { territoryPosition = territoryPosition_; }
@@ -56,13 +59,19 @@ class King : public Role {
     void SetBagWeightLimit(int weightLimit_) { bag.SetWeightLimit(weightLimit_); }
     void SetBagCurWeight(int curWeight_) { bag.SetCurWeight(curWeight_); }
     void SetPosition(const Position& position_) { position = position_; }
+    void SetCurrentWeapon(const string& curWeapon_) { curWeapon = curWeapon_; }
 
     void IncreaseMoney(int money_) { money += money_; }
     void IncreaseExperience(int experience_);
 
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
-    bool DiscardItem(const string& name, int num = 1) { return bag.Discard(name, num); }
+    bool DiscardItem(const string& name, int num = 1) {
+        if (curWeapon == name)
+            curWeapon = "";
+        return bag.Discard(name, num);
+    }
+    void EquipWeapon();
 
     void ShowMap(const Map& m) const;
     bool GoUp(const Map& m);
@@ -89,6 +98,7 @@ class King : public Role {
     int money;                        // 拥有的金币量
     Bag bag;                          // 背包
     Position position;                // 当前位置
+    string curWeapon;                 // 当前装备的武器
 };
 
 #endif  // KING_H_

@@ -36,7 +36,7 @@ void King::ShowMap(const Map& m) const {
 }
 
 void King::ShowMoney() const {
-    TextGen::Print<reward>("Kin: " + to_string(money));
+    TextGen::Print<reward>("金币: " + to_string(money));
 }
 
 void King::ShowSkills() const {
@@ -71,20 +71,24 @@ void King::ShowSupportSkills() const {
 }
 
 void King::ShowState() const {
-    TextGen::Print("Name: " + GetName());
-    TextGen::Print("Level: " + to_string(GetLevel()));
-    TextGen::Print("Exp: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
-    TextGen::Print("HP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
-    TextGen::Print("MP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
-    TextGen::Print("Attack: " + to_string(GetAttack()));
-    TextGen::Print("Country: " + GetCountryName());
+    TextGen::Print("姓名: " + GetName());
+    TextGen::Print("等级: " + to_string(GetLevel()));
+    TextGen::Print("经验: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
+    TextGen::Print("MP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
+    TextGen::Print("HP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
+    TextGen::Print("攻击力: " + to_string(GetAttack()));
+    TextGen::Print("国家: " + GetCountryName());
+    if (GetCurrentWeapon() == "")
+        TextGen::Print("当前武器: 无");
+    else
+        TextGen::Print("当前武器: " + GetCurrentWeapon());
 }
 
 bool King::GoUp(const Map& m) {
     position.GoUp();
     if (!(m.IsValidPosition(position))) {
         position.GoDown();
-        TextGen::Print<warning>("Can't go up!");
+        TextGen::Print<warning>("不能向上!");
         return false;
     } else
         return true;
@@ -94,7 +98,7 @@ bool King::GoDown(const Map& m) {
     position.GoDown();
     if (!(m.IsValidPosition(position))) {
         position.GoUp();
-        TextGen::Print<warning>("Can't go down!");
+        TextGen::Print<warning>("不能向下!");
         return false;
     } else
         return true;
@@ -104,7 +108,7 @@ bool King::GoLeft(const Map& m) {
     position.GoLeft();
     if (!(m.IsValidPosition(position))) {
         position.GoRight();
-        TextGen::Print<warning>("Can't go left!");
+        TextGen::Print<warning>("不能向左!");
         return false;
     } else
         return true;
@@ -114,7 +118,7 @@ bool King::GoRight(const Map& m) {
     position.GoRight();
     if (!(m.IsValidPosition(position))) {
         position.GoLeft();
-        TextGen::Print<warning>("Can't go right!");
+        TextGen::Print<warning>("不能向右!");
         return false;
     } else
         return true;
@@ -185,5 +189,26 @@ void King::IncreaseExperience(int experience_) {
 
         SetHP(GetMaxHP());
         SetMP(GetMaxMP());
+    }
+}
+
+void King::EquipWeapon() {
+    int inputInt;
+    int weaponNum = bag.GetWeaponsNum();
+
+    bag.ShowWeapon();
+    TextGen::Print<request>("请选择您想装备的武器");
+    inputInt = TextGen::InputInt();
+    if (inputInt < 0 || inputInt >= weaponNum) {
+        TextGen::Print<warning>("错误序号，取消装备!");
+    } else {
+        if (curWeapon != "") {
+            Weapon& weapon = bag.GetWeaponByName(curWeapon);
+            attack -= weapon.GetAttack();
+        }
+        curWeapon = bag.GetWeaponNameByIndex(inputInt);
+        Weapon& newWeapon = bag.GetWeaponByName(curWeapon);
+        attack += newWeapon.GetAttack();
+        TextGen::Print<buff>("成功装备 " + curWeapon + " !");
     }
 }

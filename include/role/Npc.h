@@ -9,7 +9,13 @@ using std::string;
 
 class Npc {
    public:
-    Npc() {}//缺少构造函数
+    Npc() {}
+    Npc(string name) : name(name) {}
+    void SetPosition(const Position& p) { position = p; }
+    void InsertStatement(const string& input, const string& output) { 
+        NpcStatements.insert(std::make_pair(input, output));
+    }
+
     void NpcSpeak(string key);
 
    private:

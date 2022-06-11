@@ -2,11 +2,15 @@
 #include "event/EventSystem.h"
 #include "item/ItemGen.h"
 #include "map/MapGen.h"
+#include "mission/MissionGen.h"
 #include "role/EnemyGen.h"
+#include "role/NpcGen.h"
 #include "role/RoleGen.h"
 #include "skill/SkillGen.h"
 #include "text/TextGen.h"
+
 void Help();
+
 int main() {
     srand((unsigned)time(NULL));
     string input;
@@ -17,6 +21,8 @@ int main() {
     SkillGen::Init();
     EnemyGen::InitEnemy();
     MapGen::Init();
+    NpcGen::Init();
+    MissionGen::InitMissions();
     TextGen::PrintTitle();
     login = RoleGen::InitKing(MapGen::map);
     if (login)
@@ -59,6 +65,8 @@ int main() {
             RoleGen::king.ShowSkills();
         } else if (input == "state") {
             RoleGen::king.ShowState();
+        } else if (input == "equip") {
+            RoleGen::king.EquipWeapon();
         } else if (input == "help") {
             Help();
         } else
@@ -92,6 +100,8 @@ void Help() {
     TextGen::Print("功能描述：查看您目前的状态");
     TextGen::Print("输入指令：rank");
     TextGen::Print("功能描述：查看国王排名");
+    TextGen::Print("输入指令：equip");
+    TextGen::Print("功能描述：装备武器");
     TextGen::Print("输入指令：exit");
     TextGen::Print("功能描述：退出游戏");
     TextGen::Print("输入指令：help");

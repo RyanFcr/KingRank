@@ -1,52 +1,6 @@
 {
     "kings": [
         {
-            "name": "�����",
-            "level": 1,
-            "attack": 1,
-            "maxHP": 100,
-            "HP": 80,
-            "maxMP": 100,
-            "MP": 80,
-            "position": {
-                "fieldX": 0,
-                "fieldY": 0,
-                "sceneX": 1,
-                "sceneY": 0
-            },
-            "experience": 10,
-            "territoryPosition": {
-                "fieldX": 1,
-                "fieldY": 0
-            },
-            "countryName": "132",
-            "money": 1050,
-            "bag": {
-                "level": 1,
-                "weightLimit": 10,
-                "curWeight": 6,
-                "medicines": {
-                    "肉包": 1,
-                    "魔法丸子": 1
-                },
-                "weapons": {}
-            },
-            "attackSkills": {
-                "普通攻击": {
-                    "description": "只是普普通通的攻击",
-                    "MPCost": 0,
-                    "damageValue": 10
-                }
-            },
-            "supportSkills": {
-                "治疗术": {
-                    "description": "每次使用可以恢复全部血量",
-                    "MPCost": 20,
-                    "HPValue": 100
-                }
-            }
-        },
-        {
             "name": "admin",
             "level": 1,
             "attack": 1,
@@ -55,7 +9,6 @@
             "maxMP": 100,
             "MP": 80,
             "position": {
-
                 "fieldX": 0,
                 "fieldY": 2,
                 "sceneX": 0,
@@ -67,16 +20,53 @@
                 "fieldY": 2
             },
             "countryName": "admin",
-            "money": 4818,
+            "money": 426980,
             "bag": {
                 "level": 1,
                 "weightLimit": 100,
-                "curWeight": 21,
+                "curWeight": 33,
                 "medicines": {
                     "肉包": 2,
-                    "魔法丸子": 5
+                    "魔法丸子": 6
                 },
-                "weapons": {}
+                "weapons": {
+                    "影刃": {
+                        "description": "一把快刀",
+                        "weight": 2,
+                        "id": 0,
+                        "attack": 1,
+                        "abrasion": 0,
+                        "abrasionLoss": 100,
+                        "price": 1
+                    },
+                    "细剑": {
+                        "description": "波吉的武器",
+                        "weight": 1,
+                        "id": 0,
+                        "attack": 1,
+                        "abrasion": 0,
+                        "abrasionLoss": 100,
+                        "price": 1
+                    },
+                    "长枪": {
+                        "description": "伯斯王国”王之枪“的武器",
+                        "weight": 4,
+                        "id": 0,
+                        "attack": 1,
+                        "abrasion": 0,
+                        "abrasionLoss": 100,
+                        "price": 1
+                    },
+                    "魔杖": {
+                        "description": "一根直直的魔杖",
+                        "weight": 2,
+                        "id": 0,
+                        "attack": 1,
+                        "abrasion": 0,
+                        "abrasionLoss": 100,
+                        "price": 1
+                    }
+                }
             },
             "attackSkills": {
                 "普通攻击": {
@@ -91,7 +81,8 @@
                     "MPCost": 20,
                     "HPValue": 100
                 }
-            }
+            },
+            "curWeapon": "细剑"
         }
     ]
 }
