@@ -20,10 +20,10 @@
                 "fieldY": 2
             },
             "countryName": "admin",
-            "money": 426980,
+            "money": 416980,
             "bag": {
                 "level": 1,
-                "weightLimit": 100,
+                "weightLimit": 200,
                 "curWeight": 32,
                 "medicines": {
                     "肉包": 2,

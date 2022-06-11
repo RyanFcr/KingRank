@@ -41,6 +41,7 @@ class Bag {
     bool InsertWeapon(const Weapon& weapon);
     bool Discard(const string& name, int num = 1);
     void DiscardAll();
+    void IncreaseCapacity(int capacity_) { weightLimit += capacity_; }
 
     void ShowBag() const;
     void ShowMedicine() const;
