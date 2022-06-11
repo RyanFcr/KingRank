@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include <utility>
+#include <iostream>
 
 using rapidjson::Document;
 using rapidjson::SizeType;
@@ -128,7 +129,7 @@ bool ItemGen::IsWeaponExist(const string &name) {
  * @throw UNKNOWN_ITEM
  */
 Weapon ItemGen::GetWeapon(const string &name) {
-    if (IsWeaponExist(name)) throw UNKNOWN_ITEM;
+    if (!IsWeaponExist(name)) throw UNKNOWN_ITEM;
     return weapons[name];
 }
 
