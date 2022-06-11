@@ -36,7 +36,7 @@ class Scene {
     int GetMoney() const { return money; }
     int GetMoneyPossibility() const { return moneyPossibility; }
     const string& GetMedicineName() const { return medicineName; }
-    int GetMedicinePossibility() const { return moneyPossibility; }
+    int GetMedicinePossibility() const { return medicinePossibility; }
     int GetShopPossibility() const { return shopPossibility; }
 
     void SetMoneyPossibility(int poss) { moneyPossibility = poss; }

@@ -99,16 +99,16 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 95,
-                            "moneyPossibility": 16,
+                            "moneyPossibility": 10,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 12,
-                            "shopPossibility": 3
+                            "shopPossibility": 20
                         },
                         {
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 126,
-                            "moneyPossibility": 41,
+                            "moneyPossibility": 12,
                             "medicineName": "肉包",
                             "medicinePossibility": 17,
                             "shopPossibility": 4

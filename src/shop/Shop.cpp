@@ -6,9 +6,8 @@
 using std::to_string;
 
 Shop::Shop() {
-    int medicineNum = NormalDistribution(shopMedicineNumExpect, shopMedicineNumSigma);
-    int weaponNum = NormalDistribution(shopWeaponNumExpect, shopWeaponNumSigma);
-    /// @attention the shop may be empty
+    int medicineNum = NormalDistribution(shopMedicineNumExpect, shopMedicineNumSigma) + 1;
+    int weaponNum = NormalDistribution(shopWeaponNumExpect, shopWeaponNumSigma) + 1;
     medicines.reserve(medicineNum);
     for (int i = 0; i < medicineNum; i++) {
         medicines.push_back(ItemGen::GetRandomMedicineName());
@@ -20,15 +19,31 @@ Shop::Shop() {
 }
 
 void Shop::ShowShopItems() const {
-    TextGen::Print("药物:");
-    for (size_t i = 0; i < medicines.size(); i++) {
-        TextGen::Print(to_string(i) + ". " + medicines[i] + ": ", "");
-        TextGen::Print<reward>(to_string(ItemGen::GetMedicine(medicines[i]).GetPrice()), " ");
+    if (GetItemNum() == 0) {
+        TextGen::Print("商店为空!");
+        return;
+    }
+
+    int ofs = medicines.size();
+
+    TextGen::Print<GREEN_>("药品:");
+    if (medicines.size()) {
+        for (size_t i = 0; i < medicines.size(); i++) {
+            TextGen::Print(to_string(i) + ". " + medicines[i] + ": ", "");
+            TextGen::Print<reward>(to_string(ItemGen::GetMedicine(medicines[i]).GetPrice()), " ");
+        }
+    } else {
+        TextGen::Print("空", "");
     }
     TextGen::Print("");
-    TextGen::Print("武器:");
-    for (size_t i = 0; i < weapons.size(); i++) {
-        TextGen::Print(to_string(i) + ". " + weapons[i] + ": ", "");
-        TextGen::Print<reward>(to_string(ItemGen::GetMedicine(weapons[i]).GetPrice()), " ");
+    TextGen::Print<RED_>("武器:");
+    if (weapons.size()) {
+        for (size_t i = 0; i < weapons.size(); i++) {
+            TextGen::Print(to_string(i + ofs) + ". " + weapons[i] + ": ", "");
+            TextGen::Print<reward>(to_string(ItemGen::GetWeapon(weapons[i]).GetPrice()), " ");
+        }
+    } else {
+        TextGen::Print("空", "");
     }
+    TextGen::Print("");
 }
