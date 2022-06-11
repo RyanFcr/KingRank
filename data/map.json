@@ -9,7 +9,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 6,
                             "money": 60,
-                            "moneyPossibility": 18,
+                            "moneyPossibility": 12,
                             "medicineName": "肉包",
                             "medicinePossibility": 7,
                             "shopPossibility": 3
@@ -18,7 +18,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 10,
                             "money": 38,
-                            "moneyPossibility": 29,
+                            "moneyPossibility": 4,
                             "medicineName": "肉包",
                             "medicinePossibility": 10,
                             "shopPossibility": 4
@@ -29,7 +29,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 15,
                             "money": 71,
-                            "moneyPossibility": 16,
+                            "moneyPossibility": 5,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 11,
                             "shopPossibility": 2
@@ -38,7 +38,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 8,
                             "money": 24,
-                            "moneyPossibility": 13,
+                            "moneyPossibility": 4,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 11,
                             "shopPossibility": 2
@@ -54,7 +54,7 @@
                             "enemyName": "",
                             "enemyPossibility": 8,
                             "money": 27,
-                            "moneyPossibility": 13,
+                            "moneyPossibility": 2,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 5,
                             "shopPossibility": 2
@@ -63,7 +63,7 @@
                             "enemyName": "",
                             "enemyPossibility": 16,
                             "money": 108,
-                            "moneyPossibility": 6,
+                            "moneyPossibility": 4,
                             "medicineName": "肉包",
                             "medicinePossibility": 6,
                             "shopPossibility": 1
@@ -74,7 +74,7 @@
                             "enemyName": "",
                             "enemyPossibility": 11,
                             "money": 72,
-                            "moneyPossibility": 14,
+                            "moneyPossibility": 2,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 10,
                             "shopPossibility": 2
@@ -83,7 +83,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 7,
                             "money": 89,
-                            "moneyPossibility": 10,
+                            "moneyPossibility": 4,
                             "medicineName": "肉包",
                             "medicinePossibility": 6,
                             "shopPossibility": 2
@@ -128,7 +128,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 63,
-                            "moneyPossibility": 37,
+                            "moneyPossibility": 5,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 18,
                             "shopPossibility": 4
@@ -144,7 +144,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 7,
                             "money": 68,
-                            "moneyPossibility": 15,
+                            "moneyPossibility": 6,
                             "medicineName": "肉包",
                             "medicinePossibility": 13,
                             "shopPossibility": 3
@@ -164,7 +164,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 9,
                             "money": 24,
-                            "moneyPossibility": 23,
+                            "moneyPossibility": 10,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 8,
                             "shopPossibility": 2
@@ -189,7 +189,7 @@
                             "enemyName": "",
                             "enemyPossibility": 11,
                             "money": 51,
-                            "moneyPossibility": 21,
+                            "moneyPossibility": 9,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 3,
                             "shopPossibility": 2
@@ -198,7 +198,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 10,
                             "money": 14,
-                            "moneyPossibility": 21,
+                            "moneyPossibility": 14,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 6,
                             "shopPossibility": 2
@@ -209,7 +209,7 @@
                             "enemyName": "",
                             "enemyPossibility": 7,
                             "money": 64,
-                            "moneyPossibility": 33,
+                            "moneyPossibility": 22,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 9,
                             "shopPossibility": 4
@@ -225,6 +225,51 @@
                         }
                     ]
                 ]
+            },
+            {
+                "name": "132",
+                "field": [
+                    [
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 100,
+                            "money": 96,
+                            "moneyPossibility": 10,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 9,
+                            "shopPossibility": 4
+                        },
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 0,
+                            "money": 142,
+                            "moneyPossibility": 69,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 15,
+                            "shopPossibility": 5
+                        }
+                    ],
+                    [
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 0,
+                            "money": 65,
+                            "moneyPossibility": 4,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 12,
+                            "shopPossibility": 4
+                        },
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 0,
+                            "money": 104,
+                            "moneyPossibility": 14,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 20,
+                            "shopPossibility": 4
+                        }
+                    ]
+                ]
             }
         ],
         [
@@ -236,7 +281,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 105,
-                            "moneyPossibility": 23,
+                            "moneyPossibility": 7,
                             "medicineName": "肉包",
                             "medicinePossibility": 23,
                             "shopPossibility": 5
@@ -269,6 +314,96 @@
                             "medicineName": "肉包",
                             "medicinePossibility": 19,
                             "shopPossibility": 4
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Plain",
+                "field": [
+                    [
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 9,
+                            "money": 52,
+                            "moneyPossibility": 12,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 12,
+                            "shopPossibility": 3
+                        },
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 9,
+                            "money": 41,
+                            "moneyPossibility": 18,
+                            "medicineName": "魔法丸子",
+                            "medicinePossibility": 9,
+                            "shopPossibility": 4
+                        }
+                    ],
+                    [
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 15,
+                            "money": 94,
+                            "moneyPossibility": 19,
+                            "medicineName": "魔法丸子",
+                            "medicinePossibility": 5,
+                            "shopPossibility": 2
+                        },
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 4,
+                            "money": 24,
+                            "moneyPossibility": 18,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 6,
+                            "shopPossibility": 2
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Plain",
+                "field": [
+                    [
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 5,
+                            "money": 91,
+                            "moneyPossibility": 17,
+                            "medicineName": "魔法丸子",
+                            "medicinePossibility": 10,
+                            "shopPossibility": 2
+                        },
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 10,
+                            "money": 44,
+                            "moneyPossibility": 5,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 17,
+                            "shopPossibility": 1
+                        }
+                    ],
+                    [
+                        {
+                            "enemyName": "史莱姆",
+                            "enemyPossibility": 4,
+                            "money": 46,
+                            "moneyPossibility": 9,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 13,
+                            "shopPossibility": 3
+                        },
+                        {
+                            "enemyName": "",
+                            "enemyPossibility": 6,
+                            "money": 48,
+                            "moneyPossibility": 23,
+                            "medicineName": "肉包",
+                            "medicinePossibility": 10,
+                            "shopPossibility": 1
                         }
                     ]
                 ]

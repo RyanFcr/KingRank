@@ -1,14 +1,34 @@
 {
     "missions": [
         {
-            "missionName": "test",
-            "description": "test",
+            "missionName": "野人国王给的任务",
+            "description": "击败一只史莱姆",
             "current": 0,
             "total": 1,
             "type": 1,
             "targetName": "史莱姆",
             "reward": 100,
             "experience": 10
+        },
+        {
+            "missionName":"德鲁西给的任务",
+            "description":"找到德斯帕",
+            "current":0,
+            "total":1,
+            "type":0,
+            "targetName":"德斯帕",
+            "reward":100,
+            "experience":20
+        },
+        {
+            "missionName":"德斯帕给的任务",
+            "description":"击败三只史莱姆",
+            "current":0,
+            "total":3,
+            "type":0,
+            "targetName":"史莱姆",
+            "reward":200,
+            "experience":40
         }
     ]
 }

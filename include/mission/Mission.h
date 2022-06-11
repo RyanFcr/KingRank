@@ -28,7 +28,17 @@ class Mission {
           reward(reward),
           experience(experience) {}
 
-   public:
+    void IncreaseCurrent() { current++; }
+    bool IsFinish() { return current == total; }
+    int GetReward() const { return reward; }
+    int GetExperience() const { return experience; }
+    int GetCurrent() const { return current; }
+    int GetTotal() const { return total; }
+    string GetTargetName() const { return targetName; }
+    string GetMissionName() const { return missionName; }
+    string GetDescription() const { return description; }
+
+   private:
     string kingName;     // 标记任务属于哪位国王
     string missionName;  // 任务名
     string description;  // 任务描述

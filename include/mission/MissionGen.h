@@ -8,6 +8,7 @@ class MissionGen {
    public:
     static void InitMissions();
     static void InitKingMissions();
+    static void ShowMission();
 
    public:
     static std::vector<Mission> missions;

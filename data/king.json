@@ -83,6 +83,53 @@
                 }
             },
             "curWeapon": "细剑"
+        },
+        {
+            "name": "Fcr",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 100,
+            "HP": 70,
+            "maxMP": 100,
+            "MP": 100,
+            "position": {
+                "fieldX": 0,
+                "fieldY": 5,
+                "sceneX": 0,
+                "sceneY": 0
+            },
+            "experience": 25,
+            "territoryPosition": {
+                "fieldX": 0,
+                "fieldY": 5
+            },
+            "countryName": "132",
+            "money": 3462,
+            "bag": {
+                "level": 1,
+                "weightLimit": 10,
+                "curWeight": 9,
+                "medicines": {
+                    "肉包": 2,
+                    "魔法丸子": 1
+                },
+                "weapons": {}
+            },
+            "attackSkills": {
+                "普通攻击": {
+                    "description": "只是普普通通的攻击",
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {
+                "治疗术": {
+                    "description": "每次使用可以恢复全部血量",
+                    "MPCost": 20,
+                    "HPValue": 100
+                }
+            },
+            "curWeapon": ""
         }
     ]
 }

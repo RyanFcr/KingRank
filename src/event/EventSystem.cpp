@@ -2,6 +2,7 @@
 #include "combat/CombatSystem.h"
 #include "common/Global.h"
 #include "item/ItemGen.h"
+#include "mission/MissionGen.h"
 #include "role/EnemyGen.h"
 #include "role/NpcGen.h"
 #include "shop/Shop.h"
@@ -9,33 +10,62 @@
 #include <string>
 using std::to_string;
 
-void EventSystem::TriggerEvent(King& king, Map& m) {
+void EventSystem::TriggerEvent(King& king, Map& m, vector<Mission>& kingMissions, vector<Mission>& missions) {
     Scene& s = m.GetSceneForChange(king.GetPosition());
     MoneyEvent(king, s);
     MedicineEvent(king, s);
     ShopEvent(king, s);
-    CombatEvent(king, s);
-    NpcEvent(king, s);
+    CombatEvent(king, s, kingMissions);
+    NpcEvent(king, s, kingMissions, missions);
 }
+
 /**
  * @brief Npc对话事件
  *
  * @param king
  * @param s
  */
-void EventSystem::NpcEvent(King& king, Scene& s) {
+void EventSystem::NpcEvent(King& king, Scene& s, vector<Mission>& kingMissions, vector<Mission>& missions) {
     Position kingPosition = king.GetPosition();
 
-    if (NpcGen::Npcs.count(kingPosition)) {
-        Npc& npc = NpcGen::Npcs[kingPosition];
-        npc.NpcSpeak("0");
-        string input = TextGen::Input();
-        npc.NpcSpeak(input);
-    } else {
+    if (!NpcGen::Npcs.count(kingPosition))
         return;
+    Npc& npc = NpcGen::Npcs[kingPosition];
+    TextGen::Print<YELLOW_>("Oops，您遇到了 " + npc.GetName());
+    npc.NpcSpeak("0");
+    string input = TextGen::Input();
+    npc.NpcSpeak(input);
+    vector<Mission>::iterator it;
+    for (it = kingMissions.begin(); it != kingMissions.end(); it++) {
+        if (npc.GetName() == it->GetTargetName()) {
+            it->IncreaseCurrent();
+            if (it->IsFinish()) {
+                TextGen::Print<YELLOW_>("完成任务 " + it->GetMissionName() + " 获得奖励！");
+                TextGen::Print<YELLOW_>("获得经验" + it->GetExperience());
+                TextGen::Print<YELLOW_>("获得金币" + it->GetReward());
+                king.IncreaseExperience(it->GetExperience());
+                king.IncreaseMoney(it->GetReward());
+            }
+            kingMissions.erase(it);
+            break;
+        }
+    }
+    for (it = missions.begin(); it != missions.end(); it++) {
+        if (it->GetMissionName() == npc.GetMissionName()) {
+            TextGen::Print<YELLOW_>("您获得了一个新的任务：");
+            TextGen::Print<YELLOW_>(it->GetDescription());
+            kingMissions.push_back(*it);
+        }
     }
 }
-
+void EventSystem::CombatEvent(King& king, Scene& s, vector<Mission>& kingMissions) {
+    // Combat
+    if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
+        Enemy e = EnemyGen::enemys.at(s.GetEnemyName());
+        TextGen::Print<warning>("突然从草丛杀出一个黑影，糟糕，您遇到了 " + e.GetName() + "!");
+        CombatSystem::Combat(king, e, kingMissions);
+    }
+}
 void EventSystem::MoneyEvent(King& king, Scene& s) {
     int totalMoney = 0;
 
@@ -83,15 +113,6 @@ void EventSystem::MedicineEvent(King& king, Scene& s) {
             s.SetMedicinePossibility(s.GetMedicinePossibility() / double(inputInt) / 1.5);
         } else
             TextGen::Print<warning>("这 " + medicineName + " 不要也罢!");
-    }
-}
-
-void EventSystem::CombatEvent(King& king, Scene& s) {
-    // Combat
-    if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
-        Enemy e = EnemyGen::enemys.at(s.GetEnemyName());
-        TextGen::Print<warning>("突然从草丛杀出一个黑影，糟糕，您遇到了 " + e.GetName() + "!");
-        CombatSystem::Combat(king, e);
     }
 }
 

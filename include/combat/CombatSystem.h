@@ -3,10 +3,11 @@
 
 #include "role/Enemy.h"
 #include "role/King.h"
+#include "mission/MissionGen.h"
 
 class CombatSystem {
    public:
-    static void Combat(King& king, Enemy& enemy);
+    static void Combat(King& king, Enemy& enemy, vector<Mission>& kingMissions);
 
    private:
     static bool CombatProcess(King& king, Enemy& enemy);

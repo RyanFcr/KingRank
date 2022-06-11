@@ -16,7 +16,7 @@ static bool CheckCombatFinish(const King& king, const Enemy& enemy) {
     return king.GetHP() <= 0 || enemy.GetHP() <= 0;
 }
 
-void CombatSystem::Combat(King& king, Enemy& enemy) {
+void CombatSystem::Combat(King& king, Enemy& enemy, vector<Mission>& kingMissions) {
     bool finish = false;
 
     TextGen::Print<warning>("战斗正式开始!");
@@ -27,6 +27,21 @@ void CombatSystem::Combat(King& king, Enemy& enemy) {
         CombatLose(king);
     } else if (king.GetHP() > 0 && enemy.GetHP() <= 0) {
         CombatWin(king, enemy);
+        vector<Mission>::iterator it = kingMissions.begin();
+        while (it != kingMissions.end()) {
+            if (it->GetTargetName() == enemy.GetName()) {
+                it->IncreaseCurrent();
+                if (it->IsFinish()) {
+                    TextGen::Print<YELLOW_>("完成任务，获得奖励！");
+                    TextGen::Print<YELLOW_>("获得经验" + it->GetExperience());
+                    TextGen::Print<YELLOW_>("获得金币" + it->GetReward());
+                    king.IncreaseExperience(it->GetExperience());
+                    king.IncreaseMoney(it->GetReward());
+                    kingMissions.erase(it);
+                }
+            }
+            it++;
+        }
     }
 }
 
