@@ -13,6 +13,7 @@ void EventSystem::TriggerEvent(King& king, Map& m) {
     Scene& s = m.GetSceneForChange(king.GetPosition());
     MoneyEvent(king, s);
     MedicineEvent(king, s);
+    ShopEvent(king, s);
     CombatEvent(king, s);
     NpcEvent(king, s);
 }
@@ -76,7 +77,7 @@ void EventSystem::MedicineEvent(King& king, Scene& s) {
         TextGen::Print<reward>(to_string(ItemGen::GetMedicine(medicineName).GetWeight()));
         inputInt = TextGen::InputInt();
         while (inputInt < 0 || inputInt > totalMedicineNumber || !king.InsertMedicine(medicineName, inputInt)) {
-            TextGen::Print<warning>("请输入正确的指令!");
+            TextGen::Print<warning>("请输入正确的整数!");
             inputInt = TextGen::InputInt();
         }
         if (inputInt > 0) {
@@ -99,10 +100,72 @@ void EventSystem::CombatEvent(King& king, Scene& s) {
 }
 
 void EventSystem::ShopEvent(King& king, Scene& s) {
+    int inputInt;
+    int itemNum;
+    int offset;
+    int price, weight;
+    std::string itemName;
+
     // Shop
     if (rand() % 100 <= s.GetShopPossibility()) {
-        TextGen::Print("You meet with a shop!");
+        TextGen::Print<YELLOW_>("你遇到了一个商店!");
         Shop shop;
-        shop.ShowShopItems();
+        while (1) {
+            shop.ShowShopItems();
+            itemNum = shop.GetItemNum();
+            offset = shop.GetMedicineNum();
+            TextGen::Print<request>("请选择你要买的商品(输入-1退出商店)");
+            TextGen::Print("您的金币数量: ", "");
+            TextGen::Print<YELLOW_>(to_string(king.GetMoney()) + " Kin", ", ");
+            TextGen::Print("背包当前容量: ", "");
+            TextGen::Print<GREEN_>(to_string(king.GetBag().GetCurWeight()), ", ");
+            TextGen::Print("最大限额: ", "");
+            TextGen::Print<RED_>(to_string(king.GetBag().GetWeightLimit()));
+            inputInt = TextGen::InputInt();
+            while (inputInt < -1 || inputInt > itemNum) {
+                TextGen::Print<warning>("请输入正确的整数!");
+                inputInt = TextGen::InputInt();
+            }
+            if (inputInt == -1) {
+                break;
+            } else {
+                if (inputInt < offset) {
+                    // medicine
+                    itemName = shop.GetMedicineByIndex(inputInt);
+                    Medicine medicine = ItemGen::GetMedicine(itemName);
+                    price = medicine.GetPrice();
+                    weight = medicine.GetWeight();
+                    if (price > king.GetMoney()) {
+                        TextGen::Print<warning>("您没有足够的金币!");
+                    } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
+                        TextGen::Print<warning>("您没有足够的背包容量!");
+                    } else {
+                        king.IncreaseMoney(-price);
+                        king.InsertMedicine(itemName, 1);
+                        shop.SellOutMedicineByIndex(inputInt);
+                        TextGen::Print<buff>("购买成功!");
+                    }
+                } else {
+                    // weapon
+                    inputInt -= offset;
+                    itemName = shop.GetWeaponByIndex(inputInt);
+                    Weapon weapon = ItemGen::GetWeapon(itemName);
+                    price = weapon.GetPrice();
+                    weight = weapon.GetWeight();
+                    if (price > king.GetMoney()) {
+                        TextGen::Print<warning>("您没有足够的金币!");
+                    } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
+                        TextGen::Print<warning>("您没有足够的背包容量!");
+                    } else {
+                        king.IncreaseMoney(-price);
+                        king.InsertWeapon(weapon);
+                        shop.SellOutWeaponByIndex(inputInt);
+                        TextGen::Print<buff>("购买成功!");
+                    }
+                }
+            }
+            TextGen::Print("");
+        }
+        TextGen::Print("欢迎下次光临!");
     }
 }
