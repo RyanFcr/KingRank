@@ -9,7 +9,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 6,
                             "money": 60,
-                            "moneyPossibility": 27,
+                            "moneyPossibility": 18,
                             "medicineName": "肉包",
                             "medicinePossibility": 7,
                             "shopPossibility": 3
@@ -38,7 +38,7 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 8,
                             "money": 24,
-                            "moneyPossibility": 20,
+                            "moneyPossibility": 13,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 11,
                             "shopPossibility": 2
@@ -83,9 +83,9 @@
                             "enemyName": "史莱姆",
                             "enemyPossibility": 7,
                             "money": 89,
-                            "moneyPossibility": 16,
+                            "moneyPossibility": 10,
                             "medicineName": "肉包",
-                            "medicinePossibility": 4,
+                            "medicinePossibility": 6,
                             "shopPossibility": 2
                         }
                     ]
@@ -99,7 +99,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 95,
-                            "moneyPossibility": 49,
+                            "moneyPossibility": 16,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 12,
                             "shopPossibility": 3
@@ -119,7 +119,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 85,
-                            "moneyPossibility": 36,
+                            "moneyPossibility": 24,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 15,
                             "shopPossibility": 5
