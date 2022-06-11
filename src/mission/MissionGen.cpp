@@ -73,7 +73,7 @@ void MissionGen::ShowMission() {
     int i = 1;
     for (it = kingMissions.begin(); it != kingMissions.end(); it++) {
         TextGen::Print(to_string(i)+". "+it->GetMissionName() + ": " + it->GetDescription() + "(" + to_string(it->GetCurrent()) + "/" +
-                       to_string(it->GetTotal())+")");
+                       to_string(it->GetTotal())+")"+" 奖励金币 "+to_string(it->GetReward())+" 奖励经验 "+to_string(it->GetExperience()));
         i++;
     }
 }
