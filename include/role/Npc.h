@@ -20,7 +20,7 @@ class Npc {
     void NpcSpeak(string key);
     string GetName() const { return name; }
     string GetMissionName() const { return missionName; }
-    string SetMissionName(string missionName_) { missionName = missionName_; }
+    void SetMissionName(string missionName_) { missionName = missionName_; }
 
    private:
     string name;

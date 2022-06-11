@@ -99,4 +99,6 @@ template<typename T>
 T MaxFour(const T& val1, const T& val2, const T& val3, const T& val4) {
     return std::max(std::max(val1, val2), std::max(val3, val4));
 }
+
+std::string RandomString(int len);
 #endif

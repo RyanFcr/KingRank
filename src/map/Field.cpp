@@ -11,3 +11,15 @@ void Field::InitScenes() {
                 field[i][j].InitPlainScene();
     }
 }
+
+void Field::InitScenes(int type) {
+    if (type) {
+        for (int i = 0; i < fieldSize; i++)
+            for (int j = 0; j < fieldSize; j++)
+                field[i][j].InitCountryScene();
+    } else {
+        for (int i = 0; i < fieldSize; i++)
+            for (int j = 0; j < fieldSize; j++)
+                field[i][j].InitPlainScene();
+    }
+}

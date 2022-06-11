@@ -5,17 +5,17 @@
  * @brief Get the scene state string and style
  * @param[in] m map
  * @param[in] p position
- * @param[out] stateString return: string representing the state 
+ * @param[out] stateString return: string representing the state
  * @param[out] stateStyle return: style to show the state
  */
-static void GetSceneState(const Map &m, const Position &p, std::string &stateString, int &stateStyle) {
+static void GetSceneState(const Map& m, const Position& p, std::string& stateString, int& stateStyle) {
     Scene s = m.GetScene(p);
     int moneyPoss = s.GetMoneyPossibility();
     int mediPoss = s.GetMedicinePossibility();
     int shopPoss = s.GetShopPossibility();
     int enemyPoss = s.GetEnemyPossibility();
     double moneyRatio, mediRatio, shopRatio, enemyRatio, maxRatio;
-    
+
     if (enemyPoss) {
         // plain
         moneyRatio = double(moneyPoss) / plainMoneyExpect;
@@ -30,7 +30,7 @@ static void GetSceneState(const Map &m, const Position &p, std::string &stateStr
         mediRatio = double(mediPoss) / countryMedicineExpect;
         enemyRatio = 0;
         maxRatio = MaxThree(moneyRatio, shopRatio, mediRatio);
-    } 
+    }
 
     /// @attention equality of double is uncertain
     if (maxRatio == moneyRatio) {
@@ -129,6 +129,20 @@ FieldPosition Map::MapExtend(string countryName) {
     Field* country = new Field{countryName};
     country->InitScenes();
     return PushField(country, index);
+}
+
+/**
+ * @brief Generate the map randomly
+ * @attention only be called by Administor!
+ */
+void Map::RandomGenerateMap() {
+    for (int i = 0; i < initialMapSize; i++) {
+        for (int j = 0; j < initialMapSize; j++) {
+            Field* plain = new Field{RandomString(rand() % 3 + 3)};
+            plain->InitScenes(rand() % 2);
+            PushField(plain, i);
+        }
+    }
 }
 
 /**

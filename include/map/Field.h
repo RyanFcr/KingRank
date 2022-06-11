@@ -20,6 +20,7 @@ class Field {
    public:
     Field(string name = initialFieldName) : name(name) {}
     void InitScenes();
+    void InitScenes(int type);
     Scene& GetScene(int row, int col) { return field[row][col]; }
     const string& GetName() const { return name; }
 

@@ -188,4 +188,5 @@ void Bag::DiscardAll() {
     weapons.clear();
     medicineNames.clear();
     weaponNames.clear();
+    curWeight = 0;
 }

@@ -81,8 +81,8 @@ void King::ShowState() const {
     TextGen::Print("姓名: " + GetName());
     TextGen::Print("等级: " + to_string(GetLevel()));
     TextGen::Print("经验: " + to_string(GetExperience()) + "/" + to_string(GetLevelUpExperience()));
-    TextGen::Print("MP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
-    TextGen::Print("HP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
+    TextGen::Print("HP: " + to_string(GetHP()) + "/" + to_string(GetMaxHP()));
+    TextGen::Print("MP: " + to_string(GetMP()) + "/" + to_string(GetMaxMP()));
     TextGen::Print("攻击力: " + to_string(GetAttack()));
     TextGen::Print("国家: " + GetCountryName());
     if (GetCurrentWeapon() == "")
@@ -149,6 +149,7 @@ void King::Resurrect() {
     SetMoney(0);
     SetHP(maxHP);
     SetMP(maxMP);
+    curWeapon = "";
     bag.DiscardAll();
 }
 
