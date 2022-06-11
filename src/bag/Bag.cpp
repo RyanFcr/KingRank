@@ -37,7 +37,8 @@ bool Bag::InsertMedicine(const string& name, int num) {
 }
 
 /**
- * @brief insert weapon into the bag
+ * @brief insert weapon into the bag, if existed,
+ * then upgrade the weapon
  * @param name Name of weapon
  * @return false: insertion fail(too full bag)
  * @throw UNKNOWN_ITEM
@@ -48,9 +49,14 @@ bool Bag::InsertWeapon(const Weapon& weapon) {
 
     // weapon exist
     if (ItemGen::IsWeaponExist(name)) {
-        if (weapons.count(name))
+        if (weapons.count(name)) {
+            // upgrade
+            Weapon& bagWeapon = weapons[name];
+            bagWeapon.SetAbrasion(100); // restore abrasion
+            bagWeapon.SetAttack(bagWeapon.GetAttack() + 1); // increase attack
             return false;
-
+        }
+            
         weight = ItemGen::GetWeapon(name).GetWeight();
         if (curWeight + weight <= weightLimit) {
             weapons.insert(make_pair(name, weapon));
@@ -103,8 +109,6 @@ bool Bag::Discard(const string& name, int num) {
         weight = ItemGen::GetWeapon(name).GetWeight();
         weapons.erase(name);
         curWeight -= weight;
-        if (medicines[name] == 0)
-            medicines.erase(name);
 
         weaponNames.clear();
         for (auto item : weapons)

@@ -3,18 +3,18 @@
 #include "common/Global.h"
 #include "common/Macro.h"
 #include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
 #include "rapidjson/prettywriter.h"
+#include "rapidjson/stringbuffer.h"
 #include "text/TextGen.h"
 
 #include <fstream>
 using rapidjson::Document;
 using rapidjson::kArrayType;
 using rapidjson::kObjectType;
+using rapidjson::PrettyWriter;
 using rapidjson::SizeType;
 using rapidjson::StringBuffer;
 using rapidjson::Value;
-using rapidjson::PrettyWriter;
 using std::ifstream;
 using std::ios;
 using std::ofstream;
@@ -45,8 +45,7 @@ bool RoleGen::InitKing(Map& map) {
     ifs.close();
     PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
 
-    TextGen::Print(
-        "欢迎来到国王排名大陆!在这里，国王需要对每一位子民负责");
+    TextGen::Print("欢迎来到国王排名大陆!在这里，国王需要对每一位子民负责");
     TextGen::Print("而国王自身是否像勇者一样强大就决定了王国的排名");
     TextGen::Print("所以每一位国王都想成为前七名的国王");
     TextGen::Print("以此展开了一次又一次国王之间的厮杀！而年轻的国王，欢迎来到国王排名的世界");
@@ -156,8 +155,9 @@ bool RoleGen::LoadKing(const string& kingName) {
     }
 
     for (auto& m : kingValue["bag"]["weapons"].GetObject()) {
-        Weapon weapon{m.name.GetString(),         m.value["description"].GetString(), m.value["weight"].GetInt(),
-                      m.value["attack"].GetInt(), m.value["abrasionLoss"].GetInt(),   m.value["abrasion"].GetInt()};
+        Weapon weapon{m.name.GetString(),          m.value["description"].GetString(), m.value["weight"].GetInt(),
+                      m.value["price"].GetInt(),   m.value["attack"].GetInt(),         m.value["abrasionLoss"].GetInt(),
+                      m.value["abrasion"].GetInt()};
         king.InsertWeapon(weapon);
     }
 
@@ -173,6 +173,7 @@ bool RoleGen::LoadKing(const string& kingName) {
         king.MasterSupportSkill(supportSkill);
     }
 
+    king.SetCurrentWeapon(kingValue["curWeapon"].GetString());
     return true;
 }
 
@@ -332,6 +333,7 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
                         WRITE_DOM_OBJECT_MEMBER_INT(m.value, "attack")
                         WRITE_DOM_OBJECT_MEMBER_INT(m.value, "abrasion")
                         WRITE_DOM_OBJECT_MEMBER_INT(m.value, "abrasionLoss")
+                        WRITE_DOM_OBJECT_MEMBER_INT(m.value, "price")
 
                         writer.EndObject();
                     }
@@ -378,6 +380,8 @@ static void SerializeKing(const Value& kingData, Writer& writer) {
             }
             writer.EndObject();
         }
+
+        WRITE_DOM_OBJECT_MEMBER_STRING(kingData, "curWeapon")
     }
     writer.EndObject();
 }
@@ -396,8 +400,7 @@ void RoleGen::AppendKing() {
     ADD_MEMBER_INT(kingValue, "maxHP", king.GetMaxHP())
     ADD_MEMBER_INT(kingValue, "HP", king.GetHP())
     ADD_MEMBER_INT(kingValue, "maxMP", king.GetMaxMP())
-    ADD_MEMBER_INT(kingValue, "MP", king.GetMP()) 
-    {
+    ADD_MEMBER_INT(kingValue, "MP", king.GetMP()) {
         Value positionValue(kObjectType);
         ADD_MEMBER_INT(positionValue, "fieldX", king.GetPosition().fieldX)
         ADD_MEMBER_INT(positionValue, "fieldY", king.GetPosition().fieldY)
@@ -405,21 +408,18 @@ void RoleGen::AppendKing() {
         ADD_MEMBER_INT(positionValue, "sceneY", king.GetPosition().sceneY)
         kingValue.AddMember("position", positionValue, allocator);
     }
-    ADD_MEMBER_INT(kingValue, "experience", king.GetExperience()) 
-    {
+    ADD_MEMBER_INT(kingValue, "experience", king.GetExperience()) {
         Value territoryPositionValue(kObjectType);
         ADD_MEMBER_INT(territoryPositionValue, "fieldX", king.GetTerritoryPosition().fieldX)
         ADD_MEMBER_INT(territoryPositionValue, "fieldY", king.GetTerritoryPosition().fieldY)
         kingValue.AddMember("territoryPosition", territoryPositionValue, allocator);
     }
     ADD_MEMBER_STRING(kingValue, "countryName", king.GetCountryName())
-    ADD_MEMBER_INT(kingValue, "money", king.GetMoney()) 
-    {
+    ADD_MEMBER_INT(kingValue, "money", king.GetMoney()) {
         Value bagValue(kObjectType);
         ADD_MEMBER_INT(bagValue, "level", king.GetBag().GetLevel())
         ADD_MEMBER_INT(bagValue, "weightLimit", king.GetBag().GetWeightLimit())
-        ADD_MEMBER_INT(bagValue, "curWeight", king.GetBag().GetCurWeight()) 
-        {
+        ADD_MEMBER_INT(bagValue, "curWeight", king.GetBag().GetCurWeight()) {
             Value medicinesValue(kObjectType);
             for (auto& item : king.GetBag().GetMedicines()) {
                 medicinesValue.AddMember(
@@ -437,6 +437,7 @@ void RoleGen::AppendKing() {
                 ADD_MEMBER_INT(weaponValue, "attack", item.second.GetAttack())
                 ADD_MEMBER_INT(weaponValue, "abrasion", item.second.GetAbrasion())
                 ADD_MEMBER_INT(weaponValue, "abrasionLoss", item.second.GetAbrasionLoss())
+                ADD_MEMBER_INT(weaponValue, "price", item.second.GetPrice())
 
                 weaponsValue.AddMember(
                     Value().SetString(item.first.c_str(), static_cast<SizeType>(item.first.length())), weaponValue,
@@ -478,5 +479,6 @@ void RoleGen::AppendKing() {
 
         kingValue.AddMember("supportSkills", supportSkillsValue, allocator);
     }
+    ADD_MEMBER_STRING(kingValue, "curWeapon", king.GetCurrentWeapon())
     kings.PushBack(kingValue, allocator);
 }

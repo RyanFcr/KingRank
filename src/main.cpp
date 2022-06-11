@@ -65,6 +65,8 @@ int main() {
             RoleGen::king.ShowSkills();
         } else if (input == "state") {
             RoleGen::king.ShowState();
+        } else if (input == "equip") {
+            RoleGen::king.EquipWeapon();
         } else if (input == "help") {
             Help();
         } else
@@ -98,6 +100,8 @@ void Help() {
     TextGen::Print("功能描述：查看您目前的状态");
     TextGen::Print("输入指令：rank");
     TextGen::Print("功能描述：查看国王排名");
+    TextGen::Print("输入指令：equip");
+    TextGen::Print("功能描述：装备武器");
     TextGen::Print("输入指令：exit");
     TextGen::Print("功能描述：退出游戏");
     TextGen::Print("输入指令：help");
