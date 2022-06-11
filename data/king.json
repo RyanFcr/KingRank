@@ -55,6 +55,7 @@
             "maxMP": 100,
             "MP": 80,
             "position": {
+
                 "fieldX": 0,
                 "fieldY": 2,
                 "sceneX": 0,

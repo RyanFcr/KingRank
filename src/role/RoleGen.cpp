@@ -45,7 +45,11 @@ bool RoleGen::InitKing(Map& map) {
     ifs.close();
     PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
 
-    TextGen::Print("欢迎来到国王排名大陆!");
+    TextGen::Print(
+        "欢迎来到国王排名大陆!在这里，国王需要对每一位子民负责");
+    TextGen::Print("而国王自身是否像勇者一样强大就决定了王国的排名");
+    TextGen::Print("所以每一位国王都想成为前七名的国王");
+    TextGen::Print("以此展开了一次又一次国王之间的厮杀！而年轻的国王，欢迎来到国王排名的世界");
     TextGen::Print<request>("年轻的国王，您拥有自己的领土嘛?(yes/no)");
     while (1) {
         input = TextGen::Input();

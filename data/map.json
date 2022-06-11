@@ -236,16 +236,16 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 105,
-                            "moneyPossibility": 35,
+                            "moneyPossibility": 23,
                             "medicineName": "肉包",
-                            "medicinePossibility": 0,
+                            "medicinePossibility": 23,
                             "shopPossibility": 5
                         },
                         {
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 89,
-                            "moneyPossibility": 27,
+                            "moneyPossibility": 3,
                             "medicineName": "肉包",
                             "medicinePossibility": 19,
                             "shopPossibility": 6
@@ -256,7 +256,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 40,
-                            "moneyPossibility": 53,
+                            "moneyPossibility": 17,
                             "medicineName": "魔法丸子",
                             "medicinePossibility": 8,
                             "shopPossibility": 5
@@ -265,7 +265,7 @@
                             "enemyName": "",
                             "enemyPossibility": 0,
                             "money": 81,
-                            "moneyPossibility": 32,
+                            "moneyPossibility": 5,
                             "medicineName": "肉包",
                             "medicinePossibility": 19,
                             "shopPossibility": 4
