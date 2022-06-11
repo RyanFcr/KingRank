@@ -20,6 +20,7 @@ using rapidjson::Writer;
 class Map {
    public:
     Scene GetScene(const Position& p) const;
+    Scene& GetSceneForChange(const Position& p);
     Field GetField(const int fieldX, const int fieldY) const;
     int GetRowNum() const { return fields.size(); }
     int GetColNum(int row) const {
@@ -32,11 +33,10 @@ class Map {
     FieldPosition PushField(Field* field, int row = -1);
     FieldPosition MapExtend(string countryName);
     void Clear();
-    /// 
 
     bool IsValidPosition(Position& p) const;
 
-    void ShowDirection(const Position& p) const;
+    void ShowDirection(const Position& p, const string centerString, int centerStyle) const;
 
     template <typename Writer>
     void Serialize(Writer& writer) const {

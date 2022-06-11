@@ -25,7 +25,7 @@ bool Bag::InsertMedicine(const string& name, int num) {
             curWeight += num * weight;
 
             medicineNames.clear();
-            for (auto& item : medicines)
+            for (auto item : medicines)
                 medicineNames.push_back(item);
             return true;
         }
@@ -57,7 +57,7 @@ bool Bag::InsertWeapon(const Weapon& weapon) {
             curWeight += weight;
 
             weaponNames.clear();
-            for (auto& item : weapons)
+            for (auto item : weapons)
                 weaponNames.push_back(item.first);
             return true;
         }
@@ -88,7 +88,7 @@ bool Bag::Discard(const string& name, int num) {
                 medicines.erase(name);
 
             medicineNames.clear();
-            for (auto& item : medicines)
+            for (auto item : medicines)
                 medicineNames.push_back(item);
             return true;
         }
@@ -107,7 +107,7 @@ bool Bag::Discard(const string& name, int num) {
             medicines.erase(name);
 
         weaponNames.clear();
-        for (auto& item : weapons)
+        for (auto item : weapons)
             weaponNames.push_back(item.first);
         return true;
     }

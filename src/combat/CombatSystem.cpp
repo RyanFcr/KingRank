@@ -9,6 +9,9 @@
 using std::string;
 using std::to_string;
 
+#include <iostream>
+using std::cout;
+
 static bool CheckCombatFinish(const King& king, const Enemy& enemy) {
     return king.GetHP() <= 0 || enemy.GetHP() <= 0;
 }
@@ -138,7 +141,7 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                 king.ShowMedicine();
                 inputInt = TextGen::InputInt();
                 if (king.GetBag().HasMedicineByIndex(inputInt)) {
-                    const string& medicineName = king.GetBag().GetMedicineNameByIndex(inputInt);
+                    const string medicineName = king.GetBag().GetMedicineNameByIndex(inputInt);
                     const Medicine& medicine = ItemGen::GetMedicine(medicineName);
                     HPVal = medicine.GetHPValue() * king.GetMaxHP() / 100;
                     MPVal = medicine.GetMPValue() * king.GetMaxMP() / 100;

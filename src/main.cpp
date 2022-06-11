@@ -12,11 +12,11 @@ int main() {
     string input;
     bool ret, login;
 
+    TextGen::Init();
     ItemGen::Init();
     SkillGen::Init();
     EnemyGen::InitEnemy();
     MapGen::Init();
-    TextGen::Init();
     TextGen::PrintTitle();
     login = RoleGen::InitKing(MapGen::map);
     while (login) {

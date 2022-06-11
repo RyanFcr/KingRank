@@ -5,13 +5,14 @@
 
 class EventSystem {
    public:
-    static void TriggerEvent(King& king, const Map& m);
+    static void TriggerEvent(King& king, Map& m);
 
    private:
-    static void MoneyEvent(King& king, const Scene& s);
-    static void MedicineEvent(King& king, const Scene& s);
-    static void CombatEvent(King& king, const Scene& s);
-    static void NpcEvent(King& king, const Scene& s);
+    static void MoneyEvent(King& king, Scene& s);
+    static void MedicineEvent(King& king, Scene& s);
+    static void CombatEvent(King& king, Scene& s);
+    static void ShopEvent(King& king, Scene& s);
+    static void NpcEvent(King& king, Scene& s);
 };
 
 #endif

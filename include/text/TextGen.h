@@ -25,14 +25,25 @@ class TextGen {
     template <int ansiStyle = 0>
     static void Print(string s, string end = "\n");
 
-    template <int ansiStyle = 0>
-    static void PrintCenter(string s, int totalLength);
+    static void Print(string s, string end = "\n", int ansiStyle = 0);
 
-    template <int ansiStyle = 0>
-    static void PrintTwo(string s1, string s2, int totalLength, string fill = " ");
+    static void PrintCenter(string s, int totalLength, int ansiStyle = 0);
 
-    template <int ansiStyle = 0>
-    static void PrintThree(string s1, string s2, string s3, int totalLength, string fill = " ");
+    static void PrintTwo(string s1,
+                         string s2,
+                         int totalLength,
+                         string fill = " ",
+                         int ansiStyle1 = 0,
+                         int ansiStyle2 = 0);
+
+    static void PrintThree(string s1,
+                           string s2,
+                           string s3,
+                           int totalLength,
+                           string fill = " ",
+                           int ansiStyle1 = 0,
+                           int ansiStyle2 = 0,
+                           int ansiStyle3 = 0);
 
     static string Input();
     static int InputInt();
@@ -41,49 +52,5 @@ class TextGen {
 template <int ansiStyle>
 void TextGen::Print(string s, string end) {
     cout << style<ansiStyle> << s << style<plain> << end;
-}
-
-template <int ansiStyle>
-void TextGen::PrintCenter(string s, int totalLength) {
-    int len = s.length();
-    if (len <= totalLength) {
-        for (int i = 0; i < (totalLength - len) / 2; i++) {
-            cout << " ";
-        }
-    }
-    Print<ansiStyle>(s);
-}
-
-template <int ansiStyle>
-void TextGen::PrintTwo(string s1, string s2, int totalLength, string fill) {
-    cout << style<ansiStyle> << s1 << style<plain>;
-    int len1 = s1.length();
-    int len2 = s2.length();
-    if (len2 <= totalLength) {
-        for (int i = 0; i < (totalLength - len2) / 2 - len1; i++) {
-            cout << fill;
-        }
-    }
-    Print<ansiStyle>(s2);
-}
-
-template <int ansiStyle>
-void TextGen::PrintThree(string s1, string s2, string s3, int totalLength, string fill) {
-    cout << style<ansiStyle> << s1 << style<plain>;
-    int len1 = s1.length();
-    int len2 = s2.length();
-    int len3 = s3.length();
-    if (len2 <= totalLength) {
-        for (int i = 0; i < (totalLength - len2) / 2 - len1; i++) {
-            cout << fill;
-        }
-    }
-    Print<ansiStyle>(s2, "");
-    if (len3 <= totalLength) {
-        for (int i = 0; i < (totalLength - len2) / 2 - len3; i++) {
-            cout << fill;
-        }
-    }
-    Print<ansiStyle>(s3);
 }
 #endif  // TEXTGEN_H_

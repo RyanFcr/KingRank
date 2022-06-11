@@ -37,6 +37,10 @@ class Scene {
     int GetMoneyPossibility() const { return moneyPossibility; }
     const string& GetMedicineName() const { return medicineName; }
     int GetMedicinePossibility() const { return moneyPossibility; }
+    int GetShopPossibility() const { return shopPossibility; }
+
+    void SetMoneyPossibility(int poss) { moneyPossibility = poss; }
+    void SetMedicinePossibility(int poss) { medicinePossibility = poss; }
 
     template <typename Writer>
     void Serialize(Writer& writer) const {

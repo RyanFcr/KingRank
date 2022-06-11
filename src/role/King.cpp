@@ -4,7 +4,35 @@
 using std::to_string;
 
 void King::ShowMap(const Map& m) const {
-    m.ShowDirection(position);
+    string stateString;
+    int stateStyle;
+
+    // set state
+    if (HP >= 0.7 * maxHP) {
+        if (MP >= 0.7 * maxMP) {
+            stateString = "Healty";
+            stateStyle = GREEN_;
+        } else if (MP >= 0.3 * maxMP) {
+            stateString = "Medium MP";
+            stateStyle = YELLOW_;
+        } else {
+            stateString = "Dangerous MP";
+            stateStyle = RED_;
+        }
+    } else if (HP >= 0.3 * maxHP) {
+        if (MP >= 0.3 * maxMP) {
+            stateString = "Medium HP";
+            stateStyle = YELLOW_;
+        } else {
+            stateString = "Dangerous MP";
+            stateStyle = RED_;
+        }
+    } else {
+        stateString = "Dangerous HP";
+        stateStyle = RED_;
+    }
+
+    m.ShowDirection(position, stateString, stateStyle);
 }
 
 void King::ShowMoney() const {
