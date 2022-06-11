@@ -61,6 +61,8 @@ void EventSystem::NpcEvent(King& king, Scene& s, vector<Mission>& kingMissions, 
 void EventSystem::CombatEvent(King& king, Scene& s, vector<Mission>& kingMissions) {
     // Combat
     if (s.GetEnemyName() != "" && rand() % 100 <= s.GetEnemyPossibility()) {
+        if (s.GetEnemyName() == "")
+            return;
         Enemy e = EnemyGen::enemys.at(s.GetEnemyName());
         TextGen::Print<warning>("突然从草丛杀出一个黑影，糟糕，您遇到了 " + e.GetName() + "!");
         CombatSystem::Combat(king, e, kingMissions);
@@ -87,13 +89,14 @@ void EventSystem::MedicineEvent(King& king, Scene& s) {
     int totalMedicineNumber = 0;
     int inputInt;
     string medicineName = s.GetMedicineName();
-
+    if (medicineName == "")
+        return;
     // Get Medicine
     while (rand() % 100 < s.GetMedicinePossibility()) {
         totalMedicineNumber += 1;
     }
     if (totalMedicineNumber > 0) {
-        TextGen::Print<reward>("哇，在您面前出现了 " + to_string(totalMedicineNumber) + " " + medicineName + "!");
+        TextGen::Print<reward>("哇，在您面前出现了 " + to_string(totalMedicineNumber) + " 个" + medicineName + "!");
         TextGen::Print<request>("您想要几个?请输入您想要的数量");
         TextGen::Print("请注意背包容量! 最大限额: ", "");
         TextGen::Print<warning>(to_string(king.GetBag().GetWeightLimit()), ", ");
@@ -146,7 +149,7 @@ void EventSystem::ShopEvent(King& king, Scene& s) {
 
             if (inputInt == -1)
                 break;
-            
+
             if (inputInt < offset1) {
                 // medicine
                 itemName = shop.GetMedicineByIndex(inputInt);

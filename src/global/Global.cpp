@@ -67,3 +67,18 @@ std::string ReadFormatJson(std::ifstream& ifs) {
     }
     return json.str();
 }
+
+std::string RandomString(int len) {
+    char tmp;							
+    string buffer;					
+    
+    for (int i = 0; i < len; i++) {
+        tmp = rand() % 26;
+        if (i == 0)	
+            tmp += 'A';
+        else
+            tmp += 'a';
+        buffer += tmp;
+    }
+    return buffer;
+}

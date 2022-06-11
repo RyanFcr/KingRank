@@ -6,10 +6,10 @@ using std::pair;
 using std::string;
 
 // 地图相关
-const int initialMapSize = 1;                                // 地图的边长(以土地作为单位)
+const int initialMapSize = 10;                               // 地图的边长(以土地作为单位)
 const int extendPlain = 2;                                   // 每次增加的平原数量(即无主人的领地)
 const string initialFieldName = "Plain";                     // 默认土地名:平原
-const int fieldSize = 2;                                     // 土地的边长
+const int fieldSize = 5;                                     // 土地的边长
 const int plainEnemyExpect = 10;                             // 平原敌人概率期望
 const int plainEnemySigma = plainEnemyExpect / 3;            // 平原敌人概率方差
 const int plainMoneyExpect = 20;                             // 平原金币概率期望

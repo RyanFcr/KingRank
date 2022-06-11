@@ -38,6 +38,8 @@ class Map {
 
     void ShowDirection(const Position& p, const string centerString, int centerStyle) const;
 
+    void RandomGenerateMap();
+
     template <typename Writer>
     void Serialize(Writer& writer) const {
         writer.StartObject();

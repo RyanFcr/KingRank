@@ -17,6 +17,186 @@
                 }
             },
             "supportSkills": {}
+        },
+        {
+            "name": "戴达",
+            "level": 1,
+            "attack": 2,
+            "maxHP": 100,
+            "HP": 100,
+            "maxMP": 50,
+            "MP": 50,
+            "experienceVal": 25,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 20
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "卡克",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 20,
+            "HP": 20,
+            "maxMP": 20,
+            "MP": 20,
+            "experienceVal": 15,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "多玛斯",
+            "level": 1,
+            "attack": 3,
+            "maxHP": 120,
+            "HP": 120,
+            "maxMP": 120,
+            "MP": 120,
+            "experienceVal": 50,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 40
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "奥斯",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 140,
+            "HP": 140,
+            "maxMP": 120,
+            "MP": 120,
+            "experienceVal": 55,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "贝宾",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 200,
+            "HP": 200,
+            "maxMP": 250,
+            "MP": 250,
+            "experienceVal": 105,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "德路西",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 120,
+            "HP": 120,
+            "maxMP": 210,
+            "MP": 210,
+            "experienceVal": 70,
+            "moneyVal": 120,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "霍库洛",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 200,
+            "HP": 200,
+            "maxMP": 200,
+            "MP": 200,
+            "experienceVal": 50,
+            "moneyVal": 200,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 20
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "伯斯",
+            "level": 1,
+            "attack": 4,
+            "maxHP": 200,
+            "HP": 200,
+            "maxMP": 1000,
+            "MP": 1000,
+            "experienceVal": 100,
+            "moneyVal": 1000,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 100
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "魔镜",
+            "level": 1,
+            "attack": 4,
+            "maxHP": 300,
+            "HP": 300,
+            "maxMP": 1000,
+            "MP": 1000,
+            "experienceVal": 100,
+            "moneyVal": 1000,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 100
+                }
+            },
+            "supportSkills": {}
+        },
+        {
+            "name": "德斯哈",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 200,
+            "HP": 200,
+            "maxMP": 200,
+            "MP": 200,
+            "experienceVal": 50,
+            "moneyVal": 100,
+            "attackSkills": {
+                "普通攻击": {
+                    "MPCost": 0,
+                    "damageValue": 30
+                }
+            },
+            "supportSkills": {}
         }
     ]
 }
