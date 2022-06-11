@@ -197,10 +197,17 @@ void King::EquipWeapon() {
     int weaponNum = bag.GetWeaponsNum();
 
     bag.ShowWeapon();
-    TextGen::Print<request>("请选择您想装备的武器");
+    TextGen::Print<request>("请选择您想装备的武器(输入-1卸下当前武器)");
     inputInt = TextGen::InputInt();
-    if (inputInt < 0 || inputInt >= weaponNum) {
+    if (inputInt < -1 || inputInt >= weaponNum) {
         TextGen::Print<warning>("错误序号，取消装备!");
+    } else if (inputInt == -1) {
+        if (curWeapon != "") {
+            Weapon& weapon = bag.GetWeaponByName(curWeapon);
+            attack -= weapon.GetAttack();
+            TextGen::Print<buff>("成功卸下 " + curWeapon + " !");
+            curWeapon = "";
+        }
     } else {
         if (curWeapon != "") {
             Weapon& weapon = bag.GetWeaponByName(curWeapon);
@@ -210,6 +217,16 @@ void King::EquipWeapon() {
         Weapon& newWeapon = bag.GetWeaponByName(curWeapon);
         attack += newWeapon.GetAttack();
         TextGen::Print<buff>("成功装备 " + curWeapon + " !");
+    }
+}
+
+void King::AbraseCurrentWeapon() {
+    if (curWeapon == "") return;
+    Weapon& weapon = bag.GetWeaponByName(curWeapon);
+    if (weapon.Abrase()) {
+        // weapon is broken
+        TextGen::Print<warning>("您的 " + curWeapon + " 已经磨损成废品了!");
+        DiscardItem(curWeapon);
     }
 }
 
