@@ -132,6 +132,25 @@ FieldPosition Map::MapExtend(string countryName) {
 }
 
 /**
+ * @brief 
+ * @param 
+ * @return 
+ */
+// FieldPosition Map::MapExtend(string countryName) {
+//     int index;
+//     for (int i = 0; i < extendPlain; i++) {
+//         index = rand() % (GetRowNum() + 1);
+//         Field* plain = new Field{};
+//         plain->InitScenes();
+//         PushField(plain, index);
+//     }
+
+//     index = rand() % (GetRowNum() + 1);
+//     Field* country = new Field{countryName};
+//     country->InitScenes();
+//     return PushField(country, index);
+// }
+/**
  * @brief show directions of the given position
  * show the direction one can go nearby
  * @param p given position

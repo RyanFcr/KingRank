@@ -53,8 +53,8 @@ void King::ShowAttackSkills() const {
         for (size_t i = 0; i < attackSkillNames.size(); i++) {
             const AttackSkill& as = attackSkills.at(attackSkillNames[i]);
             TextGen::Print(to_string(int(i)) + ". " + attackSkillNames[i],
-                           " (描述:" + as.GetDescription() + " , 魔法消耗值: " + to_string(as.GetMPCost()) +
-                               " , 伤害值: " + to_string(as.GetDamageValue()) + " )");
+                           " (描述:" + as.GetDescription() + " ,魔法消耗值: " + to_string(as.GetMPCost()) +
+                               " ,伤害值: " + to_string(as.GetDamageValue()) + " )");
         }
     }
     TextGen::Print("");
