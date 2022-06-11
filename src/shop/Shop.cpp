@@ -24,8 +24,10 @@ void Shop::ShowShopItems() const {
         return;
     }
 
-    int ofs = medicines.size();
+    int ofs1 = medicines.size();
+    int ofs2 = ofs1 + weapons.size();
 
+    // 药品
     TextGen::Print<GREEN_>("药品:");
     if (medicines.size()) {
         for (size_t i = 0; i < medicines.size(); i++) {
@@ -36,14 +38,21 @@ void Shop::ShowShopItems() const {
         TextGen::Print("空", "");
     }
     TextGen::Print("");
+    
+    // 武器
     TextGen::Print<RED_>("武器:");
     if (weapons.size()) {
         for (size_t i = 0; i < weapons.size(); i++) {
-            TextGen::Print(to_string(i + ofs) + ". " + weapons[i] + ": ", "");
+            TextGen::Print(to_string(i + ofs1) + ". " + weapons[i] + ": ", "");
             TextGen::Print<reward>(to_string(ItemGen::GetWeapon(weapons[i]).GetPrice()), " ");
         }
     } else {
         TextGen::Print("空", "");
     }
     TextGen::Print("");
+
+    // 背包
+    TextGen::Print<BLUE_>("背包扩容:");
+    TextGen::Print(to_string(ofs2) + ". 单位容量: ", "");
+    TextGen::Print<reward>(to_string(unitBagSpacePrice));
 }

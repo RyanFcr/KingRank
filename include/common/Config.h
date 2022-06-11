@@ -34,6 +34,7 @@ const int shopMedicineNumExpect = 4;                 // 商店药品数量期望
 const int shopMedicineNumSigma = 1;                  // 商店药品数量方差
 const int shopWeaponNumExpect = 3;                   // 商店武器数量期望
 const int shopWeaponNumSigma = 1;                    // 商店武器数量方差
+const int unitBagSpacePrice = 100;                   // 单位容量价格
 
 // 人物相关
 const int initialAttack = 1;       // 初始攻击力

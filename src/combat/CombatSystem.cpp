@@ -90,7 +90,7 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
 
     escape = false;
     while (1) {
-        TextGen::Print<request>("请输入战斗指令(escape/attack/support/state/bag/medicine)");
+        TextGen::Print<request>("请输入战斗指令(escape/attack/support/state/bag/medicine/equip)");
         input = TextGen::Input();
         if (input == "escape") {
             if (king.GetLevel() < 5 || rand() % 100 <= escapePossibility) {
@@ -114,6 +114,7 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                 damageVal = attackSkill.GetDamageValue() * king.GetAttack();
                 king.IncreaseMP(-MPCost);
                 enemy.IncreaseHP(-damageVal);
+                king.AbraseCurrentWeapon();
                 TextGen::Print("您消耗了 ", "");
                 TextGen::Print<BLUE_>(to_string(MPCost), " MP! ");
                 TextGen::Print("您发动了进攻，对他造成了 ", "");
@@ -177,6 +178,8 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                     TextGen::Print<warning>("请输入正确的指令!");
                 }
             }
+        } else if (input == "equip") {
+            king.EquipWeapon();
         } else
             TextGen::Print<warning>("请输入正确的指令!");
     }

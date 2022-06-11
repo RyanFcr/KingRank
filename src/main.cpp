@@ -67,6 +67,8 @@ int main() {
             RoleGen::king.ShowState();
         } else if (input == "equip") {
             RoleGen::king.EquipWeapon();
+        } else if (input == "drop") {
+            RoleGen::king.DropItem();
         } else if (input == "help") {
             Help();
         } else if (input == "mission") {
@@ -78,7 +80,6 @@ int main() {
 }
 void Help() {
     TextGen::Print("你可以输入以下指令：");
-
     TextGen::Print("map: 显示目前你所在的位置以及地图");
     TextGen::Print("up: 在地图中向上走");
     TextGen::Print("down: 在地图中向下走");

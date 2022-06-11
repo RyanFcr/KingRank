@@ -119,7 +119,7 @@ void EventSystem::MedicineEvent(King& king, Scene& s) {
 void EventSystem::ShopEvent(King& king, Scene& s) {
     int inputInt;
     int itemNum;
-    int offset;
+    int offset1, offset2;
     int price, weight;
     std::string itemName;
 
@@ -129,8 +129,8 @@ void EventSystem::ShopEvent(King& king, Scene& s) {
         Shop shop;
         while (1) {
             shop.ShowShopItems();
-            itemNum = shop.GetItemNum();
-            offset = shop.GetMedicineNum();
+            offset2 = itemNum = shop.GetItemNum();
+            offset1 = shop.GetMedicineNum();
             TextGen::Print<request>("请选择你要买的商品(输入-1退出商店)");
             TextGen::Print("您的金币数量: ", "");
             TextGen::Print<YELLOW_>(to_string(king.GetMoney()) + " Kin", ", ");
@@ -139,51 +139,66 @@ void EventSystem::ShopEvent(King& king, Scene& s) {
             TextGen::Print("最大限额: ", "");
             TextGen::Print<RED_>(to_string(king.GetBag().GetWeightLimit()));
             inputInt = TextGen::InputInt();
-            while (inputInt < -1 || inputInt > itemNum) {
+            while (inputInt < -1 || inputInt >= offset2 + 1) {
                 TextGen::Print<warning>("请输入正确的整数!");
                 inputInt = TextGen::InputInt();
             }
-            if (inputInt == -1) {
+
+            if (inputInt == -1)
                 break;
-            } else {
-                if (inputInt < offset) {
-                    // medicine
-                    itemName = shop.GetMedicineByIndex(inputInt);
-                    Medicine medicine = ItemGen::GetMedicine(itemName);
-                    price = medicine.GetPrice();
-                    weight = medicine.GetWeight();
-                    if (price > king.GetMoney()) {
-                        TextGen::Print<warning>("您没有足够的金币!");
-                    } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
-                        TextGen::Print<warning>("您没有足够的背包容量!");
-                    } else {
-                        king.IncreaseMoney(-price);
-                        king.InsertMedicine(itemName, 1);
-                        shop.SellOutMedicineByIndex(inputInt);
-                        TextGen::Print<buff>("购买成功!");
-                    }
+            
+            if (inputInt < offset1) {
+                // medicine
+                itemName = shop.GetMedicineByIndex(inputInt);
+                Medicine medicine = ItemGen::GetMedicine(itemName);
+                price = medicine.GetPrice();
+                weight = medicine.GetWeight();
+                if (price > king.GetMoney()) {
+                    TextGen::Print<warning>("您没有足够的金币!");
+                } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
+                    TextGen::Print<warning>("您没有足够的背包容量!");
                 } else {
-                    // weapon
-                    inputInt -= offset;
-                    itemName = shop.GetWeaponByIndex(inputInt);
-                    Weapon weapon = ItemGen::GetWeapon(itemName);
-                    price = weapon.GetPrice();
-                    weight = weapon.GetWeight();
-                    if (price > king.GetMoney()) {
-                        TextGen::Print<warning>("您没有足够的金币!");
-                    } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
-                        TextGen::Print<warning>("您没有足够的背包容量!");
+                    king.IncreaseMoney(-price);
+                    king.InsertMedicine(itemName, 1);
+                    shop.SellOutMedicineByIndex(inputInt);
+                    TextGen::Print<buff>("购买成功!");
+                }
+            } else if (inputInt < offset2) {
+                // weapon
+                inputInt -= offset1;
+                itemName = shop.GetWeaponByIndex(inputInt);
+                Weapon weapon = ItemGen::GetWeapon(itemName);
+                price = weapon.GetPrice();
+                weight = weapon.GetWeight();
+                if (price > king.GetMoney()) {
+                    TextGen::Print<warning>("您没有足够的金币!");
+                } else if (weight + king.GetBag().GetCurWeight() > king.GetBag().GetWeightLimit()) {
+                    TextGen::Print<warning>("您没有足够的背包容量!");
+                } else {
+                    king.IncreaseMoney(-price);
+                    shop.SellOutWeaponByIndex(inputInt);
+                    if (king.InsertWeapon(weapon)) {
+                        TextGen::Print<buff>("购买成功!");
                     } else {
-                        king.IncreaseMoney(-price);
-                        shop.SellOutWeaponByIndex(inputInt);
-                        if (king.InsertWeapon(weapon)) {
-                            TextGen::Print<buff>("购买成功!");
-                        } else {
-                            TextGen::Print<buff>("您的 " + itemName + " 获得了升级!(磨损度恢复,攻击增加)");
-                        }
+                        TextGen::Print<buff>("您的 " + itemName + " 获得了升级!(磨损度恢复,攻击增加)");
                     }
                 }
+            } else if (inputInt < offset2 + 1) {
+                TextGen::Print<request>("请输入您需要的背包容量!");
+                int num = TextGen::InputInt();
+                if (num > 0) {
+                    int price = num * unitBagSpacePrice;
+                    if (price <= king.GetMoney()) {
+                        king.IncreaseMoney(-price);
+                        king.IncreaseBagCapacity(num);
+                        TextGen::Print<buff>("您获得了 " + to_string(num) + " 单位容量!");
+                    } else {
+                        TextGen::Print<warning>("金币不够，取消购买!");
+                    }
+                } else
+                    TextGen::Print<warning>("无效输入，取消购买!");
             }
+
             TextGen::Print("");
         }
         TextGen::Print("欢迎下次光临!");
