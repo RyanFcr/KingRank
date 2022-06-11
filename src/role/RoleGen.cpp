@@ -53,7 +53,7 @@ bool RoleGen::InitKing(Map& map) {
     while (1) {
         input = TextGen::Input();
         if (input == "yes") {
-            TextGen::Print<request>("年轻的国王，我该怎么称呼您呢?");
+            TextGen::Print<request>("年轻的国王，我该怎么称呼您呢?(请尽量输入英文)");
             kingName = TextGen::Input();
             if (kingName == "quit") {
                 TextGen::Print("欢迎下次再来!");

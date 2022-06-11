@@ -39,19 +39,19 @@ int main() {
         } else if (input == "up") {
             ret = RoleGen::king.GoUp(MapGen::map);
             if (ret)
-                EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+                EventSystem::TriggerEvent(RoleGen::king, MapGen::map, MissionGen::kingMissions, MissionGen::missions);
         } else if (input == "down") {
             ret = RoleGen::king.GoDown(MapGen::map);
             if (ret)
-                EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+                EventSystem::TriggerEvent(RoleGen::king, MapGen::map, MissionGen::kingMissions, MissionGen::missions);
         } else if (input == "right") {
             ret = RoleGen::king.GoRight(MapGen::map);
             if (ret)
-                EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+                EventSystem::TriggerEvent(RoleGen::king, MapGen::map, MissionGen::kingMissions, MissionGen::missions);
         } else if (input == "left") {
             ret = RoleGen::king.GoLeft(MapGen::map);
             if (ret)
-                EventSystem::TriggerEvent(RoleGen::king, MapGen::map);
+                EventSystem::TriggerEvent(RoleGen::king, MapGen::map, MissionGen::kingMissions, MissionGen::missions);
         } else if (input == "home") {
             RoleGen::king.GoHome(MapGen::map);
         } else if (input == "save") {
@@ -71,6 +71,8 @@ int main() {
             RoleGen::king.DropItem();
         } else if (input == "help") {
             Help();
+        } else if (input == "mission") {
+            MissionGen::ShowMission();
         } else
             TextGen::Print<warning>("请输入正确的指令!");
     }
@@ -78,36 +80,19 @@ int main() {
 }
 void Help() {
     TextGen::Print("你可以输入以下指令：");
-    TextGen::Print("输入指令：map");
-    TextGen::Print("功能描述：显示目前你所在的位置以及地图");
-    TextGen::Print("输入指令：up");
-    TextGen::Print("功能描述：在地图中向上走");
-    TextGen::Print("输入指令：down");
-    TextGen::Print("功能描述：在地图中向下走");
-    TextGen::Print("输入指令：left");
-    TextGen::Print("功能描述：在地图中向左走");
-    TextGen::Print("输入指令：right");
-    TextGen::Print("功能描述：在地图中向右走");
-    TextGen::Print("输入指令：home");
-    TextGen::Print("功能描述：回到国王您的王国里");
-    TextGen::Print("输入指令：save");
-    TextGen::Print("功能描述：保存");
-    TextGen::Print("输入指令：bag");
-    TextGen::Print("功能描述：查看您目前的背包");
-    TextGen::Print("输入指令：money");
-    TextGen::Print("功能描述：查看您目前的金钱");
-    TextGen::Print("输入指令：skill");
-    TextGen::Print("功能描述：查看您目前的技能");
-    TextGen::Print("输入指令：state");
-    TextGen::Print("功能描述：查看您目前的状态");
-    TextGen::Print("输入指令：rank");
-    TextGen::Print("功能描述：查看国王排名");
-    TextGen::Print("输入指令：equip");
-    TextGen::Print("功能描述：装备武器");
-    TextGen::Print("输入指令：drop");
-    TextGen::Print("功能描述：丢弃装备");
-    TextGen::Print("输入指令：exit");
-    TextGen::Print("功能描述：退出游戏");
-    TextGen::Print("输入指令：help");
-    TextGen::Print("功能描述：显示帮助");
+    TextGen::Print("map: 显示目前你所在的位置以及地图");
+    TextGen::Print("up: 在地图中向上走");
+    TextGen::Print("down: 在地图中向下走");
+    TextGen::Print("left: 在地图中向左走");
+    TextGen::Print("right: 在地图中向右走");
+    TextGen::Print("home: 回到国王您的王国里");
+    TextGen::Print("save: 保存");
+    TextGen::Print("bag: 查看您目前的背包");
+    TextGen::Print("money: 查看您目前的金钱");
+    TextGen::Print("skill: 查看您目前的技能");
+    TextGen::Print("state: 查看您目前的状态");
+    TextGen::Print("equip: 装备武器");
+    TextGen::Print("quit: 退出游戏");
+    TextGen::Print("mission:显示任务");
+    TextGen::Print("help: 显示帮助");
 }
