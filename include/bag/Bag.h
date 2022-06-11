@@ -23,14 +23,16 @@ class Bag {
     int GetLevel() const { return level; }
     int GetWeightLimit() const { return weightLimit; }
     int GetCurWeight() const { return curWeight; }
+    int GetMedicineNum() const { return medicines.size(); }
     int GetWeaponsNum() const { return weapons.size(); }
+    int GetTotalNum() const { return medicines.size() + weapons.size(); }
     const map<string, int>& GetMedicines() const { return medicines; }
     const map<string, Weapon>& GetWeapons() const { return weapons; }
     const vector<pair<string, int>>& GetMedicineNames() const { return medicineNames; }
     const vector<string>& GetWeaponNames() const { return weaponNames; }
     const string& GetMedicineNameByIndex(int index) const { return medicineNames[index].first; }
     const string& GetWeaponNameByIndex(int index) const { return weaponNames[index]; }
-    Weapon& GetWeaponByName(const string& name) { return weapons.at(name); }
+    Weapon& GetWeaponByName(const string& name) { return weapons[name]; }
 
     void SetLevel(int level_) { level = level_; }
     void SetWeightLimit(int weightLimit_) { weightLimit = weightLimit_; }
@@ -39,6 +41,7 @@ class Bag {
     bool InsertWeapon(const Weapon& weapon);
     bool Discard(const string& name, int num = 1);
     void DiscardAll();
+    void IncreaseCapacity(int capacity_) { weightLimit += capacity_; }
 
     void ShowBag() const;
     void ShowMedicine() const;

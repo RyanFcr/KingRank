@@ -63,15 +63,20 @@ class King : public Role {
 
     void IncreaseMoney(int money_) { money += money_; }
     void IncreaseExperience(int experience_);
+    void IncreaseBagCapacity(int capacity_) { bag.IncreaseCapacity(capacity_); }
 
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
-    bool DiscardItem(const string& name, int num = 1) {
-        if (curWeapon == name)
+    bool DiscardItem(string name, int num = 1) {
+        if (curWeapon == name) {
             curWeapon = "";
+            attack -= bag.GetWeaponByName(name).GetAttack();
+        }
         return bag.Discard(name, num);
     }
     void EquipWeapon();
+    void AbraseCurrentWeapon();
+    void DropItem();
 
     void ShowMap(const Map& m) const;
     bool GoUp(const Map& m);

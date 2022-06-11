@@ -81,7 +81,7 @@
                         },
                         {
                             "enemyName": "史莱姆",
-                            "enemyPossibility": 7,
+                            "enemyPossibility": 80,
                             "money": 89,
                             "moneyPossibility": 10,
                             "medicineName": "肉包",
