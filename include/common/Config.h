@@ -72,6 +72,8 @@ const string kingFile = "..\\..\\data\\king.json";
 const string skillFile = "..\\..\\data\\skill.json";
 const string enemyFile = "..\\..\\data\\enemy.json";
 const string npcFile = "..\\..\\data\\npc.json";
+const string missionFile = "..\\..\\data\\mission.json";
+const string kingMissionFile = "..\\..\\data\\kingMission.json";
 #else
 const string mapFile = "../../data/map.json";
 const string itemFile = "../../data/item.json";
@@ -79,6 +81,8 @@ const string kingFile = "../../data/king.json";
 const string skillFile = "../../data/skill.json";
 const string enemyFile = "../../data/enemy.json";
 const string npcFile = "../../data/npc.json";
+const string missionFile = "../../data/mission.json";
+const string kingMissionFile = "../../data/kingMission.json";
 #endif
 
 #endif  // CONFIG_H_

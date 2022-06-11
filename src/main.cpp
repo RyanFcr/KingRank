@@ -2,12 +2,15 @@
 #include "event/EventSystem.h"
 #include "item/ItemGen.h"
 #include "map/MapGen.h"
+#include "mission/MissionGen.h"
 #include "role/EnemyGen.h"
 #include "role/NpcGen.h"
 #include "role/RoleGen.h"
 #include "skill/SkillGen.h"
 #include "text/TextGen.h"
+
 void Help();
+
 int main() {
     srand((unsigned)time(NULL));
     string input;
@@ -19,6 +22,7 @@ int main() {
     EnemyGen::InitEnemy();
     MapGen::Init();
     NpcGen::Init();
+    MissionGen::InitMissions();
     TextGen::PrintTitle();
     login = RoleGen::InitKing(MapGen::map);
     if (login)

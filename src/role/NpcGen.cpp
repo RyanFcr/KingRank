@@ -18,8 +18,6 @@ using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
 
-#include <iostream>
-
 map<Position, Npc, KeyCmp> NpcGen::Npcs;
 vector<string> NpcGen::NpcNames;
 
@@ -40,7 +38,6 @@ void NpcGen::Init() {
 
     const Value& npcsValue = npcDocument["Npcs"];
     for (SizeType i = 0; i < npcsValue.Size(); i++) {
-        std::cout << npcsValue.Size();
         const Value& npcValue = npcsValue[i];
         ASSERT_DOM_OBJECT_IS_OBJECT(npcValue)
 

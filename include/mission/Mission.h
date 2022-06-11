@@ -3,32 +3,41 @@
 
 #include <string>
 using std::string;
+
+enum MissionType { NPCMissionType, EnemyMissionType };
+
 class Mission {
    public:
     Mission() {}
-    Mission(string missionName,
+    Mission(string kingName,
+            string missionName,
             string description,
             int current,
             int total,
-            string kingName,
+            int type,
             string targetName,
-            int reward)
-        : missionName(missionName),
+            int reward,
+            int experience)
+        : kingName(kingName),
+          missionName(missionName),
           description(description),
           current(current),
           total(total),
-          kingName(kingName),
+          type(MissionType(type)),
           targetName(targetName),
-          reward(reward) {}
+          reward(reward),
+          experience(experience) {}
 
    public:
-    string missionName;
-    string description;
-    int current;        //当前进度，默认为0
-    int total;          //总进度
-    string kingName;    //主键，标记任务属于哪位国王
-    string targetName;  //任务完成目标名字
-    int reward;         //目前只是金币奖励
+    string kingName;     // 标记任务属于哪位国王
+    string missionName;  // 任务名
+    string description;  // 任务描述
+    int current;         // 当前进度，默认为0
+    int total;           // 总进度
+    MissionType type;    // 任务类型
+    string targetName;   // 目标人物名字
+    int reward;          // 金币奖励
+    int experience;      // 经验奖励
 };
 
 #endif
