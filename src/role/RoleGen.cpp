@@ -45,42 +45,42 @@ bool RoleGen::InitKing(Map& map) {
     ifs.close();
     PARSE_DOM_OBJECT(kingDocument, kingData.c_str())
 
-    TextGen::Print("Welcome to the world of Kings!");
-    TextGen::Print<request>("Do you have your own territory, young King?");
+    TextGen::Print("欢迎来到国王排名大陆!");
+    TextGen::Print<request>("年轻的国王，您拥有自己的领土嘛?(yes/no)");
     while (1) {
         input = TextGen::Input();
         if (input == "yes") {
-            TextGen::Print<request>("What's your name, young King?");
+            TextGen::Print<request>("年轻的国王，我该怎么称呼您呢?");
             kingName = TextGen::Input();
             if (kingName == "quit") {
-                TextGen::Print("Bye!");
+                TextGen::Print("欢迎下次再来!");
                 return false;
             }
             if (LoadKing(kingName)) {
-                TextGen::Print("Welcome! King." + king.GetName() + "!");
+                TextGen::Print("欢迎! 国王." + king.GetName() + "!");
                 break;
             } else {
-                TextGen::Print<warning>("Sorry, your territory doesn't exist!");
-                TextGen::Print<request>("Do you really have your own territory, young King?");
+                TextGen::Print<warning>("不好意思，国王，您的王国好像不存在!");
+                TextGen::Print<request>("您真的有自己的王国嘛，年轻的国王?(yes/no)");
             }
         } else if (input == "no") {
-            TextGen::Print<request>("What's your name, young King?");
+            TextGen::Print<request>("年轻的国王，我该怎么称呼您呢?");
             kingName = TextGen::Input();
             if (kingName == "quit") {
-                TextGen::Print("Bye!");
+                TextGen::Print("欢迎下次再来!");
                 return false;
             }
             if (CreateKing(kingName, map))
                 break;
             else {
-                TextGen::Print<warning>("Sorry, fail to register your territory!");
-                TextGen::Print<request>("Have you already had your own territory, young King?");
+                TextGen::Print<warning>("不好意思，没能给您分配一块王国!");
+                TextGen::Print<request>("您是不是已经有自己的王国了，年轻的国王?(yes/no)");
             }
         } else if (input == "quit") {
-            TextGen::Print("Bye!");
+            TextGen::Print("欢迎下次再来!");
             return false;
         } else {
-            TextGen::Print<warning>("Invalid Input!");
+            TextGen::Print<warning>("请输入正确的指令!");
         }
     }
     return true;
@@ -186,9 +186,9 @@ bool RoleGen::CreateKing(const string& kingName, Map& map) {
         return false;
 
     /// set kingdom name
-    TextGen::Print("Welcome, " + kingName + "!");
-    TextGen::Print("You have your own territory, your Kingdom!");
-    TextGen::Print<request>("What's your country's name?");
+    TextGen::Print("欢迎, " + kingName + "!");
+    TextGen::Print("您有了您自己的领土，这是属于您的王国!");
+    TextGen::Print<request>("您的王国叫什么呢?");
     countryName = TextGen::Input();
 
     /// allocate a new land

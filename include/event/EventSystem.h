@@ -12,6 +12,7 @@ class EventSystem {
     static void MedicineEvent(King& king, Scene& s);
     static void CombatEvent(King& king, Scene& s);
     static void ShopEvent(King& king, Scene& s);
+    static void NpcEvent(King& king, Scene& s);
 };
 
 #endif

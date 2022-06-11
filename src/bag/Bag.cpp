@@ -120,16 +120,16 @@ bool Bag::Discard(const string& name, int num) {
  * @brief print the items in the bag
  */
 void Bag::ShowBag() const {
-    TextGen::Print("Weight Limit: " + to_string(GetWeightLimit()));
-    TextGen::Print("Current Weight: " + to_string(GetCurWeight()));
+    TextGen::Print("最大容量: " + to_string(GetWeightLimit()));
+    TextGen::Print("现在的重量为: " + to_string(GetCurWeight()));
     ShowMedicine();
     ShowWeapon();
 }
 
 void Bag::ShowMedicine() const {
-    TextGen::Print("Medicines:");
+    TextGen::Print("药品:");
     if (medicineNames.size() == 0) {
-        TextGen::Print("empty", "");
+        TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < medicineNames.size(); i++) {
             TextGen::Print(to_string(int(i)) + ". " + medicineNames[i].first + ":" + to_string(medicineNames[i].second),
@@ -140,9 +140,9 @@ void Bag::ShowMedicine() const {
 }
 
 void Bag::ShowWeapon() const {
-    TextGen::Print("Weapons:");
+    TextGen::Print("武器:");
     if (weaponNames.size() == 0) {
-        TextGen::Print("empty", "");
+        TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < weaponNames.size(); i++) {
             TextGen::Print(to_string(int(i)) + ". " + weaponNames[i], " ");

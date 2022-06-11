@@ -22,7 +22,7 @@ int main() {
     while (login) {
         input = TextGen::Input();
         if (input == "quit") {
-            TextGen::Print("Bye!");
+            TextGen::Print("欢迎下次再来!");
             RoleGen::SaveKing();
             MapGen::Save();
             break;
@@ -54,7 +54,7 @@ int main() {
         } else if (input == "state") {
             RoleGen::king.ShowState();
         } else
-            TextGen::Print<warning>("Invalid Input!");
+            TextGen::Print<warning>("请输入正确的指令!");
     }
     MapGen::Free();
 }

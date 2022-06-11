@@ -420,11 +420,11 @@ King RoleGen::InitKingGen() {
 
 > 我们以这个为例，目前我们处在的位置是(1,1)
 
-![image-20220521214114038](C:\Users\Fcr\AppData\Roaming\Typora\typora-user-images\image-20220521214114038.png)
+![image-20220521214114038](G:\onedirive\OneDrive - zju.edu.cn\computer_science\oop\KingRank\Report\《国王排名》MUD M3报告.assets\image-20220521214114038.png)
 
 > up一下之后，处在(1,1)，此时再map
 
-![image-20220521214229537](C:\Users\Fcr\AppData\Roaming\Typora\typora-user-images\image-20220521214229537.png)
+![image-20220521214229537](G:\onedirive\OneDrive - zju.edu.cn\computer_science\oop\KingRank\Report\《国王排名》MUD M3报告.assets\image-20220521214229537.png)
 
 
 

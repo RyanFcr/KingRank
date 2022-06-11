@@ -52,7 +52,7 @@ int TextGen::InputInt() {
         if (iss >> val && !(iss >> remain))
             return val;
         else
-            Print<warning>("Invalid input! Please enter an integer!");
+            Print<warning>("请输入正确的指令!请输入一个整数");
     }
 }
 

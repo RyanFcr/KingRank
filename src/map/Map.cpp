@@ -275,6 +275,6 @@ void Map::ShowDirection(const Position& p, const string centerString, int center
             }
         }
     } else {
-        TextGen::Print<warning>("You has entered an unknown field!");
+        TextGen::Print<warning>("您进入了无人之境!");
     }
 }
