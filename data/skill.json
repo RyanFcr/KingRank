@@ -5,13 +5,67 @@
             "description": "只是普普通通的攻击",
             "MPCost": 0,
             "damageValue": 10
+        },
+        {
+            "name": "突刺",
+            "description": "突刺攻击",
+            "MPCost": 50,
+            "damageValue": 50
+        },
+        {
+            "name": "裂空击",
+            "description": "击破苍穹的一击",
+            "MPCost": 100,
+            "damageValue": 100
+        },
+        {
+            "name": "百裂冲击",
+            "description": "击裂一切圣灵",
+            "MPCost": 200,
+            "damageValue": 200
+        },
+        {
+            "name": "石破天惊",
+            "description": "强者君临世界",
+            "MPCost": 300,
+            "damageValue": 300
+        },
+        {
+            "name": "霸天戮杀",
+            "description": "斩灭一切",
+            "MPCost": 400,
+            "damageValue": 400
         }
     ],
     "supportSkills": [
         {
-            "name": "治疗术",
-            "description": "每次使用可以恢复全部血量",
+            "name": "初级治疗术",
+            "description": "每次使用可以恢复少量血量",
+            "MPCost": 10,
+            "HPValue": 10
+        },
+        {
+            "name": "中级治疗术",
+            "description": "每次使用获得较多血量",
             "MPCost": 20,
+            "HPValue": 25
+        },
+        {
+            "name": "高级治疗术",
+            "description": "每次使用获得大量血量",
+            "MPCost": 30,
+            "HPValue": 45
+        },
+        {
+            "name": "超级治疗术",
+            "description": "每次使用获得极多血量",
+            "MPCost": 40,
+            "HPValue": 70
+        },
+        {
+            "name": "终极治疗术",
+            "description": "每次使用恢复全部生命值",
+            "MPCost": 50,
             "HPValue": 100
         }
     ]

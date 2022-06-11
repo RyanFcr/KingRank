@@ -2,25 +2,25 @@
     "kings": [
         {
             "name": "admin",
-            "level": 1,
+            "level": 2,
             "attack": 1,
-            "maxHP": 100,
-            "HP": 40,
+            "maxHP": 200,
+            "HP": 200,
             "maxMP": 100,
-            "MP": 80,
+            "MP": 100,
             "position": {
                 "fieldX": 0,
-                "fieldY": 2,
-                "sceneX": 0,
-                "sceneY": 0
+                "fieldY": 1,
+                "sceneX": 1,
+                "sceneY": 1
             },
-            "experience": 20,
+            "experience": 0,
             "territoryPosition": {
                 "fieldX": 0,
                 "fieldY": 2
             },
             "countryName": "admin",
-            "money": 416980,
+            "money": 417080,
             "bag": {
                 "level": 1,
                 "weightLimit": 200,
@@ -35,7 +35,7 @@
                         "weight": 2,
                         "id": 0,
                         "attack": 1,
-                        "abrasion": 0,
+                        "abrasion": 94,
                         "abrasionLoss": 3,
                         "price": 1
                     },
@@ -44,7 +44,7 @@
                         "weight": 4,
                         "id": 0,
                         "attack": 1,
-                        "abrasion": 0,
+                        "abrasion": 100,
                         "abrasionLoss": 3,
                         "price": 1
                     },
@@ -53,7 +53,7 @@
                         "weight": 2,
                         "id": 0,
                         "attack": 1,
-                        "abrasion": 0,
+                        "abrasion": 100,
                         "abrasionLoss": 3,
                         "price": 1
                     }
@@ -64,6 +64,11 @@
                     "description": "只是普普通通的攻击",
                     "MPCost": 0,
                     "damageValue": 10
+                },
+                "突刺": {
+                    "description": "突刺攻击",
+                    "MPCost": 50,
+                    "damageValue": 50
                 }
             },
             "supportSkills": {

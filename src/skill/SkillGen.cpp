@@ -12,10 +12,13 @@ using rapidjson::Document;
 using rapidjson::Value;
 using rapidjson::SizeType;
 
-
+#include <iostream>
+using std::cout;
 /// instantiation
 map<string, AttackSkill> SkillGen::attackSkills;
 map<string, SupportSkill> SkillGen::supportSkills;
+vector<string> SkillGen::attackSkillsVector;
+vector<string> SkillGen::supportSkillsVector;
 
 /**
  * @brief Deserialize skills from json file
@@ -66,8 +69,8 @@ void SkillGen::Init() {
         damageValue = attackSkillData["damageValue"].GetInt();
 
         attackSkills.insert(make_pair(name, AttackSkill{name, description, MPCost, damageValue}));
+        attackSkillsVector.push_back(name);
     }
-    
 
     // Support Skills
     if (!d.HasMember("supportSkills"))
@@ -95,6 +98,7 @@ void SkillGen::Init() {
             throw HAS_PARSE_ERROR;
         HPValue = supportSkillData["HPValue"].GetInt();
 
-        supportSkills.insert(make_pair(name, SupportSkill{name, description, MPCost, HPValue}));
+        supportSkills.insert(make_pair(name, SupportSkill{name, description, MPCost, HPValue}));\
+        supportSkillsVector.push_back(name);
     }
 }

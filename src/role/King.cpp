@@ -1,4 +1,5 @@
 #include "role/King.h"
+#include "skill/SkillGen.h"
 #include <string>
 
 using std::to_string;
@@ -160,34 +161,74 @@ void King::IncreaseExperience(int experience_) {
         TextGen::Print("升级啦! 现在您的等级是 ", "");
         TextGen::Print<buff>(to_string(GetLevel()));
 
+        string attackSkillString, supportSkillString;
+        AttackSkill attackSkill;
+        SupportSkill supportSkill;
+
         switch (level) {
             case 2:
                 IncreaseMaxHP(100);
+                attackSkillString = SkillGen::attackSkillsVector[1];
+                attackSkill = SkillGen::attackSkills.at(attackSkillString);
+                MasterAttackSkill(attackSkill);
+                TextGen::Print<reward>("HP增加100, 获得技能 " + attackSkill.GetName() + " !");
                 break;
             case 3:
                 IncreaseAttack(2);
+                supportSkillString = SkillGen::supportSkillsVector[1];
+                supportSkill = SkillGen::supportSkills.at(supportSkillString);
+                MasterSupportSkill(supportSkill);
+                TextGen::Print<reward>("攻击力增加1, 获得技能 " + supportSkill.GetName() + " !");
                 break;
             case 4:
                 IncreaseMaxMP(50);
+                attackSkillString = SkillGen::attackSkillsVector[2];
+                attackSkill = SkillGen::attackSkills.at(attackSkillString);
+                MasterAttackSkill(attackSkill);
+                TextGen::Print<reward>("MP增加50, 获得技能 " + attackSkill.GetName() + " !");
                 break;
             case 5:
                 IncreaseMaxHP(200);
+                supportSkillString = SkillGen::supportSkillsVector[2];
+                supportSkill = SkillGen::supportSkills.at(supportSkillString);
+                MasterSupportSkill(supportSkill);
+                TextGen::Print<reward>("HP增加200, 获得技能 " + supportSkill.GetName() + " !");
                 break;
             case 6:
                 IncreaseAttack(2);
+                attackSkillString = SkillGen::attackSkillsVector[3];
+                attackSkill = SkillGen::attackSkills.at(attackSkillString);
+                MasterAttackSkill(attackSkill);
+                TextGen::Print<reward>("攻击力增加2, 获得技能 " + attackSkill.GetName() + " !");
                 break;
             case 7:
                 IncreaseMaxHP(300);
+                supportSkillString = SkillGen::supportSkillsVector[3];
+                supportSkill = SkillGen::supportSkills.at(supportSkillString);
+                MasterSupportSkill(supportSkill);
+                TextGen::Print<reward>("HP增加300, 获得技能 " + supportSkill.GetName() + " !");
                 break;
             case 8:
                 IncreaseMaxMP(100);
+                attackSkillString = SkillGen::attackSkillsVector[4];
+                attackSkill = SkillGen::attackSkills.at(attackSkillString);
+                MasterAttackSkill(attackSkill);
+                TextGen::Print<reward>("MP增加100, 获得技能 " + attackSkill.GetName() + " !");
                 break;
             case 9:
                 IncreaseAttack(5);
+                supportSkillString = SkillGen::supportSkillsVector[4];
+                supportSkill = SkillGen::supportSkills.at(supportSkillString);
+                MasterSupportSkill(supportSkill);
+                TextGen::Print<reward>("攻击力增加5, 获得技能 " + supportSkill.GetName() + " !");
                 break;
             case 10:
                 IncreaseMaxHP(300);
                 IncreaseMaxMP(50);
+                attackSkillString = SkillGen::attackSkillsVector[5];
+                attackSkill = SkillGen::attackSkills.at(attackSkillString);
+                MasterAttackSkill(attackSkill);
+                TextGen::Print<reward>("HP增加300, MP增加50, 获得技能 " + attackSkill.GetName() + " !");
                 break;
             default:
                 break;
