@@ -24,7 +24,7 @@
             "bag": {
                 "level": 1,
                 "weightLimit": 100,
-                "curWeight": 33,
+                "curWeight": 32,
                 "medicines": {
                     "肉包": 2,
                     "魔法丸子": 6
@@ -33,15 +33,6 @@
                     "影刃": {
                         "description": "一把快刀",
                         "weight": 2,
-                        "id": 0,
-                        "attack": 1,
-                        "abrasion": 0,
-                        "abrasionLoss": 100,
-                        "price": 1
-                    },
-                    "细剑": {
-                        "description": "波吉的武器",
-                        "weight": 1,
                         "id": 0,
                         "attack": 1,
                         "abrasion": 0,
@@ -82,7 +73,7 @@
                     "HPValue": 100
                 }
             },
-            "curWeapon": "细剑"
+            "curWeapon": "影刃"
         }
     ]
 }

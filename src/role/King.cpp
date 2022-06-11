@@ -212,3 +212,27 @@ void King::EquipWeapon() {
         TextGen::Print<buff>("成功装备 " + curWeapon + " !");
     }
 }
+
+void King::DropItem() {
+    int offset = bag.GetMedicineNum();
+    int inputInt;
+
+    bag.ShowBag();
+    TextGen::Print<request>("请选择您想丢弃的物品");
+    inputInt = TextGen::InputInt();
+    if (inputInt < 0 || inputInt >= bag.GetTotalNum()) {
+        TextGen::Print<warning>("错误序号，取消丢弃!");
+    } else {
+        string name;
+        if (inputInt >= offset) {
+            // 丢弃武器
+            inputInt -= offset;
+            name = bag.GetWeaponNameByIndex(inputInt);
+        } else {
+            // 丢弃药品
+            name = bag.GetMedicineNameByIndex(inputInt);
+        }
+        DiscardItem(name);
+        TextGen::Print<buff>("您成功丢弃 " + name + " !");
+    }
+}

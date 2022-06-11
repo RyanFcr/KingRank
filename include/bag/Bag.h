@@ -23,7 +23,9 @@ class Bag {
     int GetLevel() const { return level; }
     int GetWeightLimit() const { return weightLimit; }
     int GetCurWeight() const { return curWeight; }
+    int GetMedicineNum() const { return medicines.size(); }
     int GetWeaponsNum() const { return weapons.size(); }
+    int GetTotalNum() const { return medicines.size() + weapons.size(); }
     const map<string, int>& GetMedicines() const { return medicines; }
     const map<string, Weapon>& GetWeapons() const { return weapons; }
     const vector<pair<string, int>>& GetMedicineNames() const { return medicineNames; }

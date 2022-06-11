@@ -67,11 +67,14 @@ class King : public Role {
     bool InsertMedicine(const string& name, int num = 1) { return bag.InsertMedicine(name, num); }
     bool InsertWeapon(const Weapon& weapon) { return bag.InsertWeapon(weapon); }
     bool DiscardItem(const string& name, int num = 1) {
-        if (curWeapon == name)
+        if (curWeapon == name) {
             curWeapon = "";
+            attack -= bag.GetWeaponByName(name).GetAttack();
+        }
         return bag.Discard(name, num);
     }
     void EquipWeapon();
+    void DropItem();
 
     void ShowMap(const Map& m) const;
     bool GoUp(const Map& m);
