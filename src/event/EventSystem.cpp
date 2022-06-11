@@ -19,22 +19,18 @@ void EventSystem::TriggerEvent(King& king, Map& m) {
 }
 /**
  * @brief Npc对话事件
- * 
- * @param king 
- * @param s 
+ *
+ * @param king
+ * @param s
  */
 void EventSystem::NpcEvent(King& king, Scene& s) {
     Position kingPosition = king.GetPosition();
 
-    map<Position, Npc, decltype(PositionCmp)*>::iterator it_find;
-    it_find = NpcGen::Npcs.find(kingPosition);
-    if(it_find!=NpcGen::Npcs.end()) {
-        Npc npc = NpcGen::Npcs[kingPosition];
+    if (NpcGen::Npcs.count(kingPosition)) {
+        Npc& npc = NpcGen::Npcs[kingPosition];
         npc.NpcSpeak("0");
         string input = TextGen::Input();
         npc.NpcSpeak(input);
-        // string statement =
-        // TextGen::Print<reward>()
     } else {
         return;
     }

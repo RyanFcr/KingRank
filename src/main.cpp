@@ -3,6 +3,7 @@
 #include "item/ItemGen.h"
 #include "map/MapGen.h"
 #include "role/EnemyGen.h"
+#include "role/NpcGen.h"
 #include "role/RoleGen.h"
 #include "skill/SkillGen.h"
 #include "text/TextGen.h"
@@ -17,6 +18,7 @@ int main() {
     SkillGen::Init();
     EnemyGen::InitEnemy();
     MapGen::Init();
+    NpcGen::Init();
     TextGen::PrintTitle();
     login = RoleGen::InitKing(MapGen::map);
     if (login)
