@@ -32,7 +32,7 @@ class Bag {
     const vector<string>& GetWeaponNames() const { return weaponNames; }
     const string& GetMedicineNameByIndex(int index) const { return medicineNames[index].first; }
     const string& GetWeaponNameByIndex(int index) const { return weaponNames[index]; }
-    Weapon& GetWeaponByName(const string& name) { return weapons.at(name); }
+    Weapon& GetWeaponByName(const string& name) { return weapons[name]; }
 
     void SetLevel(int level_) { level = level_; }
     void SetWeightLimit(int weightLimit_) { weightLimit = weightLimit_; }

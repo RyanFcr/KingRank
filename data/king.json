@@ -36,7 +36,7 @@
                         "id": 0,
                         "attack": 1,
                         "abrasion": 0,
-                        "abrasionLoss": 100,
+                        "abrasionLoss": 3,
                         "price": 1
                     },
                     "长枪": {
@@ -45,7 +45,7 @@
                         "id": 0,
                         "attack": 1,
                         "abrasion": 0,
-                        "abrasionLoss": 100,
+                        "abrasionLoss": 3,
                         "price": 1
                     },
                     "魔杖": {
@@ -54,7 +54,7 @@
                         "id": 0,
                         "attack": 1,
                         "abrasion": 0,
-                        "abrasionLoss": 100,
+                        "abrasionLoss": 3,
                         "price": 1
                     }
                 }

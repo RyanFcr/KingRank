@@ -52,11 +52,11 @@ bool Bag::InsertWeapon(const Weapon& weapon) {
         if (weapons.count(name)) {
             // upgrade
             Weapon& bagWeapon = weapons[name];
-            bagWeapon.SetAbrasion(100); // restore abrasion
-            bagWeapon.SetAttack(bagWeapon.GetAttack() + 1); // increase attack
+            bagWeapon.SetAbrasion(maxAbrasion);              // restore abrasion
+            bagWeapon.SetAttack(bagWeapon.GetAttack() + 1);  // increase attack
             return false;
         }
-            
+
         weight = ItemGen::GetWeapon(name).GetWeight();
         if (curWeight + weight <= weightLimit) {
             weapons.insert(make_pair(name, weapon));
@@ -126,18 +126,9 @@ bool Bag::Discard(const string& name, int num) {
 void Bag::ShowBag() const {
     TextGen::Print("最大容量: " + to_string(GetWeightLimit()));
     TextGen::Print("现在的重量为: " + to_string(GetCurWeight()));
-    
+
     // show medicine
-    TextGen::Print("药品:");
-    if (medicineNames.size() == 0) {
-        TextGen::Print("空", "");
-    } else {
-        for (size_t i = 0; i < medicineNames.size(); i++) {
-            TextGen::Print(to_string(int(i)) + ". " + medicineNames[i].first + ":" + to_string(medicineNames[i].second),
-                           "  ");
-        }
-    }
-    TextGen::Print("");
+    ShowMedicine();
 
     // show weapon
     int offset = medicineNames.size();
@@ -146,7 +137,12 @@ void Bag::ShowBag() const {
         TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < weaponNames.size(); i++) {
-            TextGen::Print(to_string(int(i + offset)) + ". " + weaponNames[i], " ");
+            const Weapon& weapon = weapons.at(weaponNames[i]);
+            TextGen::Print(to_string(int(i + offset)) + ". ", " ");
+            TextGen::Print(weapon.GetName(), "(");
+            TextGen::Print("攻击力: " + to_string(weapon.GetAttack()), ", ");
+            TextGen::Print("磨损: " + to_string(weapon.GetAbrasion()) + "/" + to_string(maxAbrasion), ", ");
+            TextGen::Print("单次磨损量: " + to_string(weapon.GetAbrasionLoss()) + ")");
         }
     }
     TextGen::Print("");
@@ -158,8 +154,13 @@ void Bag::ShowMedicine() const {
         TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < medicineNames.size(); i++) {
-            TextGen::Print(to_string(int(i)) + ". " + medicineNames[i].first + ":" + to_string(medicineNames[i].second),
-                           "  ");
+            Medicine medicine = ItemGen::GetMedicine(medicineNames[i].first);
+            int num = medicineNames[i].second;
+            TextGen::Print(to_string(int(i)) + ". ", " ");
+            TextGen::Print(medicine.GetName(), "(");
+            TextGen::Print("数量: " + to_string(num), ", ");
+            TextGen::Print("HP: " + to_string(medicine.GetHPValue()) + "%", ", ");
+            TextGen::Print("MP: " + to_string(medicine.GetMPValue()) + "%)");
         }
     }
     TextGen::Print("");
@@ -171,7 +172,12 @@ void Bag::ShowWeapon() const {
         TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < weaponNames.size(); i++) {
-            TextGen::Print(to_string(int(i)) + ". " + weaponNames[i], " ");
+            const Weapon& weapon = weapons.at(weaponNames[i]);
+            TextGen::Print(to_string(int(i)) + ". ", " ");
+            TextGen::Print(weapon.GetName(), "(");
+            TextGen::Print("攻击力: " + to_string(weapon.GetAttack()), ", ");
+            TextGen::Print("磨损: " + to_string(weapon.GetAbrasion()) + "/" + to_string(maxAbrasion), ", ");
+            TextGen::Print("单次磨损量: " + to_string(weapon.GetAbrasionLoss()) + ")");
         }
     }
     TextGen::Print("");
