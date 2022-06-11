@@ -16,7 +16,7 @@ static bool CheckCombatFinish(const King& king, const Enemy& enemy) {
 void CombatSystem::Combat(King& king, Enemy& enemy) {
     bool finish = false;
 
-    TextGen::Print<warning>("Combat Start!");
+    TextGen::Print<warning>("战斗正式开始!");
     while (!finish) {
         finish = CombatProcess(king, enemy);
     }
@@ -52,7 +52,7 @@ bool CombatSystem::CombatProcess(King& king, Enemy& enemy) {
 void CombatSystem::CombatWin(King& king, Enemy& enemy) {
     int experienceVal = enemy.GetExperienceVal();
     int moneyVal = enemy.GetMoneyVal();
-    TextGen::Print("Congratulations, King! You get ", "");
+    TextGen::Print("恭喜国王获得胜利! 你获得了 ", "");
     TextGen::Print<buff>(to_string(experienceVal) + " EXP", " and ");
     TextGen::Print<reward>(to_string(moneyVal) + " Kin", "!\n");
     king.IncreaseMoney(moneyVal);
@@ -60,8 +60,8 @@ void CombatSystem::CombatWin(King& king, Enemy& enemy) {
 }
 
 void CombatSystem::CombatLose(King& king) {
-    TextGen::Print<warning>("Massacred!");
-    TextGen::Print<warning>("You wil resurrect in your territory, BUT you will lose all your money and items!");
+    TextGen::Print<warning>("年轻的国王战死沙场!");
+    TextGen::Print<warning>("您即将在您的领土复活，但是背包里的所有东西都被影之一族的族人偷走了~");
     king.Resurrect();
 }
 
@@ -72,44 +72,45 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
 
     escape = false;
     while (1) {
-        TextGen::Print<request>("Please input combat instruction!");
+        TextGen::Print<request>("请输入战斗指令(escape/attack/support/state/bag/medicine)");
         input = TextGen::Input();
         if (input == "escape") {
             if (king.GetLevel() < 5 || rand() % 100 <= escapePossibility) {
-                TextGen::Print<buff>("Escape Success!");
+                TextGen::Print<buff>("溜了溜了，拜拜了您");
                 escape = true;
                 break;
             } else {
-                TextGen::Print<warning>("Escape Fail!");
+                TextGen::Print<warning>("逃跑失败！留下来！");
                 break;
             }
         } else if (input == "attack") {
-            TextGen::Print<request>("Which skill do your want to use?");
+            TextGen::Print<request>("您想发动什么技能？");
             king.ShowAttackSkills();
             inputInt = TextGen::InputInt();
+            TextGen::Print<request>("请输入技能的序号");
             if (king.HasAttackSkillByIndex(inputInt)) {
                 const AttackSkill& attackSkill = king.GetAttackSkillByIndex(inputInt);
-                TextGen::Print("You use ", "");
+                TextGen::Print("您使出了 ", "");
                 TextGen::Print<warning>(attackSkill.GetName(), "!\n");
                 MPCost = attackSkill.GetMPCost();
                 damageVal = attackSkill.GetDamageValue() * king.GetAttack();
                 king.IncreaseMP(-MPCost);
                 enemy.IncreaseHP(-damageVal);
-                TextGen::Print("You consume ", "");
+                TextGen::Print("您消耗了 ", "");
                 TextGen::Print<BLUE_>(to_string(MPCost), " MP! ");
-                TextGen::Print("You cause ", "");
-                TextGen::Print<RED_>(to_string(damageVal), " damage!\n");
+                TextGen::Print("您发动了进攻，对他造成了 ", "");
+                TextGen::Print<RED_>(to_string(damageVal), " 伤害!\n");
                 break;
             } else {
-                TextGen::Print<warning>("Invalid input!");
+                TextGen::Print<warning>("请输入正确的指令!");
             }
         } else if (input == "support") {
-            TextGen::Print<request>("Which skill do your want to use?");
+            TextGen::Print<request>("您想发动什么技能？请输入技能的序号");
             king.ShowSupportSkills();
             inputInt = TextGen::InputInt();
             if (king.HasSupportSkillByIndex(inputInt)) {
                 const SupportSkill& supportSkill = king.GetSupportSkillByIndex(inputInt);
-                TextGen::Print("You use ", "");
+                TextGen::Print("您使出了 ", "");
                 TextGen::Print<buff>(supportSkill.GetName(), "!\n");
                 MPCost = supportSkill.GetMPCost();
                 HPVal = supportSkill.GetHPValue() * king.GetMaxHP() / 100;
@@ -117,13 +118,13 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                     HPVal = king.GetMaxHP() - king.GetHP();
                 king.IncreaseMP(-MPCost);
                 king.IncreaseHP(HPVal);
-                TextGen::Print("You consume ", "");
+                TextGen::Print("您消耗了 ", "");
                 TextGen::Print<BLUE_>(to_string(MPCost), " MP! ");
-                TextGen::Print("You restore ", "");
+                TextGen::Print("您恢复了 ", "");
                 TextGen::Print<RED_>(to_string(HPVal), " HP!\n");
                 break;
             } else {
-                TextGen::Print<warning>("Invalid input!");
+                TextGen::Print<warning>("请输入正确的指令!");
             }
         } else if (input == "state") {
             king.ShowState();
@@ -131,9 +132,9 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
             king.ShowBag();
         } else if (input == "medicine") {
             if (king.GetBag().HasNoMedicine()) {
-                TextGen::Print<warning>("You have no medicine!");
+                TextGen::Print<warning>("您没有药！药丸了！");
             } else {
-                TextGen::Print<request>("Which medicine do your want to use?");
+                TextGen::Print<request>("您想使用什么药?请输入想使用药品的序号");
                 king.ShowMedicine();
                 inputInt = TextGen::InputInt();
                 if (king.GetBag().HasMedicineByIndex(inputInt)) {
@@ -148,18 +149,18 @@ void CombatSystem::KingTurn(King& king, Enemy& enemy, bool& escape) {
                     king.IncreaseMP(MPVal);
                     king.IncreaseHP(HPVal);
                     king.DiscardItem(medicineName, 1);
-                    TextGen::Print("You use a " + medicineName);
-                    TextGen::Print("You restore ", "");
+                    TextGen::Print("您使用了 " + medicineName);
+                    TextGen::Print("您恢复了 ", "");
                     TextGen::Print<BLUE_>(to_string(MPVal), " MP! ");
-                    TextGen::Print("You restore ", "");
+                    TextGen::Print("您恢复了 ", "");
                     TextGen::Print<RED_>(to_string(HPVal), " HP!\n");
                     break;
                 } else {
-                    TextGen::Print<warning>("Invalid input!");
+                    TextGen::Print<warning>("请输入正确的指令!");
                 }
             }
         } else
-            TextGen::Print<warning>("Invalid input!");
+            TextGen::Print<warning>("请输入正确的指令!");
     }
 }
 
@@ -173,8 +174,8 @@ void CombatSystem::EnemyTurn(King& king, Enemy& enemy) {
     enemy.IncreaseMP(-MPCost);
     king.IncreaseHP(-damageVal);
 
-    TextGen::Print("Enemy uses ", "");
+    TextGen::Print("敌人使出了 ", "");
     TextGen::Print<warning>(attackSkill.GetName(), "!\n");
-    TextGen::Print("You suffer ", "");
-    TextGen::Print<RED_>(to_string(damageVal), " damage!\n");
+    TextGen::Print("您遭受了 ", "");
+    TextGen::Print<RED_>(to_string(damageVal), " 伤害!\n");
 }

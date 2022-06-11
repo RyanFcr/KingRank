@@ -11,6 +11,7 @@ class EventSystem {
     static void MoneyEvent(King& king, const Scene& s);
     static void MedicineEvent(King& king, const Scene& s);
     static void CombatEvent(King& king, const Scene& s);
+    static void NpcEvent(King& king, const Scene& s);
 };
 
 #endif

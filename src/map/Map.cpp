@@ -196,6 +196,6 @@ void Map::ShowDirection(const Position& p) const {
             }
         }
     } else {
-        TextGen::Print<warning>("You has entered an unknown field!");
+        TextGen::Print<warning>("您进入了无人之境!");
     }
 }

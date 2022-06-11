@@ -18,9 +18,9 @@ void King::ShowSkills() const {
 
 void King::ShowAttackSkills() const {
     /// @attention too long string!
-    TextGen::Print<warning>("Attack Skills:");
+    TextGen::Print<warning>("进攻技能:");
     if (attackSkillNames.size() == 0) {
-        TextGen::Print("empty", "");
+        TextGen::Print("无", "");
     } else {
         for (size_t i = 0; i < attackSkillNames.size(); i++) {
             TextGen::Print(to_string(int(i)) + ". " + attackSkillNames[i], " ");
@@ -31,9 +31,9 @@ void King::ShowAttackSkills() const {
 
 void King::ShowSupportSkills() const {
     /// @attention too long string!
-    TextGen::Print<buff>("Support Skills:");
+    TextGen::Print<buff>("辅助技能:");
     if (supportSkillNames.size() == 0) {
-        TextGen::Print("empty", "");
+        TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < supportSkillNames.size(); i++) {
             TextGen::Print(to_string(int(i)) + ". " + supportSkillNames[i], " ");
@@ -94,7 +94,7 @@ bool King::GoRight(const Map& m) {
 
 void King::GoHome(const Map& m) {
     if (position.fieldX == territoryPosition.fieldX && position.fieldY == territoryPosition.fieldY) {
-        TextGen::Print<warning>("You are currently in your territory!");
+        TextGen::Print<warning>("您已经在您的国家了!");
         return;
     }
 
@@ -102,7 +102,7 @@ void King::GoHome(const Map& m) {
     position.fieldY = territoryPosition.fieldY;
     position.sceneX = 0;
     position.sceneY = 0;
-    TextGen::Print("Welcome back to your territory, your Grace!");
+    TextGen::Print("欢迎回家，我的陛下~");
 }
 
 void King::Resurrect() {
@@ -119,7 +119,7 @@ void King::IncreaseExperience(int experience_) {
         IncreaseLevel(1);
         SetExperience(0);
 
-        TextGen::Print("Level up! Now your level is ", "");
+        TextGen::Print("升级啦! 现在您的等级是 ", "");
         TextGen::Print<buff>(to_string(GetLevel()));
 
         switch (level) {

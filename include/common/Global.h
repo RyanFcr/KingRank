@@ -68,8 +68,8 @@ struct FieldPosition {
 };
 
 /// possibility
-/** 
- * @brief Generate a possibility according to normal distribution 
+/**
+ * @brief Generate a possibility according to normal distribution
  * @param mu expectation
  * @param sigma variance
  * @return possibility

@@ -45,6 +45,52 @@
                     "HPValue": 100
                 }
             }
+        },
+        {
+            "name": "�����",
+            "level": 1,
+            "attack": 1,
+            "maxHP": 100,
+            "HP": 80,
+            "maxMP": 100,
+            "MP": 80,
+            "position": {
+                "fieldX": 0,
+                "fieldY": 0,
+                "sceneX": 1,
+                "sceneY": 0
+            },
+            "experience": 10,
+            "territoryPosition": {
+                "fieldX": 1,
+                "fieldY": 0
+            },
+            "countryName": "132",
+            "money": 1050,
+            "bag": {
+                "level": 1,
+                "weightLimit": 10,
+                "curWeight": 6,
+                "medicines": {
+                    "肉包": 1,
+                    "魔法丸子": 1
+                },
+                "weapons": {}
+            },
+            "attackSkills": {
+                "普通攻击": {
+                    "description": "只是普普通通的攻击",
+                    "MPCost": 0,
+                    "damageValue": 10
+                }
+            },
+            "supportSkills": {
+                "治疗术": {
+                    "description": "每次使用可以恢复全部血量",
+                    "MPCost": 20,
+                    "HPValue": 100
+                }
+            }
         }
     ]
 }
