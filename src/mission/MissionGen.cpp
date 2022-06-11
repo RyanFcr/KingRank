@@ -1,15 +1,21 @@
 #include "mission/MissionGen.h"
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
+#include <string>
+#include <vector>
 #include "common/Config.h"
 #include "common/Global.h"
+#include "mission/Mission.h"
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "text/TextGen.h"
 
 #include <fstream>
-using std::ifstream;
-using std::ios;
 using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
+using std::ifstream;
+using std::ios;
+using std::to_string;
+using std::vector;
 
 std::vector<Mission> MissionGen::missions;
 std::vector<Mission> MissionGen::kingMissions;
@@ -29,7 +35,7 @@ void MissionGen::InitMissions() {
         const Value& missionVal = missionDocument["missions"][i];
         ASSERT_DOM_OBJECT_IS_OBJECT(missionVal)
         std::string missionName, description, targetName;
-        int current, total, type, reward, experience; 
+        int current, total, type, reward, experience;
         // missionName
         ASSERT_DOM_OBJECT_HAS_MEMBER(missionVal, "missionName")
         DOM_OBJECT_MEMBER_TO_VAR_STRING(missionVal, "missionName", missionName)
@@ -55,6 +61,19 @@ void MissionGen::InitMissions() {
         ASSERT_DOM_OBJECT_HAS_MEMBER(missionVal, "experience")
         DOM_OBJECT_MEMBER_TO_VAR_INT(missionVal, "experience", experience)
 
-        missions.emplace_back(Mission{"", missionName, description, current, total, type, targetName, reward, experience});
+        missions.emplace_back(
+            Mission{"", missionName, description, current, total, type, targetName, reward, experience});
+    }
+}
+void MissionGen::ShowMission() {
+    vector<Mission>::iterator it;
+    if (kingMissions.size() == 0)
+        TextGen::Print("任务暂无");
+
+    int i = 1;
+    for (it = kingMissions.begin(); it != kingMissions.end(); it++) {
+        TextGen::Print(to_string(i)+". "+it->GetMissionName() + ": " + it->GetDescription() + "(" + to_string(it->GetCurrent()) + "/" +
+                       to_string(it->GetTotal())+")"+" 奖励金币 "+to_string(it->GetReward())+" 奖励经验 "+to_string(it->GetExperience()));
+        i++;
     }
 }

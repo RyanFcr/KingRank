@@ -51,7 +51,10 @@ void King::ShowAttackSkills() const {
         TextGen::Print("无", "");
     } else {
         for (size_t i = 0; i < attackSkillNames.size(); i++) {
-            TextGen::Print(to_string(int(i)) + ". " + attackSkillNames[i], " ");
+            const AttackSkill& as = attackSkills.at(attackSkillNames[i]);
+            TextGen::Print(to_string(int(i)) + ". " + attackSkillNames[i],
+                           " (描述:" + as.GetDescription() + " ,魔法消耗值: " + to_string(as.GetMPCost()) +
+                               " ,伤害值: " + to_string(as.GetDamageValue()) + " )");
         }
     }
     TextGen::Print("");
@@ -64,7 +67,10 @@ void King::ShowSupportSkills() const {
         TextGen::Print("空", "");
     } else {
         for (size_t i = 0; i < supportSkillNames.size(); i++) {
-            TextGen::Print(to_string(int(i)) + ". " + supportSkillNames[i], " ");
+            const SupportSkill& ss = supportSkills.at(supportSkillNames[i]);
+            TextGen::Print(to_string(int(i)) + ". " + supportSkillNames[i],
+                           " (描述:" + ss.GetDescription() + " ,魔法消耗值: " + to_string(ss.GetMPCost()) +
+                               " ,恢复血量: " + to_string(ss.GetHPValue()) + " )");
         }
     }
     TextGen::Print("");

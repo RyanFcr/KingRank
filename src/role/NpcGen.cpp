@@ -1,22 +1,22 @@
 #include "role/NpcGen.h"
-#include "role/Npc.h"
+#include "common/Config.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
+#include "role/Npc.h"
 #include "text/TextGen.h"
-#include "common/Config.h"
 
+#include <fstream>
 #include <map>
 #include <string>
 #include <vector>
-#include <fstream>
-using std::map;
-using std::string;
-using std::vector;
-using std::ifstream;
-using std::ios;
 using rapidjson::Document;
 using rapidjson::SizeType;
 using rapidjson::Value;
+using std::ifstream;
+using std::ios;
+using std::map;
+using std::string;
+using std::vector;
 
 map<Position, Npc, KeyCmp> NpcGen::Npcs;
 vector<string> NpcGen::NpcNames;
@@ -42,6 +42,7 @@ void NpcGen::Init() {
         ASSERT_DOM_OBJECT_IS_OBJECT(npcValue)
 
         string name;
+        string missionName;
         Position p;
         // name
         ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue, "name")
@@ -49,26 +50,26 @@ void NpcGen::Init() {
         Npc npc{name};
         // position
         ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue, "position")
-        ASSERT_DOM_OBJECT_IS_OBJECT(npcValue["position"])
-        {
-            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "fieldX")
-            DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "fieldX", p.fieldX)
-            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "fieldY")
-            DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "fieldY", p.fieldY)
-            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "sceneX")
-            DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "sceneX", p.sceneX)
-            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "sceneY")
-            DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "sceneY", p.sceneY)
-        }
-        // statement
-        ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue, "NpcStatements")
-        ASSERT_DOM_OBJECT_IS_OBJECT(npcValue["NpcStatements"])
-        for (auto& m : npcValue["NpcStatements"].GetObject()) {
+        ASSERT_DOM_OBJECT_IS_OBJECT(npcValue["position"]){
+            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "fieldX") DOM_OBJECT_MEMBER_TO_VAR_INT(
+                npcValue["position"], "fieldX", p.fieldX) ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "fieldY")
+                DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "fieldY", p.fieldY)
+                    ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "sceneX")
+                        DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "sceneX", p.sceneX)
+                            ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue["position"], "sceneY")
+                                DOM_OBJECT_MEMBER_TO_VAR_INT(npcValue["position"], "sceneY", p.sceneY)}  // statement
+        ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue, "NpcStatements") ASSERT_DOM_OBJECT_IS_OBJECT(
+            npcValue["NpcStatements"]) for (auto& m : npcValue["NpcStatements"].GetObject()) {
             string input = m.name.GetString();
             string output = m.value.GetString();
             npc.InsertStatement(input, output);
         }
+        // missionName
+        ASSERT_DOM_OBJECT_HAS_MEMBER(npcValue, "missionName")
+        DOM_OBJECT_MEMBER_TO_VAR_STRING(npcValue, "missionName", missionName)
+
         npc.SetPosition(p);
+        npc.SetMissionName(missionName);
         Npcs.insert(std::make_pair(p, npc));
     }
 }
