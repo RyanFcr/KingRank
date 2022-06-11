@@ -83,4 +83,20 @@ double NormalDistribution(double mu, double sigma);
  * @return string: json string
  */
 std::string ReadFormatJson(std::ifstream& ifs);
+
+/**
+ * @brief Calculate the maximum of three elements
+ */
+template<typename T>
+T MaxThree(const T& val1, const T& val2, const T& val3) {
+    return std::max(std::max(val1, val2), val3);
+}
+
+/**
+ * @brief Calculate the maximum of four elements
+ */
+template<typename T>
+T MaxFour(const T& val1, const T& val2, const T& val3, const T& val4) {
+    return std::max(std::max(val1, val2), std::max(val3, val4));
+}
 #endif
